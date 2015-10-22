@@ -28,7 +28,7 @@ Its purpose is to make communication and organization easier for the projects yo
 
 
 ### Technical specifications
-Cosmos will be a desktop application and will run on Electron to ensure compatibility with OSX/Windows/Linux systems. Server-side, it will run on a private API made with node.js. And then, if time allows, I will develop an iOS client using Swift.
+Cosmos will be a desktop application and will run on Electron to ensure compatibility with OSX/Windows/Linux systems. Server-side, it will run on an API made with node.js. And then, if time allows, I will develop an iOS client using Swift.
 
 **Stay tuned.**
 
