@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html lang="en"></html>
+<head>
+  <meta charset="UTF-8"/>
+  <title>Cosmos</title>
+  <link rel="stylesheet" href="../css/jointeam.css"/>
+</head>
+<body class="setup">
+  <div class="container">
+    <h1>You need to be part of a team.</h1>
+    <h2>This app is all about teamwork!</h2>
+    <form>
+      <legend>Find an exisiting team</legend>
+      <div>
+        <label for="search_team_name">Team name</label>
+        <input type="text" name="search_team_name" id="search_team_name"/><a href="searchteam.html" class="submit-btn">Search for this team</a>
+      </div>
+    </form>
+    <form>
+      <legend>Create your own team</legend>
+      <div>
+        <label for="create_team_name">Team name</label>
+        <input type="text" name="create_team_name" id="create_team_name"/><a href="teamprojects.html" class="submit-btn">Create this team</a>
+      </div>
+    </form>
+    <h3 class="pending">You have 3 pending team requests</h3>
+  </div>
+  <script>require('electron-connect').client.create()</script>
+</body>

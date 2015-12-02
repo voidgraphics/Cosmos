@@ -1,0 +1,22 @@
+<!DOCTYPE html>
+<html lang="en"></html>
+<head>
+  <meta charset="UTF-8"/>
+  <title>Cosmos</title>
+  <link rel="stylesheet" href="../css/signin.css"/>
+</head>
+<body class="setup">
+  <div class="container">
+    <h1>Welcome to Cosmos</h1>
+    <h2>Please sign in</h2>
+    <form>
+      <div>
+        <label for="username">Username</label>
+        <input type="text" name="username" id="username"/>
+        <label for="password">Password</label>
+        <input type="password" name="password" id="password"/><a href="jointeam.html" class="submit-btn">Log in</a><a href="signin.html">Don't have an account?</a><a href="forgotpassword.html">Forgot your password?</a>
+      </div>
+    </form>
+  </div>
+  <script>require('electron-connect').client.create()</script>
+</body>

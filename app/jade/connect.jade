@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+html(lang="en")
+head
+    meta(charset="UTF-8")
+    title Cosmos
+    link(rel="stylesheet", href="../css/signin.css")
+body.setup
+    div.container
+        h1 Welcome to Cosmos
+        h2 Please sign in
+        form
+            div
+                label(for="username") Username
+                input(type="text" name="username" id="username")
+
+                label(for="password") Password
+                input(type="password" name="password" id="password")
+
+                a(href="jointeam.html", class="submit-btn") Log in
+
+                a(href="signin.html") Don't have an account?
+                a(href="forgotpassword.html") Forgot your password?
+
+
+    script require('electron-connect').client.create()

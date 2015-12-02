@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8"/>
+    <title>Connect</title>
+    <link rel="stylesheet" href="../css/projectdashboard.css"/>
+  </head>
+  <body class="app">
+    <div class="navbar">
+      <div class="team">
+        <p>Team name</p>
+      </div>
+      <div class="links"><a href="teammembers.html">Members</a><a href="teamprojects.html">Projects</a></div>
+      <div class="account">
+        <p class="account__name">Adrien Leloup</p><img src="../img/user1.png" alt="" width="20" height="20" class="account__picture"/>
+      </div>
+    </div>
+    <div class="sidebar"><a href="projectdashboard.html" class="sidebar__item"> <i class="dashboard-icon sidebar__icon"></i>Dashboard</a><a href="projecttasks.html" class="sidebar__item"> <i class="tasks-icon sidebar__icon"></i>Tasks</a><a href="projectmockups.html" class="sidebar__item"> <i class="mockups-icon sidebar__icon"></i>Mockups</a><a href="projectchat.html" class="sidebar__item"> <i class="chat-icon sidebar__icon"></i>Chat</a></div>
+    <div class="container">
+      <h1 class="page-title">Dashboard - Project Name</h1>
+      <div class="task-items">
+        <div class="task-items__section">
+          <h2 class="task-items__section__title">Recently added</h2>
+          <div class="task-item">
+            <p class="task-item__name">Something to do</p>
+            <date class="task-item__deadline">Due in 7 days</date><img src="../img/profile.png" class="account__picture task-item__assigned-to"/>
+          </div>
+          <div class="task-item">
+            <p class="task-item__name">Something else to do</p>
+            <date class="task-item__deadline">Due in 14 days</date>
+            <div class="task-item__assigned-to"><img src="../img/user1.png" class="account__picture"/><img src="../img/user2.png" class="account__picture"/><img src="../img/user3.png" class="account__picture"/></div>
+          </div>
+        </div>
+        <div class="task-items__section">
+          <h2 class="task-items__section__title">Recently started</h2>
+          <div class="task-item">
+            <p class="task-item__name">Something in progress</p>
+            <date class="task-item__deadline">Due in 7 days</date><img src="../img/user1.png" class="account__picture task-item__assigned-to"/>
+          </div>
+          <div class="task-item">
+            <p class="task-item__name">Something else in progress</p>
+            <date class="task-item__deadline">Due in 14 days</date><img src="../img/user3.png" class="account__picture task-item__assigned-to"/>
+          </div>
+        </div>
+        <div class="task-items__section">
+          <h2 class="task-items__section__title">Recently finished</h2>
+          <div class="task-item">
+            <p class="task-item__name">Something finished</p>
+            <date class="task-item__deadline">Due in 7 days</date><img src="../img/user4.png" class="account__picture task-item__assigned-to"/>
+          </div>
+          <div class="task-item">
+            <p class="task-item__name">Something else finished</p>
+            <date class="task-item__deadline">Due in 14 days</date><img src="../img/user1.png" class="account__picture task-item__assigned-to"/>
+          </div>
+        </div>
+      </div>
+      <div class="chatroom-items">
+        <h2 class="chatroom-items__section-title">Available chatrooms</h2><a href="projectchat.html" class="chatroom-item">General</a><a href="projectchat.html" class="chatroom-item">UI</a><a href="projectchat.html" class="chatroom-item">Front-end</a>
+      </div>
+    </div>
+    <script>require('electron-connect').client.create()</script>
+  </body>
+</html>

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        title Project Name - General Chat
+        link(rel="stylesheet", href="../css/projectchat.css")
+    body.app
+        include ./includes/navbar.jade
+        include ./includes/sidebar.jade
+        include ./includes/chatbar.jade
+        
+        div.container
+            h1.page-title General Chat - Project Name
+            
+            div.chat
+                div.chat__messages
+                    div.chat__message
+                        p.user__name Adrien
+                        time.message__time 08:14
+                        p.message No. We're on the top. Please, Don-Bot… look into your hard drive, and open your mercy file! And when we woke up, we had these bodies. Oh, but you can. But you may have to metaphorically make a deal with the devil. And by "devil", I mean Robot Devil. And by "metaphorically", I mean get your coat.
+                        
+                    div.chat__message
+                        p.user__name Zoidberg
+                        time.message__time 08:16
+                        p.message Is that a cooking show?
+                        
+                    div.chat__message
+                        p.user__name Bender
+                        time.message__time 08:16
+                        p.message Why would I want to know that?
+                
+                    div.chat__message
+                        p.user__name Farnsworth
+                        time.message__time 08:18
+                        p.message Bender? You stole the atom. Too much work. Let's burn it and say we dumped it in the sewer. Meh. We'll need to have a look inside you with this camera.
+                        
+                    div.chat__message
+                        p.user__name Adrien
+                        time.message__time 08:21
+                        p.message Good news, everyone!
+                
+                form.input-area
+                    input.input-area__textfield(type="text" placeholder="Type your message...")
+                    input.input-area__submit(type="submit" value="Send")
+                
+        script require('electron-connect').client.create()

@@ -4,7 +4,16 @@
   "description": "Project manager app",
   "main": "app/main.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "dev": "electron ./app",
+    "clean": "rm -rf ./dist",
+    "clean:osx": "rm -rf ./dist/osx",
+    "clean:win": "rm -rf ./dist/win",
+    "build": "npm run clean && npm run build:osx && npm run build:win",
+    "build:osx": "npm run clean:osx && electron-packager . \"Cosmos\" --out=dist/osx --platform=darwin --arch=x64 --version=0.25.3 --icon=assets/osx/app-icon.icns",
+    "build:win": "npm run clean:win && electron-packager . \"Cosmos\" --out=dist/win --platform=win32 --arch=ia32 --version=0.25.3 --icon=assets/win/icon.ico",
+    "pack": "npm run pack:osx && npm run pack:win",
+    "pack:osx": "npm run build:osx && electron-builder \"dist/osx/Cosmos-darwin-x64/Cosmos.app\" --platform=osx --out=\"dist/osx\" --config=packager.json",
+    "pack:win": "npm run build:win && electron-builder \"dist/win/Cosmo-win32\" --platform=win --out=\"dist/win\" --config=packager.json"
   },
   "repository": {
     "type": "git",
@@ -22,5 +31,22 @@
   "bugs": {
     "url": "https://github.com/voidgraphics/Cosmos/issues"
   },
-  "homepage": "https://github.com/voidgraphics/Cosmos#readme"
+  "homepage": "https://github.com/voidgraphics/Cosmos#readme",
+  "devDependencies": {
+    "browser-sync": "^2.9.8",
+    "gulp": "^3.9.0",
+    "gulp-coffee": "^2.3.1",
+    "gulp-jade": "^1.1.0",
+    "gulp-sass": "^2.0.4",
+    "gulp-uglify": "^1.4.1",
+    "lodash": "^3.10.1"
+  },
+  "dependencies": {
+    "dragula": "^3.5.4",
+    "electron-builder": "^1.0.0",
+    "electron-packager": "^4.0.2",
+    "electron-prebuilt": "^0.25.2",
+    "gulp-jade": "^1.1.0",
+    "susy": "^2.2.6"
+  }
 }

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8"/>
+    <title>Project Name - General Chat</title>
+    <link rel="stylesheet" href="../css/projectchat.css"/>
+  </head>
+  <body class="app">
+    <div class="navbar">
+      <div class="team">
+        <p>Team name</p>
+      </div>
+      <div class="links"><a href="teammembers.html">Members</a><a href="teamprojects.html">Projects</a></div>
+      <div class="account">
+        <p class="account__name">Adrien Leloup</p><img src="../img/user1.png" alt="" width="20" height="20" class="account__picture"/>
+      </div>
+    </div>
+    <div class="sidebar"><a href="projectdashboard.html" class="sidebar__item"> <i class="dashboard-icon sidebar__icon"></i>Dashboard</a><a href="projecttasks.html" class="sidebar__item"> <i class="tasks-icon sidebar__icon"></i>Tasks</a><a href="projectmockups.html" class="sidebar__item"> <i class="mockups-icon sidebar__icon"></i>Mockups</a><a href="projectchat.html" class="sidebar__item"> <i class="chat-icon sidebar__icon"></i>Chat</a></div>
+    <div class="chatbar">
+      <div class="chatbar__section">
+        <p class="chatbar__section__title">Chatrooms</p><a href="#" class="chatbar__section__btn">Add</a>
+        <div class="chatrooms"><a href="#" class="chatroom">#General        </a><a href="#" class="chatroom">#UI</a><a href="#" class="chatroom">#Front-end</a></div>
+      </div>
+      <div class="chatbar__section">
+        <p class="chatbar__section__title">Users</p>
+        <div class="chat-users">
+          <div class="chat-user"><img src="../img/profile.png" class="account__picture"/><a href="#" class="user__name">Adrien</a></div>
+          <div class="chat-user"><img src="../img/profile.png" class="account__picture"/><a href="#" class="user__name">Bender</a></div>
+          <div class="chat-user"><img src="../img/profile.png" class="account__picture"/><a href="#" class="user__name">Fry</a></div>
+          <div class="chat-user"><img src="../img/profile.png" class="account__picture"/><a href="#" class="user__name">Leela</a></div>
+          <div class="chat-user"><img src="../img/profile.png" class="account__picture"/><a href="#" class="user__name">Zoidberg</a></div>
+        </div>
+      </div>
+    </div>
+    <div class="container">
+      <h1 class="page-title">General Chat - Project Name</h1>
+      <div class="chat">
+        <div class="chat__messages">
+          <div class="chat__message">
+            <p class="user__name">Adrien</p>
+            <time class="message__time">08:14</time>
+            <p class="message">No. We're on the top. Please, Don-Bot… look into your hard drive, and open your mercy file! And when we woke up, we had these bodies. Oh, but you can. But you may have to metaphorically make a deal with the devil. And by "devil", I mean Robot Devil. And by "metaphorically", I mean get your coat.</p>
+          </div>
+          <div class="chat__message">
+            <p class="user__name">Zoidberg</p>
+            <time class="message__time">08:16</time>
+            <p class="message">Is that a cooking show?</p>
+          </div>
+          <div class="chat__message">
+            <p class="user__name">Bender</p>
+            <time class="message__time">08:16</time>
+            <p class="message">Why would I want to know that?</p>
+          </div>
+          <div class="chat__message">
+            <p class="user__name">Farnsworth</p>
+            <time class="message__time">08:18</time>
+            <p class="message">Bender? You stole the atom. Too much work. Let's burn it and say we dumped it in the sewer. Meh. We'll need to have a look inside you with this camera.</p>
+          </div>
+          <div class="chat__message">
+            <p class="user__name">Adrien</p>
+            <time class="message__time">08:21</time>
+            <p class="message">Good news, everyone!</p>
+          </div>
+        </div>
+        <form class="input-area">
+          <input type="text" placeholder="Type your message..." class="input-area__textfield"/>
+          <input type="submit" value="Send" class="input-area__submit"/>
+        </form>
+      </div>
+    </div>
+    <script>require('electron-connect').client.create()</script>
+  </body>
+</html>

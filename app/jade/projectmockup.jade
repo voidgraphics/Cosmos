@@ -1,0 +1,17 @@
+<!DOCTYPE html>
+html(lang="en")
+    head
+        meta(charset="UTF-8")
+        title Project Name - Tasks
+        link(rel="stylesheet", href="../css/projectmockup.css")
+    body.app
+        include ./includes/navbar.jade
+        include ./includes/sidebar.jade
+        
+        div.container
+            h1.page-title Homepage Mockup - Project Name
+            p.header-info Click anywhere on the image to leave a comment.
+            div.mockup
+                img.mockup__image(src="../img/mockups/fullsize/nutri-home.png")
+                
+        script require('electron-connect').client.create()
