@@ -84,7 +84,9 @@ html(lang="en")
                             input.task-submit(type="submit" id="new-task__submit" value="Add this task")
                         
             div.popup-overlay
-        script require('electron-connect').client.create()
+        script(src="http://localhost:12345/socket.io/socket.io.js")
+        script require('electron-connect').client.create();
+        script(src="../js/socket.js")
         //- script(src="../js/populatestorage.js")
         script(src="../js/Popup.js")
         script(src="../js/Task.js")

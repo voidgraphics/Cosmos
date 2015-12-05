@@ -1,6 +1,9 @@
 var Task = {
     items: {},
     init: function(){
+        socket.emit( "task.getAll", function( oData ){
+            console.log( oData );
+        } );
         for( i = 0; i < localStorage.length; i++ ) {
             this.items[localStorage.key(i)] = JSON.parse( localStorage.getItem( localStorage.key(i) ) );
             this.draw(localStorage.key(i));
@@ -23,6 +26,7 @@ var Task = {
 
         // Constructing the tile
         var taskItem = document.createElement( "div" );
+        taskItem.dataset.id = iID;
         taskItem.className = "task-item";
 
         var taskItemName = document.createElement( "p" );
@@ -70,7 +74,7 @@ var Task = {
 
     },
     add: function( sTitle, sDeadline, aUsers, sState ){
-        var taskID = localStorage.length++;
+        var taskID = Date.now();
 
         var taskObject = {
             title: sTitle,
@@ -111,7 +115,6 @@ var Task = {
 
         aUserCheckboxes.forEach( function( $checkbox ) {
             if( $checkbox.checked ){
-                console.log( $checkbox );
                 aCheckedUsers.push( $checkbox.id );
             }
         } );
@@ -126,6 +129,12 @@ var Task = {
         }
     },
     delete: function( iID ){
-        alert( "Deleting " + iID );
+        console.log( "deleting task" );
+        socket.emit( "task.delete", iID );
+        Popup.toggleDelete();
     },
+    save: function( iID, oTask ){
+        localStorage.setItem( iID, oTask );
+        socket.emit( "task.save", oTask );
+    }
 };

@@ -89,7 +89,9 @@
       </div>
       <div class="popup-overlay"></div>
     </div>
-    <script>require('electron-connect').client.create()</script>
+    <script src="http://localhost:12345/socket.io/socket.io.js"></script>
+    <script>require('electron-connect').client.create();</script>
+    <script src="../js/socket.js"></script>
     <script src="../js/Popup.js"></script>
     <script src="../js/Task.js"></script>
     <script src="../js/moment.js"></script>
