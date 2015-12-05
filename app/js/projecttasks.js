@@ -69,12 +69,25 @@
             Task.edit( iID );
         }
     } );
+    document.querySelector( "#confirmDelete" ).addEventListener( "click", function( e ){
+        targetID = e.target.dataset.id;
+        Task.delete( targetID );
+    } );
 
 
 
 
 
     // Init dragula for drag n drop
-    dragula([document.querySelector('#todo-column__items'), document.querySelector('#progress-column__items'), document.querySelector('#finished-column__items')]);
+    var drake = dragula([document.querySelector('#todo-column__items'), document.querySelector('#progress-column__items'), document.querySelector('#finished-column__items')]);
+
+    drake.on( "dragend", function( element ) {
+        var sNewState = element.parentNode.parentNode.id;
+        var taskItem = Task.get( element.dataset.id );
+        taskItem.state = sNewState;
+        Task.items[element.dataset.id] = taskItem;
+        Task.save( element.dataset.id, JSON.stringify( taskItem ) );
+        Task.redraw();
+    } );
 
 } )();

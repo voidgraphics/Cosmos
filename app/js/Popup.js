@@ -42,15 +42,10 @@ var Popup = {
     toggleDelete: function( e ){
         if( e ) {
             e.preventDefault();
-
             targetID = e.target.dataset.id;
             document.querySelector( "#confirmDelete" ).dataset.id = targetID;
-            document.querySelector( "#confirmDelete" ).addEventListener( "click", function(){
-                Task.delete( targetID );
-            } );
-            this.deletePopupElement.classList.remove( "hidden" );
-
         }
+        this.deletePopupElement.classList.toggle( "hidden" );
     },
     useEditForm: function( taskID ){
         var aUserCheckboxes = [].slice.call( document.querySelectorAll( ".assign-user__check" ) );
