@@ -1,13 +1,11 @@
 var Task = {
     items: {},
     init: function(){
-        socket.emit( "task.getAll", function( oData ){
-            console.log( oData );
+        var that = this;
+        socket.emit( "task.getAll", function( oReturnedTasks ){
+            that.items = oReturnedTasks;
+            that.redraw();
         } );
-        for( i = 0; i < localStorage.length; i++ ) {
-            this.items[localStorage.key(i)] = JSON.parse( localStorage.getItem( localStorage.key(i) ) );
-            this.draw(localStorage.key(i));
-        }
     },
     redraw: function() {
         var aColumns = [].slice.call( document.querySelectorAll( ".task-items__cards" ) );
@@ -20,7 +18,6 @@ var Task = {
         }
     },
     draw: function( iID ){
-
         // Getting the Column
         $addColumn = document.querySelector( "#" + this.items[iID].state );
 
@@ -47,11 +44,13 @@ var Task = {
 
         var taskItemDeadline = document.createElement( "date" );
         taskItemDeadline.className = "task-item__deadline";
+
         if( this.items[iID].deadline !== "" ){
             taskItemDeadline.innerHTML = moment( this.items[iID].deadline ).format( "ll" );
         } else {
             taskItemDeadline.innerHTML = "No deadline set";
         }
+
 
         if( this.items[iID].users.length !== 0 ) {
             var assignedTo = document.createElement( "div" );
@@ -83,9 +82,9 @@ var Task = {
             state: sState
         };
 
-        this.items[taskID] = taskObject;
-        taskObject = JSON.stringify( taskObject );
-        localStorage.setItem( taskID, taskObject );
+
+        taskObject = taskObject;
+        this.save( taskID, taskObject );
         this.draw( taskID );
 
     },
@@ -134,7 +133,7 @@ var Task = {
         Popup.toggleDelete();
     },
     save: function( iID, oTask ){
-        localStorage.setItem( iID, oTask );
+        this.items[iID] = oTask;
         socket.emit( "task.save", oTask );
     }
 };
