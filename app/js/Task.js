@@ -12,10 +12,12 @@ var Task = {
         aColumns.forEach( function( $column ){
             $column.innerHTML = "";
         } );
-        for( i = 0; i < localStorage.length; i++ ) {
-            this.items[localStorage.key(i)] = JSON.parse( localStorage.getItem( localStorage.key(i) ) );
-            this.draw(localStorage.key(i));
-        }
+
+        var that = this;
+        Object.keys( this.items ).forEach( function( key, oTask ){
+            that.draw( key )
+        } );
+
     },
     draw: function( iID ){
         // Getting the Column
@@ -92,10 +94,9 @@ var Task = {
         return this.items[iID];
     },
     edit: function( iID ){
-        var editedTaskItem = this.getFormData();
+        var oEditedTaskItem = this.getFormData();
 
-        this.items[iID] = editedTaskItem;
-        localStorage.setItem( iID, JSON.stringify( editedTaskItem ) );
+        this.update( iID, oEditedTaskItem );
         this.redraw();
         Popup.toggle();
     },
@@ -129,11 +130,17 @@ var Task = {
     },
     delete: function( iID ){
         console.log( "deleting task" );
+        delete this.items[iID];
         socket.emit( "task.delete", iID );
+        this.redraw();
         Popup.toggleDelete();
     },
     save: function( iID, oTask ){
         this.items[iID] = oTask;
         socket.emit( "task.save", oTask );
+    },
+    update: function( iID, oTask ){
+        this.items[iID] = oTask;
+        socket.emit( "task.update", iID, oTask );
     }
 };

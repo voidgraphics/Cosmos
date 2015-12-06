@@ -38,7 +38,6 @@
 
         aUserCheckboxes.forEach( function( $checkbox ) {
             if( $checkbox.checked ){
-                console.log( $checkbox );
                 aCheckedUsers.push( $checkbox.id );
             }
         } );
@@ -67,6 +66,7 @@
         } else {
             var iID = document.querySelector( ".popup #taskID" ).value;
             Task.edit( iID );
+            console.log("We're editing");
         }
     } );
     document.querySelector( "#confirmDelete" ).addEventListener( "click", function( e ){
@@ -85,8 +85,7 @@
         var sNewState = element.parentNode.parentNode.id;
         var taskItem = Task.get( element.dataset.id );
         taskItem.state = sNewState;
-        Task.items[element.dataset.id] = taskItem;
-        Task.save( element.dataset.id, JSON.stringify( taskItem ) );
+        Task.update( element.dataset.id, taskItem );
         Task.redraw();
     } );
 
