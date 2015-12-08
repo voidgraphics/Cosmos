@@ -1,1 +1,221 @@
-*{box-sizing:border-box;margin:0;padding:0}*:focus{outline:0}body{font-family:"Montserrat",sans-serif}body.setup{background-color:#171F22;color:#DFE0D6;height:100vh}body.app{background-color:#f3f3f3;color:#171F22}h1{font-weight:400;font-size:24px;text-align:center;margin-bottom:15px}h1.page-title{text-align:left}h2{font-weight:300;font-size:18px;color:#E75F3E;text-align:center;margin-bottom:25px}h3{font-weight:400;font-size:16px}a{text-decoration:none;display:block;color:#DFE0D6;font-size:12px;padding:2px 0;margin:5px 0}.container{margin-left:280px;margin-top:60px;padding:25px;position:relative}.chatbar{position:fixed;top:60px;bottom:0;left:80px;width:200px}.input-area{position:fixed;width:calc(100% - 330px);bottom:50px}.input-area__textfield{width:calc(100% - 50px);height:35px;position:absolute;z-index:16}.input-area__submit{width:55px;right:0;z-index:15;height:35px;position:absolute}.navbar{position:fixed;top:0;left:0;right:0;height:60px;background-color:#28373C;color:#fff;z-index:999999999}.team,.links,.account{position:absolute;top:50%;transform:translateY(-65%)}.team{left:25px}.links{left:250px}.links a{display:inline;padding:15px}.account{right:25px}.account__name{display:inline;font-size:12px;margin-right:10px}.account__picture{width:20px;height:20px;border-radius:5px;vertical-align:text-top}.sidebar{position:fixed;left:0;top:60px;bottom:0;width:80px;padding-top:25px;background-color:#171F22}.sidebar__item{width:100%;text-align:center;height:80px}.sidebar__item .sidebar__icon{display:block;margin:0 auto 10px;width:30px;height:30px}.sidebar__item .dashboard-icon{background-color:#E75F3E}.sidebar__item .tasks-icon{background-color:#E75F3E}.sidebar__item .mockups-icon{background-color:#E75F3E}.sidebar__item .chat-icon{background-color:#E75F3E}.chatbar{background-color:#1b262e;color:#fff;padding:25px}.chatbar__section{margin-bottom:35px;position:relative}.chatbar__section__title{font-size:14px;margin-bottom:10px}.chatbar__section__btn{display:inline-block;background-color:#28373C;padding:5px 10px;border-radius:5px;position:absolute;top:-7px;right:0}.chat-user{margin-bottom:3px}.chat-user .user__name{display:inline-block;margin-left:10px}.chat__message{margin-bottom:20px}.chat__message .user__name{display:inline-block;font-size:14px;font-weight:600}.message__time{display:inline-block;font-weight:600;font-size:14px}.message__time::before{content:"-";margin-right:5px}.message{font-size:14px;line-height:1.6;margin-top:5px}.input-area__textfield{border:none;padding:10px;font-size:14px;font-family:"Montserrat",sans-serif;border-radius:5px}.input-area__submit{border:none;background-color:#E75F3E;color:#fff;font-family:"Montserrat",sans-serif;border-radius:5px}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0; }
+  *:focus {
+    outline: 0; }
+
+body {
+  font-family: "Montserrat", sans-serif; }
+
+.setup {
+  background-color: #171F22;
+  color: #DFE0D6;
+  height: 100vh;
+  width: 100%; }
+
+.view {
+  display: none; }
+
+#app .view {
+  display: block; }
+
+.container {
+  height: 100vh;
+  display: none; }
+  .container.showing {
+    display: block !important; }
+
+body.app {
+  background-color: #f3f3f3;
+  color: #171F22; }
+
+h1 {
+  font-weight: 400;
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 15px; }
+
+h1.page-title {
+  text-align: left; }
+
+h2 {
+  font-weight: 300;
+  font-size: 18px;
+  color: #E75F3E;
+  text-align: center;
+  margin-bottom: 25px; }
+
+h3 {
+  font-weight: 400;
+  font-size: 16px; }
+
+a {
+  text-decoration: none;
+  display: block;
+  color: #DFE0D6;
+  font-size: 12px;
+  padding: 2px 0;
+  margin: 5px 0; }
+
+#view-projectchat .container {
+  margin-left: 280px;
+  margin-top: 60px;
+  padding: 25px;
+  position: relative; }
+
+#view-projectchat .chatbar {
+  position: fixed;
+  top: 60px;
+  bottom: 0;
+  left: 80px;
+  width: 200px; }
+
+#view-projectchat .input-area {
+  position: fixed;
+  width: calc(100% - 330px);
+  bottom: 50px; }
+
+#view-projectchat .input-area__textfield {
+  width: calc(100% - 50px);
+  height: 35px;
+  position: absolute;
+  z-index: 16; }
+
+#view-projectchat .input-area__submit {
+  width: 55px;
+  right: 0;
+  z-index: 15;
+  height: 35px;
+  position: absolute; }
+
+.navbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  background-color: #28373C;
+  color: #fff;
+  z-index: 999999999; }
+
+.team,
+.links,
+.account {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-65%); }
+
+.team {
+  left: 25px; }
+
+.links {
+  left: 250px; }
+  .links a {
+    display: inline;
+    padding: 15px; }
+
+.account {
+  right: 25px; }
+
+.account__name {
+  display: inline;
+  font-size: 12px;
+  margin-right: 10px; }
+
+.account__picture {
+  width: 20px;
+  height: 20px;
+  border-radius: 5px;
+  vertical-align: text-top; }
+
+.sidebar {
+  position: fixed;
+  left: 0;
+  top: 60px;
+  bottom: 0;
+  width: 80px;
+  padding-top: 25px;
+  background-color: #171F22; }
+
+.sidebar__item {
+  width: 100%;
+  text-align: center;
+  height: 80px; }
+  .sidebar__item .sidebar__icon {
+    display: block;
+    margin: 0 auto 10px;
+    width: 30px;
+    height: 30px; }
+  .sidebar__item .dashboard-icon {
+    background-color: #E75F3E; }
+  .sidebar__item .tasks-icon {
+    background-color: #E75F3E; }
+  .sidebar__item .mockups-icon {
+    background-color: #E75F3E; }
+  .sidebar__item .chat-icon {
+    background-color: #E75F3E; }
+
+.chatbar {
+  background-color: #1b262e;
+  color: #fff;
+  padding: 25px; }
+
+.chatbar__section {
+  margin-bottom: 35px;
+  position: relative; }
+
+.chatbar__section__title {
+  font-size: 14px;
+  margin-bottom: 10px; }
+
+.chatbar__section__btn {
+  display: inline-block;
+  background-color: #28373C;
+  padding: 5px 10px;
+  border-radius: 5px;
+  position: absolute;
+  top: -7px;
+  right: 0; }
+
+.chat-user {
+  margin-bottom: 3px; }
+
+.chat-user .user__name {
+  display: inline-block;
+  margin-left: 10px; }
+
+.chat__message {
+  margin-bottom: 20px; }
+
+.chat__message .user__name {
+  display: inline-block;
+  font-size: 14px;
+  font-weight: 600; }
+
+.message__time {
+  display: inline-block;
+  font-weight: 600;
+  font-size: 14px; }
+  .message__time::before {
+    content: "-";
+    margin-right: 5px; }
+
+.message {
+  font-size: 14px;
+  line-height: 1.6;
+  margin-top: 5px; }
+
+.input-area__textfield {
+  border: none;
+  padding: 10px;
+  font-size: 14px;
+  font-family: "Montserrat", sans-serif;
+  border-radius: 5px; }
+
+.input-area__submit {
+  border: none;
+  background-color: #E75F3E;
+  color: #fff;
+  font-family: "Montserrat", sans-serif;
+  border-radius: 5px; }

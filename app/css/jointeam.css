@@ -1,1 +1,109 @@
-*{box-sizing:border-box;margin:0;padding:0}*:focus{outline:0}body{font-family:"Montserrat",sans-serif}body.setup{background-color:#171F22;color:#DFE0D6;height:100vh}body.app{background-color:#f3f3f3;color:#171F22}h1{font-weight:400;font-size:24px;text-align:center;margin-bottom:15px}h1.page-title{text-align:left}h2{font-weight:300;font-size:18px;color:#E75F3E;text-align:center;margin-bottom:25px}h3{font-weight:400;font-size:16px}a{text-decoration:none;display:block;color:#DFE0D6;font-size:12px;padding:2px 0;margin:5px 0}body{height:100vh;display:flex;flex-wrap:wrap;justify-content:center;align-items:center}form{display:inline-block;margin:30px 80px}.pending{margin-top:30px;text-align:center}form{width:250px}form legend{margin-top:10px;margin-bottom:20px;font-size:18px}form label{display:inline-block;margin-bottom:7px;font-size:14px}form input[type="text"],form input[type="submit"],form input[type="password"],form input[type="submit"],form .submit-btn{border-radius:5px;background-color:#DFE0D6;display:block;border:none;width:100%;padding:11px;font-size:12px;font-family:"Montserrat",sans-serif;margin-bottom:30px}form .submit-btn{text-decoration:none;margin-top:35px;background-color:#E75F3E;text-align:center;color:#DFE0D6;padding:12px 0 14px;font-size:14px}form a{text-align:center}
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0; }
+  *:focus {
+    outline: 0; }
+
+body {
+  font-family: "Montserrat", sans-serif; }
+
+.setup {
+  background-color: #171F22;
+  color: #DFE0D6;
+  height: 100vh;
+  width: 100%; }
+
+.view {
+  display: none; }
+
+#app .view {
+  display: block; }
+
+.container {
+  height: 100vh;
+  display: none; }
+  .container.showing {
+    display: block !important; }
+
+body.app {
+  background-color: #f3f3f3;
+  color: #171F22; }
+
+h1 {
+  font-weight: 400;
+  font-size: 24px;
+  text-align: center;
+  margin-bottom: 15px; }
+
+h1.page-title {
+  text-align: left; }
+
+h2 {
+  font-weight: 300;
+  font-size: 18px;
+  color: #E75F3E;
+  text-align: center;
+  margin-bottom: 25px; }
+
+h3 {
+  font-weight: 400;
+  font-size: 16px; }
+
+a {
+  text-decoration: none;
+  display: block;
+  color: #DFE0D6;
+  font-size: 12px;
+  padding: 2px 0;
+  margin: 5px 0; }
+
+#view-jointeam {
+  height: 100vh; }
+  #view-jointeam .content {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    align-items: center; }
+  #view-jointeam form {
+    display: inline-block;
+    margin: 30px 80px; }
+  #view-jointeam .pending {
+    margin-top: 30px;
+    text-align: center; }
+
+form {
+  width: 250px; }
+  form legend {
+    margin-top: 10px;
+    margin-bottom: 20px;
+    font-size: 18px; }
+  form label {
+    display: inline-block;
+    margin-bottom: 7px;
+    font-size: 14px; }
+  form input[type="text"],
+  form input[type="email"],
+  form input[type="submit"],
+  form input[type="password"],
+  form input[type="submit"],
+  form .submit-btn {
+    border-radius: 5px;
+    background-color: #DFE0D6;
+    display: block;
+    border: none;
+    width: 100%;
+    padding: 11px;
+    font-size: 12px;
+    font-family: "Montserrat", sans-serif;
+    margin-bottom: 30px; }
+  form .submit-btn {
+    text-decoration: none;
+    margin-top: 35px;
+    background-color: #E75F3E;
+    text-align: center;
+    color: #DFE0D6;
+    padding: 12px 0 14px;
+    font-size: 14px; }
+  form a {
+    text-align: center; }
