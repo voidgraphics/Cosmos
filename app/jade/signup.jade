@@ -1,17 +1,22 @@
-div.container.view#view-signin
+div.container.view#view-signup
     .content
         div
             h1 Welcome to Cosmos
-            h2 Please sign in
+            h2 Please create an account
             form
                 div
                     label(for="username") Username
                     input(type="text" name="username" id="username")
+                    
+                    label(for="email") E-mail
+                    input(type="email" name="email" id="email")
 
                     label(for="password") Password
                     input(type="password" name="password" id="password")
 
                     a(href="jointeam.html", class="submit-btn") Log in
 
-                    a#signup-link(href="#" v-link="{path: '/signup'}") Don't have an account?
+                    a#signin-link(href="#" v-link="{path: '/signin'}") Already have an account?
                     a(href="forgotpassword.html") Forgot your password?
+    
+script(src="../js/signup/SignupForm.js")

@@ -1,69 +1,57 @@
-<!DOCTYPE html>
-html(lang="en")
-    head
-        meta(charset="UTF-8")
-        title Project Name - Mockups
-        link(rel="stylesheet", href="../css/projectmockups.css")
-    body.app
-        include ./includes/navbar.jade
-        include ./includes/sidebar.jade
-        
-        div.container
-            h1.page-title Homepage Mockup - Project Name
-            a.header-btn(href="") Add a mockup
-            div.mockup-items
-                div.mockup-item
-                    a(href="projectmockup.html")
-                        div.thumbnail-container
-                            img.mockup-item__thumbnail(src="../img/mockups/fullsize/nutri-home.png")
-                    div.mockup-item__comment-count
-                        i.comment-count-icon
-                        span 6
-                    a.mockup-item__title(href="projectmockup.html") Homepage
-                    
-                div.mockup-item
-                    a(href="projectmockup.html")
-                        div.thumbnail-container
-                            img.mockup-item__thumbnail(src="../img/mockups/fullsize/nutri-home.png")
-                    div.mockup-item__comment-count
-                        i.comment-count-icon
-                        span 3
-                    a.mockup-item__title(href="projectmockup.html") About
-                    
-                div.mockup-item
-                    a(href="projectmockup.html")
-                        div.thumbnail-container
-                            img.mockup-item__thumbnail(src="../img/mockups/fullsize/nutri-home.png")
-                    div.mockup-item__comment-count
-                        i.comment-count-icon
-                        span 0
-                    a.mockup-item__title(href="projectmockup.html") Contact
-                    
-                div.mockup-item
-                    a(href="projectmockup.html")
-                        div.thumbnail-container
-                            img.mockup-item__thumbnail(src="../img/mockups/fullsize/nutri-home.png")
-                    div.mockup-item__comment-count
-                        i.comment-count-icon
-                        span 2
-                    a.mockup-item__title(href="projectmockup.html") Products
-                    
-                div.mockup-item
-                    a(href="projectmockup.html")
-                        div.thumbnail-container
-                            img.mockup-item__thumbnail(src="../img/mockups/fullsize/nutri-home.png")
-                    div.mockup-item__comment-count
-                        i.comment-count-icon
-                        span 10
-                    a.mockup-item__title(href="projectmockup.html") Admin
-                    
-                div.mockup-item
-                    a(href="projectmockup.html")
-                        div.thumbnail-container
-                            img.mockup-item__thumbnail(src="../img/mockups/fullsize/nutri-home.png")
-                    div.mockup-item__comment-count
-                        i.comment-count-icon
-                        span 1
-                    a.mockup-item__title(href="projectmockup.html") Pricing
-                    
-        script require('electron-connect').client.create()
+div.container#view-projectmockups
+    h1.page-title Homepage Mockup - Project Name
+    a.header-btn(href="") Add a mockup
+    div.mockup-items
+        div.mockup-item
+            a(href="projectmockup.html")
+                div.thumbnail-container
+                    img.mockup-item__thumbnail(src="../img/mockups/fullsize/nutri-home.png")
+            div.mockup-item__comment-count
+                i.comment-count-icon
+                span 6
+            a.mockup-item__title(href="projectmockup.html") Homepage
+
+        div.mockup-item
+            a(href="projectmockup.html")
+                div.thumbnail-container
+                    img.mockup-item__thumbnail(src="../img/mockups/fullsize/nutri-home.png")
+            div.mockup-item__comment-count
+                i.comment-count-icon
+                span 3
+            a.mockup-item__title(href="projectmockup.html") About
+
+        div.mockup-item
+            a(href="projectmockup.html")
+                div.thumbnail-container
+                    img.mockup-item__thumbnail(src="../img/mockups/fullsize/nutri-home.png")
+            div.mockup-item__comment-count
+                i.comment-count-icon
+                span 0
+            a.mockup-item__title(href="projectmockup.html") Contact
+
+        div.mockup-item
+            a(href="projectmockup.html")
+                div.thumbnail-container
+                    img.mockup-item__thumbnail(src="../img/mockups/fullsize/nutri-home.png")
+            div.mockup-item__comment-count
+                i.comment-count-icon
+                span 2
+            a.mockup-item__title(href="projectmockup.html") Products
+
+        div.mockup-item
+            a(href="projectmockup.html")
+                div.thumbnail-container
+                    img.mockup-item__thumbnail(src="../img/mockups/fullsize/nutri-home.png")
+            div.mockup-item__comment-count
+                i.comment-count-icon
+                span 10
+            a.mockup-item__title(href="projectmockup.html") Admin
+
+        div.mockup-item
+            a(href="projectmockup.html")
+                div.thumbnail-container
+                    img.mockup-item__thumbnail(src="../img/mockups/fullsize/nutri-home.png")
+            div.mockup-item__comment-count
+                i.comment-count-icon
+                span 1
+            a.mockup-item__title(href="projectmockup.html") Pricing

@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+html(lang="en")
+head
+    meta(charset="UTF-8")
+    title Cosmos
+    link(rel="stylesheet", href="../css/pikaday.css")
+    link(rel="stylesheet", href="../css/dragula.css")
+    link(rel="stylesheet", href="../css/main.css")
+    script(src="http://localhost:12345/socket.io/socket.io.js")
+    script(src="../js/socket.js")
+body
+    div#app
+        p
+            a(href="#" v-link="{path: '/signin'}") Go to signin
+            a(href="#" v-link="{path: '/signup'}") Go to signup
+            a(href="#" v-link="{path: '/tasks'}") Go to tasks
+        router-view
+            
+    include ./connect.jade
+    include ./signup.jade
+    //- include ./jointeam.jade
+    //- include ./searchteam.jade
+    //- include ./projectdashboard.jade
+    include ./projecttasks.jade
+    //- include ./projectmockups.jade
+    //- include ./projectmockup.jade
+    //- include ./projectchat.jade
+
+    script(src="../js/bundle.js")
+    
+    script require('electron-connect').client.create()

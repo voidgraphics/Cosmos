@@ -1,56 +1,44 @@
-<!DOCTYPE html>
-html(lang="en")
-    head
-        meta(charset="UTF-8")
-        title Connect
-        link(rel="stylesheet", href="../css/projectdashboard.css")
-    body.app
-        include ./includes/navbar.jade
-        include ./includes/sidebar.jade
-        
-        div.container
-            h1.page-title Dashboard - Project Name
-            div.task-items
-                div.task-items__section
-                    h2.task-items__section__title Recently added
-                    div.task-item
-                        p.task-item__name Something to do
-                        date.task-item__deadline Due in 7 days
-                        img.account__picture.task-item__assigned-to(src="../img/profile.png")
-                    div.task-item
-                        p.task-item__name Something else to do
-                        date.task-item__deadline Due in 14 days
-                        div.task-item__assigned-to
-                            img.account__picture(src="../img/user1.png")
-                            img.account__picture(src="../img/user2.png")
-                            img.account__picture(src="../img/user3.png")
-                        
-                div.task-items__section
-                    h2.task-items__section__title Recently started
-                    div.task-item
-                        p.task-item__name Something in progress
-                        date.task-item__deadline Due in 7 days
-                        img.account__picture.task-item__assigned-to(src="../img/user1.png")
-                    div.task-item
-                        p.task-item__name Something else in progress
-                        date.task-item__deadline Due in 14 days
-                        img.account__picture.task-item__assigned-to(src="../img/user3.png")
-                        
-                div.task-items__section
-                    h2.task-items__section__title Recently finished
-                    div.task-item
-                        p.task-item__name Something finished
-                        date.task-item__deadline Due in 7 days
-                        img.account__picture.task-item__assigned-to(src="../img/user4.png")
-                    div.task-item
-                        p.task-item__name Something else finished
-                        date.task-item__deadline Due in 14 days
-                        img.account__picture.task-item__assigned-to(src="../img/user1.png")
-                    
-            div.chatroom-items
-                h2.chatroom-items__section-title Available chatrooms
-                a.chatroom-item(href="projectchat.html") General
-                a.chatroom-item(href="projectchat.html") UI
-                a.chatroom-item(href="projectchat.html") Front-end
-            
-        script require('electron-connect').client.create()
+div.container#view-projectdashboard
+    h1.page-title Dashboard - Project Name
+    div.task-items
+        div.task-items__section
+            h2.task-items__section__title Recently added
+            div.task-item
+                p.task-item__name Something to do
+                date.task-item__deadline Due in 7 days
+                img.account__picture.task-item__assigned-to(src="../img/user1.png")
+            div.task-item
+                p.task-item__name Something else to do
+                date.task-item__deadline Due in 14 days
+                div.task-item__assigned-to
+                    img.account__picture(src="../img/user1.png")
+                    img.account__picture(src="../img/user2.png")
+                    img.account__picture(src="../img/user3.png")
+
+        div.task-items__section
+            h2.task-items__section__title Recently started
+            div.task-item
+                p.task-item__name Something in progress
+                date.task-item__deadline Due in 7 days
+                img.account__picture.task-item__assigned-to(src="../img/user1.png")
+            div.task-item
+                p.task-item__name Something else in progress
+                date.task-item__deadline Due in 14 days
+                img.account__picture.task-item__assigned-to(src="../img/user3.png")
+
+        div.task-items__section
+            h2.task-items__section__title Recently finished
+            div.task-item
+                p.task-item__name Something finished
+                date.task-item__deadline Due in 7 days
+                img.account__picture.task-item__assigned-to(src="../img/user4.png")
+            div.task-item
+                p.task-item__name Something else finished
+                date.task-item__deadline Due in 14 days
+                img.account__picture.task-item__assigned-to(src="../img/user1.png")
+
+    div.chatroom-items
+        h2.chatroom-items__section-title Available chatrooms
+        a.chatroom-item(href="projectchat.html") General
+        a.chatroom-item(href="projectchat.html") UI
+        a.chatroom-item(href="projectchat.html") Front-end
