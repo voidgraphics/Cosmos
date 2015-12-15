@@ -8,8 +8,8 @@ div.container.view#view-projecttasks
                 div.task-items__cards#todo-column__items
                     div.task-item(v-for="task in tasks" v-if="task.state == 'todo'" data-id="{{ task.id }}")
                         p.task-item__name {{ task.title }}
-                        a.task-item__edit(href="#" id="{{ task.id }}")
-                        a.task-item__delete(href="#" data-id="{{ task.id }}")
+                        a.task-item__edit(href="#" id="{{ task.id }}" v-on:click="editPopup")
+                        a.task-item__delete(href="#" data-id="{{ task.id }}" v-on:click="showPopup")
                         date.task-item__deadline {{ task.deadline }}
 
             div.task-items__section#inprogress(data-section="In progress")
@@ -19,7 +19,7 @@ div.container.view#view-projecttasks
                     div.task-item(v-for="task in tasks" v-if="task.state == 'inprogress'" data-id="{{ task.id }}")
                         p.task-item__name {{ task.title }}
                         a.task-item__edit(href="#" id="{{ task.id }}")
-                        a.task-item__delete(href="#" data-id="{{ task.id }}")
+                        a.task-item__delete(href="#" data-id="{{ task.id }}" v-on:click="showPopup")
                         date.task-item__deadline {{ task.deadline }}
 
             div.task-items__section#finished(data-section="Finished")
@@ -29,60 +29,8 @@ div.container.view#view-projecttasks
                     div.task-item(v-for="task in tasks" v-if="task.state == 'finished'" data-id="{{ task.id }}")
                         p.task-item__name {{ task.title }}
                         a.task-item__edit(href="#" id="{{ task.id }}")
-                        a.task-item__delete(href="#" data-id="{{ task.id }}")
+                        a.task-item__delete(href="#" data-id="{{ task.id }}" v-on:click="showPopup")
                         date.task-item__deadline {{ task.deadline }}
-        div.deletePopup.hidden
-            h2 Are you sure you want to delete this task?
-            a#confirmDelete(href="#") Yes, delete it.
-            a#cancelDelete(href="") No, cancel.
-        div.popup-overlay
 
-        div.popup.hidden
-            button.close-popup
-            form#task-form
-                fieldset.popup-sidebar
-                    p.popup-sidebar__title Assign
-                    div.assign-user__container
-                        input.assign-user__check(type="checkbox" id="user1")
-                        label.assign-user(for="user1")
-                            img.assign-user__image(src="../img/user1.png", alt="Adrien Leloup")
-                    div.assign-user__container
-                        input.assign-user__check(type="checkbox" id="user2")
-                        label.assign-user(for="user2")
-                            img.assign-user__image(src="../img/user2.png", alt="Adrien Leloup")
-                    div.assign-user__container
-                        input.assign-user__check(type="checkbox" id="user3")
-                        label.assign-user(for="user3")
-                            img.assign-user__image(src="../img/user3.png", alt="Adrien Leloup")
-                    div.assign-user__container
-                        input.assign-user__check(type="checkbox" id="user4")
-                        label.assign-user(for="user4")
-                            img.assign-user__image(src="../img/user4.png", alt="Adrien Leloup")
-
-                fieldset.form-body
-                    h2.popup-title New task
-
-                    div.form-group
-                        input#taskID(type="hidden" value="")
-                        label.form-body__label(for="new-task__name") Task
-                        input.form-body__input(type="text" id="newtask__name" placeholder="Task description...")
-
-                    div.form-group
-                        input.form-body__input(type="checkbox" id="new-task__hasDeadline")
-                        label.form-body__label(for="new-task__hasDeadline") Deadline
-                        p.currentDate#currentDate Today is Sept. 6, 2015
-                        input.form-body__input(type="text" id="datepicker" placeholder="Select a date below...")
-
-                    div.form-group
-                        input.form-body__input(type="radio" name="new-task__state" id="state-todo" value="todo")
-                        label.form-body__label(for="state-todo") To do
-                        input.form-body__input(type="radio" name="new-task__state" id="state-inprogress" value="inprogress")
-                        label.form-body__label(for="state-inprogress") In progress
-                        input.form-body__input(type="radio" name="new-task__state" id="state-finished" value="finished")
-                        label.form-body__label(for="state-finished") Finished
-
-                    div.form-group.submit-container
-                        input.task-submit(type="submit" id="new-task__submit" value="Add this task")
-
-        div.popup-overlay
-    
+        popup( v-if="popupIsShowing" )
+        
