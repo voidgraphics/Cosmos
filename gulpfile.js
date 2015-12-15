@@ -5,18 +5,22 @@ var gulp        = require('gulp'),
     uglify      = require('gulp-uglify'),
     streamify   = require('gulp-streamify'),
     source      = require('vinyl-source-stream'),
+    webpack     = require('webpack'),
+    wpConfig    = require('./webpack.config.js'),
+    gutil       = require('gulp-util'),
     rename      = require('gulp-rename'),
     coffee      = require('gulp-coffee'),
     gulpJade    = require('gulp-jade'),
     coffee      = require('gulp-coffee'),
     electron    = require('electron-connect').server.create();
 
-gulp.task('serve', ['sass'], function() {
+gulp.task('serve', ['sass', 'webpack'], function() {
 
     electron.start();
 
     gulp.watch("./app/sass/**/*.sass", ['sass']);
-    gulp.watch("./app/coffee/**/*.coffee", ['browserify']);
+    gulp.watch("./app/coffee/**/*.coffee", ['webpack']);
+    gulp.watch("./app/vues/**/*.vue", ['webpack']);
     gulp.watch("./app/jade/**/*.jade", ['jade']);
     gulp.watch("./app/js/bundle.js").on('change', electron.reload);
     gulp.watch("./app/css/*.css").on('change', electron.reload);
@@ -47,19 +51,16 @@ gulp.task('coffee', function() {
 gulp.task('jade', function () {
   return gulp.src('./app/jade/**/*.jade')
     .pipe(gulpJade({
-      pretty: true
+      pretty: false
     }))
     .pipe(gulp.dest('./app/html/'))
 })
 
-gulp.task('browserify', ['coffee'], function() {
-    var bundleStream = browserify('./app/js/main.js').bundle()
-
-    bundleStream
-        .pipe(source('./app/js/main.js'))
-        .pipe(streamify(uglify()))
-        .pipe(rename('bundle.js'))
-        .pipe(gulp.dest('./app/js'))
+gulp.task('webpack', ['coffee'], function() {
+    webpack( wpConfig , function( err, stats ) {
+        if( err ) throw new gutil.PluginError( 'webpack', err );
+        gutil.log( '[webpack]', stats.toString( { colors: true } ) );
+    });
 });
 
 gulp.task('default', ['serve']);
