@@ -12277,7 +12277,7 @@
 /* 16 */
 /***/ function(module, exports) {
 
-	module.exports = "<div><p>{{ deleteid }}</p><div class=\"deletePopup\"><h2>Are you sure you want to delete this task?</h2><a id=\"confirmDelete\" href=\"#\" v-on:click=\"confirmDelete\">Yes, delete it.</a><a id=\"cancelDelete\" href=\"#\" v-on:click=\"hidePopup\">No, cancel.</a></div><div class=\"popup-overlay\"></div></div>";
+	module.exports = "<div><p>{{ deleteid }}</p><div class=\"deletePopup\"><h2>Are you sure you want to delete this task?</h2><a id=\"confirmDelete\" href=\"#\" v-on:click=\"confirmDelete\">Yes, delete it.</a><a id=\"cancelDelete\" href=\"#\" v-on:click=\"hidePopup\">No, cancel.</a></div><div v-on:click=\"hidePopup\" class=\"popup-overlay\"></div></div>";
 
 /***/ },
 /* 17 */
@@ -12334,20 +12334,38 @@
 	    var drake, that;
 	    drake = Dragula([document.querySelector('#todo-column__items'), document.querySelector('#progress-column__items'), document.querySelector('#finished-column__items')]);
 	    that = this;
-	    return drake.on("dragend", function(element) {
-	      var i, index, len, ref, sNewState, task, taskToUpdate;
-	      sNewState = element.parentNode.parentNode.id;
-	      index = element.dataset.id;
-	      taskToUpdate = null;
-	      ref = that.tasks;
-	      for (i = 0, len = ref.length; i < len; i++) {
-	        task = ref[i];
-	        if (task.id === index) {
-	          taskToUpdate = task;
-	        }
+	    drake.on("drag", function(element) {
+	      var column, currentColumnTasks, i, iOldPosition, index, len, results, task;
+	      iOldPosition = [].indexOf.call(element.parentNode.children, element);
+	      index = parseInt(element.dataset.id);
+	      column = element.parentNode.parentNode.id;
+	      currentColumnTasks = that.tasks.filter(function(task) {
+	        return (task.state === column) && (task.position >= iOldPosition) && (task.id !== index);
+	      });
+	      results = [];
+	      for (i = 0, len = currentColumnTasks.length; i < len; i++) {
+	        task = currentColumnTasks[i];
+	        results.push(--task.position);
 	      }
+	      return results;
+	    });
+	    return drake.on("dragend", function(element) {
+	      var column, currentColumnTasks, i, iNewPosition, index, len, oTasks, sNewState, task;
+	      sNewState = element.parentNode.parentNode.id;
+	      index = parseInt(element.dataset.id);
+	      iNewPosition = [].indexOf.call(element.parentNode.children, element);
 	      that.tasks[index].state = sNewState;
-	      return socket.emit("task.changeState", index, sNewState);
+	      that.tasks[index].position = iNewPosition;
+	      column = element.parentNode.parentNode.id;
+	      currentColumnTasks = that.tasks.filter(function(task) {
+	        return (task.state === column) && (task.position >= iNewPosition) && (task.id !== index);
+	      });
+	      for (i = 0, len = currentColumnTasks.length; i < len; i++) {
+	        task = currentColumnTasks[i];
+	        ++task.position;
+	      }
+	      oTasks = that.tasks;
+	      return socket.emit("task.saveAll", oTasks);
 	    });
 	  },
 	  methods: {
@@ -12359,26 +12377,13 @@
 	    editPopup: function(event) {
 	      return console.log('editing', event.target.parentNode);
 	    },
-	    showDeletePopup: function(event) {
-	      var id;
-	      id = parseInt(event.target.parentNode.dataset.id);
-	      this.taskToDelete = id;
+	    showDeletePopup: function(task) {
+	      this.taskToDelete = task;
 	      return this.popupIsShowing = true;
 	    },
 	    "delete": function() {
-	      var i, id, index, len, ref, task, taskToDelete;
-	      id = this.taskToDelete;
-	      taskToDelete = null;
-	      ref = this.tasks;
-	      for (i = 0, len = ref.length; i < len; i++) {
-	        task = ref[i];
-	        if (task.id === id) {
-	          taskToDelete = task;
-	        }
-	      }
-	      index = this.tasks.indexOf(taskToDelete);
-	      this.tasks.splice(index, 1);
-	      socket.emit("task.delete", id);
+	      this.tasks.$remove(this.taskToDelete);
+	      socket.emit("task.delete", this.taskToDelete.id);
 	      return this.popupIsShowing = false;
 	    }
 	  },
@@ -13395,7 +13400,7 @@
 /* 29 */
 /***/ function(module, exports) {
 
-	module.exports = "<div id=\"view-projecttasks\" class=\"container view\"><div class=\"content\"><h1 class=\"page-title\">Tasks - Project Name</h1><div class=\"task-items\"><div id=\"todo\" data-section=\"To do\" class=\"task-items__section\"><h2 class=\"task-items__section__title\">To do</h2><a href=\"#\" id=\"add-todo\" v-on:click=\"addPopup\" class=\"add-task-btn\">Add</a><div id=\"todo-column__items\" class=\"task-items__cards\"><div v-for=\"task in tasks\" v-if=\"task.state == 'todo'\" data-id=\"{{ task.id }}\" class=\"task-item\"><p class=\"task-item__name\">{{ task.title }}</p><a href=\"#\" id=\"{{ task.id }}\" v-on:click=\"editPopup\" class=\"task-item__edit\"></a><a href=\"#\" data-id=\"{{ task.id }}\" v-on:click=\"showDeletePopup\" class=\"task-item__delete\"></a><date class=\"task-item__deadline\">{{ task.deadline }}</date></div></div></div><div id=\"inprogress\" data-section=\"In progress\" class=\"task-items__section\"><h2 class=\"task-items__section__title\">In progress</h2><a href=\"#\" id=\"add-inprogress\" v-on:click=\"addPopup\" class=\"add-task-btn\">Add</a><div id=\"progress-column__items\" class=\"task-items__cards\"><div v-for=\"task in tasks\" v-if=\"task.state == 'inprogress'\" data-id=\"{{ task.id }}\" class=\"task-item\"><p class=\"task-item__name\">{{ task.title }}</p><a href=\"#\" id=\"{{ task.id }}\" class=\"task-item__edit\"></a><a href=\"#\" data-id=\"{{ task.id }}\" v-on:click=\"showDeletePopup\" class=\"task-item__delete\"></a><date class=\"task-item__deadline\">{{ task.deadline }}</date></div></div></div><div id=\"finished\" data-section=\"Finished\" class=\"task-items__section\"><h2 class=\"task-items__section__title\">Finished</h2><a href=\"#\" id=\"add-finished\" v-on:click=\"addPopup\" class=\"add-task-btn\">Add</a><div id=\"finished-column__items\" class=\"task-items__cards\"><div v-for=\"task in tasks\" v-if=\"task.state == 'finished'\" data-id=\"{{ task.id }}\" class=\"task-item\"><p class=\"task-item__name\">{{ task.title }}</p><a href=\"#\" id=\"{{ task.id }}\" class=\"task-item__edit\"></a><a href=\"#\" data-id=\"{{ task.id }}\" v-on:click=\"showDeletePopup\" class=\"task-item__delete\"></a><date class=\"task-item__deadline\">{{ task.deadline }}</date></div></div></div></div><popup v-if=\"popupIsShowing\"></popup></div></div>";
+	module.exports = "<div id=\"view-projecttasks\" class=\"container view\"><div class=\"content\"><h1 class=\"page-title\">Tasks - Project Name</h1><div class=\"task-items\"><div id=\"todo\" data-section=\"To do\" class=\"task-items__section\"><h2 class=\"task-items__section__title\">To do</h2><a href=\"#\" id=\"add-todo\" v-on:click=\"addPopup\" class=\"add-task-btn\">Add</a><div id=\"todo-column__items\" class=\"task-items__cards\"><div v-for=\"task in tasks | orderBy 'position'\" v-if=\"task.state == 'todo'\" data-id=\"{{ task.id }}\" class=\"task-item\"><p class=\"task-item__name\">{{ task.title }}</p><a href=\"#\" id=\"{{ task.id }}\" v-on:click=\"editPopup\" class=\"task-item__edit\"></a><a href=\"#\" data-id=\"{{ task.id }}\" v-on:click=\"showDeletePopup( task )\" class=\"task-item__delete\"></a><date class=\"task-item__deadline\">{{ task.deadline }}</date></div></div></div><div id=\"inprogress\" data-section=\"In progress\" class=\"task-items__section\"><h2 class=\"task-items__section__title\">In progress</h2><a href=\"#\" id=\"add-inprogress\" v-on:click=\"addPopup\" class=\"add-task-btn\">Add</a><div id=\"progress-column__items\" class=\"task-items__cards\"><div v-for=\"task in tasks | orderBy 'position'\" v-if=\"task.state == 'inprogress'\" data-id=\"{{ task.id }}\" class=\"task-item\"><p class=\"task-item__name\">{{ task.title }}</p><a href=\"#\" id=\"{{ task.id }}\" class=\"task-item__edit\"></a><a href=\"#\" data-id=\"{{ task.id }}\" v-on:click=\"showDeletePopup( task )\" class=\"task-item__delete\"></a><date class=\"task-item__deadline\">{{ task.deadline }}</date></div></div></div><div id=\"finished\" data-section=\"Finished\" class=\"task-items__section\"><h2 class=\"task-items__section__title\">Finished</h2><a href=\"#\" id=\"add-finished\" v-on:click=\"addPopup\" class=\"add-task-btn\">Add</a><div id=\"finished-column__items\" class=\"task-items__cards\"><div v-for=\"task in tasks | orderBy 'position'\" v-if=\"task.state == 'finished'\" data-id=\"{{ task.id }}\" class=\"task-item\"><p class=\"task-item__name\">{{ task.title }}</p><a href=\"#\" id=\"{{ task.id }}\" class=\"task-item__edit\"></a><a href=\"#\" data-id=\"{{ task.id }}\" v-on:click=\"showDeletePopup( task )\" class=\"task-item__delete\"></a><date class=\"task-item__deadline\">{{ task.deadline }}</date></div></div></div></div><popup v-if=\"popupIsShowing\"></popup><pre>{{ $data | json }}</pre></div></div>";
 
 /***/ }
 /******/ ]);
