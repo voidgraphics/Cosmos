@@ -6,7 +6,7 @@ div.container.view#view-projecttasks
                 h2.task-items__section__title To do
                 a.add-task-btn(href="#", id="add-todo", v-on:click="addPopup") Add
                 div.task-items__cards#todo-column__items
-                    div.task-item(v-for="task in tasks" v-if="task.state == 'todo'" data-id="{{ task.id }}")
+                    div.task-item(v-for="task in tasks | orderBy 'position'" v-if="task.state == 'todo'" data-id="{{ task.id }}")
                         p.task-item__name {{ task.title }}
                         a.task-item__edit(href="#" id="{{ task.id }}" v-on:click="editPopup")
                         a.task-item__delete(href="#" data-id="{{ task.id }}" v-on:click="showDeletePopup")
@@ -16,7 +16,7 @@ div.container.view#view-projecttasks
                 h2.task-items__section__title In progress
                 a.add-task-btn(href="#", id="add-inprogress" v-on:click="addPopup") Add
                 div.task-items__cards#progress-column__items
-                    div.task-item(v-for="task in tasks" v-if="task.state == 'inprogress'" data-id="{{ task.id }}")
+                    div.task-item(v-for="task in tasks | orderBy 'position'" v-if="task.state == 'inprogress'" data-id="{{ task.id }}")
                         p.task-item__name {{ task.title }}
                         a.task-item__edit(href="#" id="{{ task.id }}")
                         a.task-item__delete(href="#" data-id="{{ task.id }}" v-on:click="showDeletePopup")
@@ -26,7 +26,7 @@ div.container.view#view-projecttasks
                 h2.task-items__section__title Finished
                 a.add-task-btn(href="#", id="add-finished" v-on:click="addPopup") Add
                 div.task-items__cards#finished-column__items
-                    div.task-item(v-for="task in tasks" v-if="task.state == 'finished'" data-id="{{ task.id }}")
+                    div.task-item(v-for="task in tasks | orderBy 'position'" v-if="task.state == 'finished'" data-id="{{ task.id }}")
                         p.task-item__name {{ task.title }}
                         a.task-item__edit(href="#" id="{{ task.id }}")
                         a.task-item__delete(href="#" data-id="{{ task.id }}" v-on:click="showDeletePopup")
