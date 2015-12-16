@@ -36,22 +36,16 @@
             editPopup: ( event ) ->
                 console.log 'editing', event.target.parentNode
 
-            showDeletePopup: ( event ) ->
-                id = parseInt event.target.parentNode.dataset.id
-                this.taskToDelete = id
+            showDeletePopup: ( task ) ->
+                this.taskToDelete = task
                 this.popupIsShowing = true
 
             delete: ->
                 # Deleting client-side
-                id = this.taskToDelete
-                taskToDelete = null
-                for task in this.tasks
-                    taskToDelete = task if task.id == id
-                index = this.tasks.indexOf( taskToDelete )
-                this.tasks.splice( index, 1 )
+                this.tasks.$remove( this.taskToDelete )
 
                 # Deleting server-side
-                socket.emit "task.delete", id
+                socket.emit "task.delete", this.taskToDelete.id
 
                 this.popupIsShowing = false
 
