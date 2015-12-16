@@ -19,14 +19,39 @@
         ready: ->
             drake = Dragula( [ document.querySelector( '#todo-column__items' ), document.querySelector( '#progress-column__items' ), document.querySelector( '#finished-column__items' ) ] )
             that = this
+
+            drake.on "drag", ( element ) ->
+                # Decrease position of all tasks after the one we're dragging
+                iOldPosition = [].indexOf.call element.parentNode.children, element
+                index = parseInt element.dataset.id
+                column = element.parentNode.parentNode.id
+
+                currentColumnTasks = that.tasks.filter ( task ) ->
+                    return ( task.state == column ) && ( task.position >= iOldPosition ) && ( task.id != index )
+
+                for task in currentColumnTasks
+                    --task.position
+
             drake.on "dragend", ( element ) ->
+                # Handle new position
                 sNewState = element.parentNode.parentNode.id
-                index = element.dataset.id
-                taskToUpdate = null
-                for task in that.tasks
-                    taskToUpdate = task if task.id == index
+                index = parseInt element.dataset.id
+                iNewPosition = [].indexOf.call element.parentNode.children, element
+
                 that.tasks[index].state = sNewState
-                socket.emit "task.changeState", index, sNewState
+                that.tasks[index].position = iNewPosition
+
+                column = element.parentNode.parentNode.id
+
+                currentColumnTasks = that.tasks.filter ( task ) ->
+                    return ( task.state == column ) && ( task.position >= iNewPosition ) && ( task.id != index )
+
+                for task in currentColumnTasks
+                    ++task.position
+
+                # Send modified tasks to server
+                oTasks = that.tasks
+                socket.emit "task.saveAll", oTasks
 
         methods:
             addPopup: ( event ) ->
@@ -48,6 +73,7 @@
                 socket.emit "task.delete", this.taskToDelete.id
 
                 this.popupIsShowing = false
+
 
         events:
             hidePopup: ->
