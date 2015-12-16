@@ -9,7 +9,7 @@ div.container.view#view-projecttasks
                     div.task-item(v-for="task in tasks | orderBy 'position'" v-if="task.state == 'todo'" data-id="{{ task.id }}")
                         p.task-item__name {{ task.title }}
                         a.task-item__edit(href="#" id="{{ task.id }}" v-on:click="editPopup")
-                        a.task-item__delete(href="#" data-id="{{ task.id }}" v-on:click="showDeletePopup")
+                        a.task-item__delete(href="#" data-id="{{ task.id }}" v-on:click="showDeletePopup( task )")
                         date.task-item__deadline {{ task.deadline }}
 
             div.task-items__section#inprogress(data-section="In progress")
@@ -19,7 +19,7 @@ div.container.view#view-projecttasks
                     div.task-item(v-for="task in tasks | orderBy 'position'" v-if="task.state == 'inprogress'" data-id="{{ task.id }}")
                         p.task-item__name {{ task.title }}
                         a.task-item__edit(href="#" id="{{ task.id }}")
-                        a.task-item__delete(href="#" data-id="{{ task.id }}" v-on:click="showDeletePopup")
+                        a.task-item__delete(href="#" data-id="{{ task.id }}" v-on:click="showDeletePopup( task )")
                         date.task-item__deadline {{ task.deadline }}
 
             div.task-items__section#finished(data-section="Finished")
@@ -29,8 +29,9 @@ div.container.view#view-projecttasks
                     div.task-item(v-for="task in tasks | orderBy 'position'" v-if="task.state == 'finished'" data-id="{{ task.id }}")
                         p.task-item__name {{ task.title }}
                         a.task-item__edit(href="#" id="{{ task.id }}")
-                        a.task-item__delete(href="#" data-id="{{ task.id }}" v-on:click="showDeletePopup")
+                        a.task-item__delete(href="#" data-id="{{ task.id }}" v-on:click="showDeletePopup( task )")
                         date.task-item__deadline {{ task.deadline }}
 
         popup( v-if="popupIsShowing" )
         
+        pre {{ $data | json }}
