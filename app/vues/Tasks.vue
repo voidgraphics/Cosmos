@@ -1,6 +1,7 @@
 <template src="../html/projecttasks.html"></template>
 
 <script lang="coffee">
+    zouti = require "zouti"
     Dragula = require "dragula"
     Tasks =
         items: []
@@ -9,6 +10,7 @@
                 popupIsShowing: false
                 deletePopupIsShowing: false
                 taskToDelete: null
+                columnName: null
                 tasks: [ { title: "not loaded yet" } ]
              }
 
@@ -62,6 +64,16 @@
             editPopup: ( event ) ->
                 console.log 'editing', event.target.parentNode
 
+            showPopup: ( event )  ->
+                this.columnName = event.target.parentNode.id
+                console.log this.columnName
+                this.popupIsShowing = true
+
+            showEditPopup: ( oTask ) ->
+                this.taskToEdit = oTask
+                console.log "Editing:", oTask
+                this.popupIsShowing = true
+
             showDeletePopup: ( task ) ->
                 this.taskToDelete = task
                 this.deletePopupIsShowing = true
@@ -84,6 +96,13 @@
 
             confirmDelete: ->
                 this.delete()
+
+            submitTask: ( oTask ) ->
+                console.log oTask
+                oTask.id = zouti.uuid()
+                socket.emit "task.save", oTask
+                this.tasks.push( oTask )
+                this.popupIsShowing = false
 
     module.exports = Tasks
 
