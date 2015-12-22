@@ -4,6 +4,7 @@ VueAsyncData = require "vue-async-data"
 
 SignInView = require "../vues/SignIn.vue"
 SignUpView = require "../vues/SignUp.vue"
+DeletePopup = require "../vues/DeletePopup.vue"
 Popup = require "../vues/Popup.vue"
 TasksView = require "../vues/Tasks.vue"
 
@@ -18,7 +19,8 @@ router = new VueRouter()
 
 SignInView  = Vue.component "signin-component", SignInView
 SignUpView  = Vue.component "signup-component", SignUpView
-PopupView    = Vue.component "popup", Popup
+DeletePopupView   = Vue.component "delete-popup", DeletePopup
+PopupView   = Vue.component "popup", Popup
 TasksView   = Vue.component "tasks-component", TasksView
 
 router.redirect { "/": "/tasks" }
