@@ -7,6 +7,7 @@
         data: ->
             return {
                 popupIsShowing: false
+                deletePopupIsShowing: false
                 taskToDelete: null
                 tasks: [ { title: "not loaded yet" } ]
              }
@@ -63,7 +64,7 @@
 
             showDeletePopup: ( task ) ->
                 this.taskToDelete = task
-                this.popupIsShowing = true
+                this.deletePopupIsShowing = true
 
             delete: ->
                 # Deleting client-side
@@ -72,12 +73,14 @@
                 # Deleting server-side
                 socket.emit "task.delete", this.taskToDelete.id
 
-                this.popupIsShowing = false
-
+                this.deletePopupIsShowing = false
 
         events:
             hidePopup: ->
                 this.popupIsShowing = false
+
+            hideDeletePopup: ->
+                this.deletePopupIsShowing = false
 
             confirmDelete: ->
                 this.delete()
