@@ -58,6 +58,12 @@ a {
   padding: 2px 0;
   margin: 5px 0; }
 
+.fade-transition {
+  transition: all .2s ease; }
+
+.fade-enter, .fade-leave {
+  opacity: 0; }
+
 #view-connect .content {
   height: 100vh;
   display: flex;
@@ -282,41 +288,42 @@ a {
   padding: 10px;
   margin-right: 10px; }
 
-form {
-  width: 250px; }
-  form legend {
-    margin-top: 10px;
-    margin-bottom: 20px;
-    font-size: 18px; }
-  form label {
-    display: inline-block;
-    margin-bottom: 7px;
-    font-size: 14px; }
-  form input[type="text"],
-  form input[type="email"],
-  form input[type="submit"],
-  form input[type="password"],
-  form input[type="submit"],
-  form .submit-btn {
-    border-radius: 5px;
-    background-color: #DFE0D6;
-    display: block;
-    border: none;
-    width: 100%;
-    padding: 11px;
-    font-size: 12px;
-    font-family: "Montserrat", sans-serif;
-    margin-bottom: 30px; }
-  form .submit-btn {
-    text-decoration: none;
-    margin-top: 35px;
-    background-color: #E75F3E;
-    text-align: center;
-    color: #DFE0D6;
-    padding: 12px 0 14px;
-    font-size: 14px; }
-  form a {
-    text-align: center; }
+form legend {
+  margin-top: 10px;
+  margin-bottom: 20px;
+  font-size: 18px; }
+
+form label {
+  display: inline-block;
+  margin-bottom: 7px;
+  font-size: 14px; }
+
+form input[type="text"],
+form input[type="email"],
+form input[type="submit"],
+form input[type="password"],
+form input[type="submit"],
+form .submit-btn {
+  border-radius: 5px;
+  display: block;
+  border: none;
+  width: 100%;
+  padding: 11px;
+  font-size: 12px;
+  font-family: "Montserrat", sans-serif;
+  margin-bottom: 30px; }
+
+form .submit-btn {
+  text-decoration: none;
+  margin-top: 35px;
+  background-color: #E75F3E;
+  text-align: center;
+  color: #DFE0D6;
+  padding: 12px 0 14px;
+  font-size: 14px; }
+
+form a {
+  text-align: center; }
 
 a.header-btn {
   background-color: #E75F3E;
@@ -705,7 +712,8 @@ a.header-btn {
 .form-body__input {
   display: block;
   border-radius: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid #ddd !important;
+  background: #fff;
   font-size: 14px;
   padding: 5px 10px;
   font-family: "Montserrat", sans-serif;

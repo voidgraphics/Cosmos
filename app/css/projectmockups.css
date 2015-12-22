@@ -58,6 +58,12 @@ a {
   padding: 2px 0;
   margin: 5px 0; }
 
+.fade-transition {
+  transition: all .2s ease; }
+
+.fade-enter, .fade-leave {
+  opacity: 0; }
+
 #view-projectmockups .container {
   margin-left: 80px;
   margin-top: 60px;
