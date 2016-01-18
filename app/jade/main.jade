@@ -11,9 +11,13 @@ head
 body
     div#app
         p
-            a(href="#" v-link="{path: '/signin'}") Go to signin
-            a(href="#" v-link="{path: '/signup'}") Go to signup
+            //- a(href="#" v-link="{path: '/signin'}") Go to signin
+            //- a(href="#" v-link="{path: '/signup'}") Go to signup
+            //- 
+            a(href="#" v-link="{path: '/dashboard'}") Go to dashboard
             a(href="#" v-link="{path: '/tasks'}") Go to tasks
+            a(href="#" v-link="{path: '/mockups'}") Go to mockups
+            a(href="#" v-link="{path: '/chat'}") Go to chat
         router-view
 
     script(src="../js/bundle.js")

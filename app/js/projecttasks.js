@@ -4,6 +4,7 @@
 
     Popup.init();
     Task.init();
+    console.log( "Hello" );
 
     var aAddTaskBtns,
         aTaskItems = [],

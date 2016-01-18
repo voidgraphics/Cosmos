@@ -1,8 +1,7 @@
-<template src="../html/projecttasks.html"></template>
+<template src="../html/projectdashboard.html"></template>
 
 <script lang="coffee">
     zouti = require "zouti"
-    Dragula = require "dragula"
     Tasks =
         items: []
         data: ->
@@ -20,46 +19,6 @@
                 resolve { tasks: this.items }
 
         ready: ->
-            drake = Dragula( [ document.querySelector( '#todo-column__items' ), document.querySelector( '#progress-column__items' ), document.querySelector( '#finished-column__items' ) ] )
-            that = this
-
-            drake.on "drag", ( element ) ->
-                # Decrease position of all tasks after the one we're dragging
-                iOldPosition = [].indexOf.call element.parentNode.children, element
-                index = parseInt element.dataset.id
-                column = element.parentNode.parentNode.id
-
-                currentColumnTasks = that.tasks.filter ( task ) ->
-                    return ( task.state == column ) && ( task.position >= iOldPosition ) && ( task.id != index )
-
-                for task in currentColumnTasks
-                    --task.position
-
-            drake.on "dragend", ( element ) ->
-                # Handle new position
-                sNewState = element.parentNode.parentNode.id
-                index = element.dataset.id
-                console.log index
-                iNewPosition = [].indexOf.call element.parentNode.children, element
-                console.log that.tasks
-
-                for task in that.tasks
-                    if task.id == index
-                        task.state = sNewState
-                        task.position = iNewPosition
-                        break
-
-                column = element.parentNode.parentNode.id
-
-                currentColumnTasks = that.tasks.filter ( task ) ->
-                    return ( task.state == column ) && ( task.position >= iNewPosition ) && ( task.id != index )
-
-                for task in currentColumnTasks
-                    ++task.position
-
-                # Send modified tasks to server
-                oTasks = that.tasks
-                socket.emit "task.saveAll", oTasks
 
         methods:
             addPopup: ( event ) ->

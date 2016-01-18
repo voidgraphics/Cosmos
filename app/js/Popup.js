@@ -1,3 +1,5 @@
+var moment = require( 'moment' );
+
 var Popup = {
     title: document.querySelector( ".popup .popup-title" ),
     popupElement: document.querySelector( ".popup" ),
@@ -81,3 +83,4 @@ var Popup = {
         document.querySelector( "#task-form" ).reset();
     },
 };
+module.exports = Popup;
