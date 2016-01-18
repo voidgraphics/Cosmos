@@ -3,39 +3,28 @@ div.container.view#view-projectdashboard
     div.task-items
         div.task-items__section
             h2.task-items__section__title Recently added
-            div.task-item
-                p.task-item__name Something to do
-                date.task-item__deadline Due in 7 days
-                img.account__picture.task-item__assigned-to(src="../img/user1.png")
-            div.task-item
-                p.task-item__name Something else to do
-                date.task-item__deadline Due in 14 days
-                div.task-item__assigned-to
-                    img.account__picture(src="../img/user1.png")
-                    img.account__picture(src="../img/user2.png")
-                    img.account__picture(src="../img/user3.png")
+            div.task-item(v-for="task in tasks | orderBy 'position'" v-if="task.state == 'todo'" data-id="{{ task.id }}")
+                p.task-item__name {{ task.title }}
+                a.task-item__edit(id="{{ task.id }}" v-on:click="showEditPopup( task )")
+                a.task-item__delete(data-id="{{ task.id }}" v-on:click="showDeletePopup( task )")
+                date.task-item__deadline {{ task.deadline }}
 
         div.task-items__section
             h2.task-items__section__title Recently started
-            div.task-item
-                p.task-item__name Something in progress
-                date.task-item__deadline Due in 7 days
-                img.account__picture.task-item__assigned-to(src="../img/user1.png")
-            div.task-item
-                p.task-item__name Something else in progress
-                date.task-item__deadline Due in 14 days
-                img.account__picture.task-item__assigned-to(src="../img/user3.png")
+            div.task-item(v-for="task in tasks | orderBy 'position'" v-if="task.state == 'inprogress'" data-id="{{ task.id }}")
+                p.task-item__name {{ task.title }}
+                a.task-item__edit(id="{{ task.id }}" v-on:click="showEditPopup( task )")
+                a.task-item__delete(data-id="{{ task.id }}" v-on:click="showDeletePopup( task )")
+                date.task-item__deadline {{ task.deadline }}
+
 
         div.task-items__section
             h2.task-items__section__title Recently finished
-            div.task-item
-                p.task-item__name Something finished
-                date.task-item__deadline Due in 7 days
-                img.account__picture.task-item__assigned-to(src="../img/user4.png")
-            div.task-item
-                p.task-item__name Something else finished
-                date.task-item__deadline Due in 14 days
-                img.account__picture.task-item__assigned-to(src="../img/user1.png")
+            div.task-item(v-for="task in tasks | orderBy 'position'" v-if="task.state == 'finished'" data-id="{{ task.id }}")
+                p.task-item__name {{ task.title }}
+                a.task-item__edit(id="{{ task.id }}" v-on:click="showEditPopup( task )")
+                a.task-item__delete(data-id="{{ task.id }}" v-on:click="showDeletePopup( task )")
+                date.task-item__deadline {{ task.deadline }}
 
     div.chatroom-items
         h2.chatroom-items__section-title Available chatrooms

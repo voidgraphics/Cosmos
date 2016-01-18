@@ -14,8 +14,9 @@
              }
 
         asyncData: ( resolve, reject ) ->
-            socket.emit "task.getAll", ( oReturnedTasks ) ->
+            socket.emit "task.getRecent", ( oReturnedTasks ) ->
                 this.items = Object.keys( oReturnedTasks ).map( ( key ) -> return oReturnedTasks[ key ] )
+                console.log oReturnedTasks
                 resolve { tasks: this.items }
 
         ready: ->
