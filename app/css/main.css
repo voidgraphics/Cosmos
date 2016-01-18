@@ -486,7 +486,8 @@ a.header-btn {
   bottom: 5px;
   left: 10px;
   width: 16px;
-  height: 16px; }
+  height: 16px;
+  cursor: pointer; }
 
 .task-item__delete {
   display: inline-block;
@@ -495,7 +496,8 @@ a.header-btn {
   bottom: 5px;
   left: 30px;
   width: 16px;
-  height: 16px; }
+  height: 16px;
+  cursor: pointer; }
 
 .task-item__assigned-to {
   position: absolute;
@@ -512,7 +514,8 @@ a.header-btn {
   right: 0;
   color: #fff;
   border-radius: 5px;
-  padding: 5px 10px; }
+  padding: 5px 10px;
+  cursor: pointer; }
 
 .team-search-results {
   display: flex;
@@ -614,7 +617,8 @@ a.header-btn {
   position: absolute;
   bottom: 20px;
   width: 120px;
-  text-align: center; }
+  text-align: center;
+  cursor: pointer; }
 
 #confirmDelete {
   background-color: #E75F3E;

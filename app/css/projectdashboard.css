@@ -184,7 +184,8 @@ a.header-btn {
   bottom: 5px;
   left: 10px;
   width: 16px;
-  height: 16px; }
+  height: 16px;
+  cursor: pointer; }
 
 .task-item__delete {
   display: inline-block;
@@ -193,7 +194,8 @@ a.header-btn {
   bottom: 5px;
   left: 30px;
   width: 16px;
-  height: 16px; }
+  height: 16px;
+  cursor: pointer; }
 
 .task-item__assigned-to {
   position: absolute;
@@ -210,7 +212,8 @@ a.header-btn {
   right: 0;
   color: #fff;
   border-radius: 5px;
-  padding: 5px 10px; }
+  padding: 5px 10px;
+  cursor: pointer; }
 
 .chatroom-items__section-title {
   text-align: left;

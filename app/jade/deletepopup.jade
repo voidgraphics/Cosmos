@@ -2,6 +2,6 @@ div
     p {{ deleteid }}
     div.deletePopup
         h2 Are you sure you want to delete this task?
-        a#confirmDelete(href="#" v-on:click="confirmDelete") Yes, delete it.
-        a#cancelDelete(href="#" v-on:click="hidePopup") No, cancel.
+        a#confirmDelete(v-on:click="confirmDelete") Yes, delete it.
+        a#cancelDelete(v-on:click="hidePopup") No, cancel.
     div.popup-overlay(v-on:click="hidePopup")
