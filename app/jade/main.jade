@@ -6,18 +6,24 @@ head
     link(rel="stylesheet", href="../css/pikaday.css")
     link(rel="stylesheet", href="../css/dragula.css")
     link(rel="stylesheet", href="../css/main.css")
-    script(src="http://localhost:12345/socket.io/socket.io.js")
+    script(src="http://www.intothevoid.space:12346/socket.io/socket.io.js")
     script(src="../js/socket.js")
 body
     div#app
-        p
+        div.navbar
             //- a(href="#" v-link="{path: '/signin'}") Go to signin
             //- a(href="#" v-link="{path: '/signup'}") Go to signup
             //- 
-            a(href="#" v-link="{path: '/dashboard'}") Go to dashboard
-            a(href="#" v-link="{path: '/tasks'}") Go to tasks
-            a(href="#" v-link="{path: '/mockups'}") Go to mockups
-            a(href="#" v-link="{path: '/chat'}") Go to chat
+            div.team
+                p
+                    span.team__name Team Name 
+                    span.team__separator - 
+                    span.team__project Project Name
+            div.links
+                a(href="#" v-link="{path: '/dashboard'}") Dashboard
+                a(href="#" v-link="{path: '/tasks'}") Tasks
+                a(href="#" v-link="{path: '/mockups'}") Mockups
+                a(href="#" v-link="{path: '/chat'}") Chat
         router-view
 
     script(src="../js/bundle.js")
