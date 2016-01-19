@@ -9,6 +9,7 @@ Popup = require "../vues/Popup.vue"
 DashboardView = require "../vues/Dashboard.vue"
 TasksView = require "../vues/Tasks.vue"
 MockupsView = require "../vues/Mockups.vue"
+MockupView = require "../vues/Mockup.vue"
 ChatView = require "../vues/Chat.vue"
 
 Vue.config.debug = false
@@ -27,6 +28,7 @@ PopupView   = Vue.component "popup", Popup
 DashboardView   = Vue.component "dashboard-component", DashboardView
 TasksView   = Vue.component "tasks-component", TasksView
 MockupsView   = Vue.component "mockups-component", MockupsView
+MockupView   = Vue.component "mockup-component", MockupView
 ChatView   = Vue.component "chat-component", ChatView
 
 router.redirect { "/": "/dashboard" }
@@ -42,6 +44,8 @@ router.map {
         component: TasksView
     '/mockups':
         component: MockupsView
+    '/mockups/:id':
+        component: MockupView
     '/chat':
         component: ChatView
 }
