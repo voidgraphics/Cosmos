@@ -1,4 +1,4 @@
-<template src="../html/projectmockups.html"></template>
+<template src="../html/projectmockup.html"></template>
 
 <script lang="coffee">
     zouti = require "zouti"
