@@ -64,8 +64,8 @@ a {
 .fade-enter, .fade-leave {
   opacity: 0; }
 
-#view-projectchat .container {
-  margin-left: 280px;
+#view-projectchat.container {
+  margin-left: 220px;
   margin-top: 60px;
   padding: 25px;
   position: relative; }
@@ -74,7 +74,7 @@ a {
   position: fixed;
   top: 60px;
   bottom: 0;
-  left: 80px;
+  left: 0;
   width: 200px; }
 
 #view-projectchat .input-area {
@@ -110,16 +110,22 @@ a {
 .account {
   position: absolute;
   top: 50%;
-  transform: translateY(-65%); }
+  transform: translateY(-65%);
+  font-size: 14px; }
 
 .team {
   left: 25px; }
 
+.team__separator {
+  margin: 0 5px; }
+
 .links {
-  left: 250px; }
+  left: 280px; }
   .links a {
     display: inline;
-    padding: 15px; }
+    padding: 15px;
+    color: #fff;
+    font-size: 14px; }
 
 .account {
   right: 25px; }

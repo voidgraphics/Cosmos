@@ -108,14 +108,29 @@ a {
 #view-signin form {
   margin: auto; }
 
-#view-projectdashboard .container {
-  margin-left: 80px;
+#view-projectdashboard.container {
   margin-top: 60px;
   padding: 25px;
   position: relative; }
 
-#view-projectmockups .container {
-  margin-left: 80px;
+#view-projectdashboard .task-items__section {
+  position: relative; }
+
+#view-projectdashboard .task-items {
+  display: flex;
+  justify-content: space-between;
+  align-items: stretch; }
+
+#view-projectdashboard #todo-column__items,
+#view-projectdashboard #progress-column__items,
+#view-projectdashboard #finished-column__items {
+  position: absolute;
+  top: 35px;
+  bottom: 0;
+  left: 0;
+  right: 0; }
+
+#view-projectmockups.container {
   margin-top: 60px;
   padding: 25px;
   position: relative; }
@@ -144,8 +159,8 @@ a {
 #view-projectmockup .mockup__image {
   max-width: 100%; }
 
-#view-projectchat .container {
-  margin-left: 280px;
+#view-projectchat.container {
+  margin-left: 220px;
   margin-top: 60px;
   padding: 25px;
   position: relative; }
@@ -154,7 +169,7 @@ a {
   position: fixed;
   top: 60px;
   bottom: 0;
-  left: 80px;
+  left: 0;
   width: 200px; }
 
 #view-projectchat .input-area {
@@ -387,16 +402,22 @@ a.header-btn {
 .account {
   position: absolute;
   top: 50%;
-  transform: translateY(-65%); }
+  transform: translateY(-65%);
+  font-size: 14px; }
 
 .team {
   left: 25px; }
 
+.team__separator {
+  margin: 0 5px; }
+
 .links {
-  left: 250px; }
+  left: 280px; }
   .links a {
     display: inline;
-    padding: 15px; }
+    padding: 15px;
+    color: #fff;
+    font-size: 14px; }
 
 .account {
   right: 25px; }

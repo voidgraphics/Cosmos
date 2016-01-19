@@ -1,6 +1,22 @@
 #view-projectdashboard
-    .container
-        margin-left: 80px
+    &.container
         margin-top: 60px
         padding: 25px
         position: relative
+
+    .task-items__section
+        position: relative
+
+    .task-items
+        display: flex
+        justify-content: space-between
+        align-items: stretch
+
+    #todo-column__items,
+    #progress-column__items,
+    #finished-column__items
+        position: absolute
+        top: 35px
+        bottom: 0
+        left: 0
+        right: 0

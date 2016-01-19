@@ -107,16 +107,22 @@ a {
 .account {
   position: absolute;
   top: 50%;
-  transform: translateY(-65%); }
+  transform: translateY(-65%);
+  font-size: 14px; }
 
 .team {
   left: 25px; }
 
+.team__separator {
+  margin: 0 5px; }
+
 .links {
-  left: 250px; }
+  left: 280px; }
   .links a {
     display: inline;
-    padding: 15px; }
+    padding: 15px;
+    color: #fff;
+    font-size: 14px; }
 
 .account {
   right: 25px; }
