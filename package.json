@@ -9,7 +9,7 @@
     "clean:osx": "rm -rf ./dist/osx",
     "clean:win": "rm -rf ./dist/win",
     "build": "npm run clean && npm run build:osx && npm run build:win",
-    "build:osx": "npm run clean:osx && electron-packager . \"Cosmos\" --out=dist/osx --platform=darwin --arch=x64 --version=0.25.3 --icon=assets/osx/app-icon.icns",
+    "build:osx": "npm run clean:osx && electron-packager . \"Cosmos\" --out=dist/osx --platform=darwin --arch=x64 --version=0.25.2 --icon=assets/osx/app-icon.icns",
     "build:win": "npm run clean:win && electron-packager . \"Cosmos\" --out=dist/win --platform=win32 --arch=ia32 --version=0.25.3 --icon=assets/win/icon.ico",
     "pack": "npm run pack:osx && npm run pack:win",
     "pack:osx": "npm run build:osx && electron-builder \"dist/osx/Cosmos-darwin-x64/Cosmos.app\" --platform=osx --out=\"dist/osx\" --config=packager.json",
