@@ -1,1 +1,4 @@
+*.css
+*.js
+!app/js/socket.js
 node_modules
