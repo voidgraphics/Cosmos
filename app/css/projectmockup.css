@@ -6,7 +6,8 @@
     outline: 0; }
 
 body {
-  font-family: "Montserrat", sans-serif; }
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px; }
 
 .setup {
   background-color: #171F22;
@@ -93,8 +94,10 @@ a {
   left: 0;
   right: 0;
   height: 60px;
-  background-color: #28373C;
+  background-color: #0b0c0d;
+  text-transform: uppercase;
   color: #fff;
+  font-size: s(11);
   z-index: 999999999; }
 
 .team,
@@ -103,21 +106,30 @@ a {
   position: absolute;
   top: 50%;
   transform: translateY(-65%);
-  font-size: 14px; }
+  letter-spacing: ps_ls(120); }
 
 .team {
   left: 25px; }
-
-.team__separator {
-  margin: 0 5px; }
+  .team__separator {
+    vertical-align: middle;
+    display: inline-block;
+    margin: 0 s(8, 11);
+    width: s(5, 11);
+    height: s(8, 11);
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image: url("../img/right-arrow.svg");
+    background-size: 100%; }
+  .team__project {
+    color: #c4ccd0; }
 
 .links {
   left: 280px; }
   .links a {
     display: inline;
     padding: 15px;
-    color: #fff;
-    font-size: 14px; }
+    font-size: inherit;
+    color: #fff; }
 
 .account {
   right: 25px; }

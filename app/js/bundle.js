@@ -29330,9 +29330,7 @@
 	      var column, currentColumnTasks, i, iNewPosition, index, j, len, len1, oTasks, ref, sNewState, task;
 	      sNewState = element.parentNode.parentNode.id;
 	      index = element.dataset.id;
-	      console.log(index);
 	      iNewPosition = [].indexOf.call(element.parentNode.children, element);
-	      console.log(that.tasks);
 	      ref = that.tasks;
 	      for (i = 0, len = ref.length; i < len; i++) {
 	        task = ref[i];
@@ -29357,8 +29355,7 @@
 	  methods: {
 	    addPopup: function(event) {
 	      var column;
-	      column = event.target.parentNode.id;
-	      return console.log(column);
+	      return column = event.target.parentNode.id;
 	    },
 	    editPopup: function(event) {
 	      return console.log('editing', event.target.parentNode);
@@ -29369,7 +29366,6 @@
 	    },
 	    showEditPopup: function(oTask) {
 	      this.taskToEdit = oTask;
-	      console.log("Editing:", oTask);
 	      return this.popupIsShowing = true;
 	    },
 	    showDeletePopup: function(task) {

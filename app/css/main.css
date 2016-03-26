@@ -1,3 +1,59 @@
+/*
+      MAIN MIXIN
+      Handcrafted By WhiteCube.
+      ---------------------------
+
+      Shapes, positions and sets a rotation to pseudo-element
+      in order to make a leaning border (with a background-image
+      if you want to).
+      The anchor point will be positionned exactly where you
+      want it, even if the pseudo-element's anchor point is
+      outside the parent-element.
+      Use this mixin along with your other styling rules inside
+      your pseudo-element in order to make something beautiful.
+
+      -----
+
+      @include kaduk( $position, $degrees, $width )
+
+      $position: string ('bottom-right'|'bottom-left'|'top-right'|'top-left');
+      $degrees: int (with 'deg' unit)
+      $width: int (with css width unit. Width of pseudo-element)
+
+      -----
+
+      # EXAMPLE - TEST IT
+      ---------------------------
+      In order to truly understand what this does,
+      test this code.
+
+      ## HTML
+      -------
+
+      <div class="kaduk-test"><p>Some content</p></div>
+
+      ## SCSS
+      -------
+
+      .kaduk-test{
+            position: relative;
+            width: 400px;
+            height: 200px;
+            background: #000;
+            &:before{
+                  @include kaduk('bottom-right', -3.5deg, 200%);
+                  background: rgba(#c8c8c8, 0.8);
+            }
+      }
+
+
+      # FUNCTIONS
+      ---------------------------
+*/
+/*
+      # MIXINS
+      ---------------------------
+*/
 * {
   box-sizing: border-box;
   margin: 0;
@@ -6,7 +62,8 @@
     outline: 0; }
 
 body {
-  font-family: "Montserrat", sans-serif; }
+  font-family: "Montserrat", sans-serif;
+  font-size: 16px; }
 
 .setup {
   background-color: #171F22;
@@ -393,8 +450,10 @@ a.header-btn {
   left: 0;
   right: 0;
   height: 60px;
-  background-color: #28373C;
+  background-color: #0b0c0d;
+  text-transform: uppercase;
   color: #fff;
+  font-size: 0.6875em;
   z-index: 999999999; }
 
 .team,
@@ -403,21 +462,30 @@ a.header-btn {
   position: absolute;
   top: 50%;
   transform: translateY(-65%);
-  font-size: 14px; }
+  letter-spacing: 0.12em; }
 
 .team {
   left: 25px; }
-
-.team__separator {
-  margin: 0 5px; }
+  .team__separator {
+    vertical-align: middle;
+    display: inline-block;
+    margin: 0 0.72727em;
+    width: 0.45455em;
+    height: 0.72727em;
+    background-repeat: no-repeat;
+    background-position: center center;
+    background-image: url("../img/right-arrow.svg");
+    background-size: 100%; }
+  .team__project {
+    color: #c4ccd0; }
 
 .links {
   left: 280px; }
   .links a {
     display: inline;
     padding: 15px;
-    color: #fff;
-    font-size: 14px; }
+    font-size: inherit;
+    color: #fff; }
 
 .account {
   right: 25px; }
