@@ -1,0 +1,12 @@
+<svg id="Groupe_1" data-name="Groupe 1" xmlns="http://www.w3.org/2000/svg" width="8" height="8" viewBox="0 0 8 8">
+  <defs>
+    <style>
+      .cls-1 {
+        fill: #c5c5c5;
+      }
+    </style>
+  </defs>
+  <circle class="cls-1" cx="6.5" cy="6.5" r="1.5"/>
+  <circle id="Ellipse_4_copie" data-name="Ellipse 4 copie" class="cls-1" cx="1.5" cy="6.5" r="1.5"/>
+  <circle id="Ellipse_4_copie_2" data-name="Ellipse 4 copie 2" class="cls-1" cx="6.5" cy="1.5" r="1.5"/>
+</svg>
