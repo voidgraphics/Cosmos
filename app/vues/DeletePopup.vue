@@ -4,11 +4,11 @@
 <script lang="coffee">
     module.exports = DeletePopup =
 
-        methods:
-            confirmDelete: ->
-                this.$dispatch "confirmDelete"
+    methods:
+        confirmDelete: ->
+            this.$dispatch "confirmDelete"
 
-            hidePopup: ->
-                this.$dispatch "hideDeletePopup"
+        hidePopup: ->
+            this.$dispatch "hideDeletePopup"
 
 </script>
