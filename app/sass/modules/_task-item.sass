@@ -1,25 +1,39 @@
-.task-items__section
-    width: 28%
-    padding-top: 15px
-    height: 100%
-
 .task-items__section__title
     text-align: left
-    font-size: 14px
     font-weight: 500
     margin-bottom: 15px
+    display: inline
+    text-transform: uppercase
+    color: $cDarkBlue
+    font-size: s($s1)
+    letter-spacing: ps_ls(80)
 
 .task-item
     background-color: #fff
-    border-radius: 5px
-    padding: 15px 15px 35px
-    margin: 15px 0
-    font-size: 14px
+    border-radius: 3px
+    padding: 20px
+    margin: 30px 0
     position: relative
-    box-shadow: 0 1px 1px rgba( 0, 0, 0, .15 )
+    box-shadow: 0 10px 20px rgba( 0, 0, 0, .1 )
+    font-family: $fOpenSemiBold
+    font-size: s($s2)
 
-.task-item__deadline
-    font-size: 12px
+    &:after
+        position: absolute
+        bottom: 5px
+        right: 5px
+        content: ''
+        display: block
+        background: url('../img/gripper.svg') no-repeat center center
+        width: 8px
+        height: 8px
+
+    &__name
+        margin-bottom: 3px
+
+    &__deadline
+        font-family: $fOpenRegular
+        color: $cGray
 
 .task-item__edit
     display: inline-block
@@ -51,12 +65,13 @@
         margin: 0 2px
 
 .add-task-btn
+    width: s(20, 12)
+    height: s(20, 12)
     background-color: $orange
     display: inline-block
-    position: absolute
-    top: 10px
-    right: 0
     color: #fff
-    border-radius: 5px
-    padding: 5px 10px
+    border-radius: s(3, 12)
+    margin-right: s(10, 12)
+    text-align: center
+    line-height: s(15, 12)
     cursor: pointer

@@ -1,35 +1,28 @@
 div.container.view#view-projecttasks
     div.content
-        h1.page-title Tasks - Project Name
         div.task-items
             div.task-items__section#todo(data-section="To do")
+                a.add-task-btn(id="add-todo", v-on:click="showPopup") +
                 h2.task-items__section__title To do
-                a.add-task-btn(id="add-todo", v-on:click="showPopup") Add
                 div.task-items__cards#todo-column__items
                     div.task-item(v-for="task in tasks | orderBy 'position'" v-if="task.state == 'todo'" data-id="{{ task.id }}")
                         p.task-item__name {{ task.title }}
-                        a.task-item__edit(id="{{ task.id }}" v-on:click="showEditPopup( task )")
-                        a.task-item__delete(data-id="{{ task.id }}" v-on:click="showDeletePopup( task )")
                         time.task-item__deadline Due {{ task.deadline | formatted }}
 
             div.task-items__section#inprogress(data-section="In progress")
+                a.add-task-btn(id="add-inprogress" v-on:click="showPopup") +
                 h2.task-items__section__title In progress
-                a.add-task-btn(id="add-inprogress" v-on:click="showPopup") Add
                 div.task-items__cards#progress-column__items
                     div.task-item(v-for="task in tasks | orderBy 'position'" v-if="task.state == 'inprogress'" data-id="{{ task.id }}")
                         p.task-item__name {{ task.title }}
-                        a.task-item__edit(id="{{ task.id }}" v-on:click="showEditPopup( task )")
-                        a.task-item__delete(data-id="{{ task.id }}" v-on:click="showDeletePopup( task )")
                         time.task-item__deadline Due {{ task.deadline | formatted }}
 
             div.task-items__section#finished(data-section="Finished")
+                a.add-task-btn(id="add-finished" v-on:click="showPopup") +
                 h2.task-items__section__title Finished
-                a.add-task-btn(id="add-finished" v-on:click="showPopup") Add
                 div.task-items__cards#finished-column__items
                     div.task-item(v-for="task in tasks | orderBy 'position'" v-if="task.state == 'finished'" data-id="{{ task.id }}")
                         p.task-item__name {{ task.title }}
-                        a.task-item__edit(id="{{ task.id }}" v-on:click="showEditPopup( task )")
-                        a.task-item__delete(data-id="{{ task.id }}" v-on:click="showDeletePopup( task )")
                         time.task-item__deadline Due {{ task.deadline | formatted }}
 
         delete-popup( v-if="deletePopupIsShowing" )

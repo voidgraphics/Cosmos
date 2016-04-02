@@ -6,9 +6,9 @@ $ws_sBaseFont:          16;         //    Base font-size (without units but base
 // GRIDZ
 
 $ws_GridzUnit:          1em;        //    Unit used in the gridz-system. Possible values : 1px, 1em, 1rem, 1banana (all available css units except '%')
-$ws_iGridzColumns:      12;         //    Number of columns you want in the grid
-$ws_sGridzTotalWidth:   1024;       //    Base grid-size (without units but based on pixels)
-$ws_sGridzGutterWidth:  40;         //    Base gutter-size (without units but based on pixels)
+$ws_iGridzColumns:      15;         //    Number of columns you want in the grid
+$ws_sGridzTotalWidth:   1000;       //    Base grid-size (without units but based on pixels)
+$ws_sGridzGutterWidth:  20;         //    Base gutter-size (without units but based on pixels)
 
 
 // SPRITES
