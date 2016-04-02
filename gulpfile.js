@@ -14,8 +14,7 @@ var gulp        = require('gulp'),
     coffee      = require('gulp-coffee'),
     electron    = require('electron-connect').server.create();
 
-gulp.task('serve', ['sass', 'webpack'], function() {
-
+gulp.task('serve', function() {
     electron.start();
 
     gulp.watch("./app/sass/**/*.sass", ['sass']);
