@@ -2,6 +2,8 @@
 *.css
 *.js
 !app/js/socket.js
+app/js/bundle.js
+app/js/bundle/js/map
 node_modules
 
 *.css
