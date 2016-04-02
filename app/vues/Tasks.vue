@@ -3,6 +3,7 @@
 <script lang="coffee">
     zouti = require "zouti"
     Dragula = require "dragula"
+    Moment = require "moment"
     Tasks =
         items: []
         data: ->
@@ -86,6 +87,10 @@
                 socket.emit "task.delete", this.taskToDelete.id
 
                 this.deletePopupIsShowing = false
+
+        filters:
+            formatted: (value) ->
+                return Moment(value).fromNow();
 
         events:
             hidePopup: ->

@@ -10,7 +10,7 @@ div.container.view#view-projecttasks
                         p.task-item__name {{ task.title }}
                         a.task-item__edit(id="{{ task.id }}" v-on:click="showEditPopup( task )")
                         a.task-item__delete(data-id="{{ task.id }}" v-on:click="showDeletePopup( task )")
-                        date.task-item__deadline {{ task.deadline }}
+                        time.task-item__deadline Due {{ task.deadline | formatted }}
 
             div.task-items__section#inprogress(data-section="In progress")
                 h2.task-items__section__title In progress
@@ -20,7 +20,7 @@ div.container.view#view-projecttasks
                         p.task-item__name {{ task.title }}
                         a.task-item__edit(id="{{ task.id }}" v-on:click="showEditPopup( task )")
                         a.task-item__delete(data-id="{{ task.id }}" v-on:click="showDeletePopup( task )")
-                        date.task-item__deadline {{ task.deadline }}
+                        time.task-item__deadline Due {{ task.deadline | formatted }}
 
             div.task-items__section#finished(data-section="Finished")
                 h2.task-items__section__title Finished
@@ -30,7 +30,7 @@ div.container.view#view-projecttasks
                         p.task-item__name {{ task.title }}
                         a.task-item__edit(id="{{ task.id }}" v-on:click="showEditPopup( task )")
                         a.task-item__delete(data-id="{{ task.id }}" v-on:click="showDeletePopup( task )")
-                        date.task-item__deadline {{ task.deadline }}
+                        time.task-item__deadline Due {{ task.deadline | formatted }}
 
         delete-popup( v-if="deletePopupIsShowing" )
         popup( v-if="popupIsShowing" transition="fade" v-bind:columnname="columnName")
