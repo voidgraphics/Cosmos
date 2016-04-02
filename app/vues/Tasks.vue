@@ -39,9 +39,7 @@
                 # Handle new position
                 sNewState = element.parentNode.parentNode.id
                 index = element.dataset.id
-                console.log index
                 iNewPosition = [].indexOf.call element.parentNode.children, element
-                console.log that.tasks
 
                 for task in that.tasks
                     if task.id == index
@@ -64,7 +62,6 @@
         methods:
             addPopup: ( event ) ->
                 column = event.target.parentNode.id
-                console.log column
 
             editPopup: ( event ) ->
                 console.log 'editing', event.target.parentNode
@@ -75,7 +72,6 @@
 
             showEditPopup: ( oTask ) ->
                 this.taskToEdit = oTask
-                console.log "Editing:", oTask
                 this.popupIsShowing = true
 
             showDeletePopup: ( task ) ->

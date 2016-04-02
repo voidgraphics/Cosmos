@@ -4,8 +4,10 @@
     left: 0
     right: 0
     height: 60px
-    background-color: $blue
-    color: #fff
+    background-color: $cBlack
+    text-transform: uppercase
+    color: $cWhite
+    font-size: s($s1)
     z-index: 999999999
 
 .team,
@@ -14,13 +16,24 @@
     position: absolute
     top: 50%
     transform: translateY(-65%)
-    font-size: 14px
+    letter-spacing: ps_ls(120)
 
 .team
     left: 25px
 
-.team__separator
-    margin: 0 5px
+    &__separator
+        vertical-align: middle
+        display: inline-block
+        margin: 0 s(8, $s1)
+        width: s(5, $s1)
+        height: s(8, $s1)
+        background-repeat: no-repeat
+        background-position: center center
+        background-image: url('../img/right-arrow.svg')
+        background-size: 100%
+
+    &__project
+        color: $cLightBlue
 
 .links
     left: 280px
@@ -28,8 +41,8 @@
     a
         display: inline
         padding: 15px
-        color: #fff
-        font-size: 14px
+        font-size: inherit
+        color: $cWhite
 
 .account
     right: 25px
