@@ -1,6 +1,6 @@
 .chatbar
-    background-color: rgb(27, 38, 46)
-    color: #fff
+    background-color: $cMediumBlue1
+    color: $cWhite
     padding: 25px
 
 .chatbar__section
@@ -8,17 +8,23 @@
     position: relative
 
 .chatbar__section__title
-    font-size: 14px
+    font-size: s($s1)
+    letter-spacing: ps_ls(80)
+    text-transform: uppercase
     margin-bottom: 10px
+    display: inline
 
-.chatbar__section__btn
-    display: inline-block
-    background-color: $blue
-    padding: 5px 10px
-    border-radius: 5px
-    position: absolute
-    top: -7px
-    right: 0
+.chatrooms
+    margin-top: 15px
+
+.chatroom
+    color: $cLightBlue
+    text-transform: uppercase
+    letter-spacing: ps_ls(80)
+    font-size: s($s1)
+
+    &__active
+        color: $cWhite
 
 .chat-user
     margin-bottom: 3px
