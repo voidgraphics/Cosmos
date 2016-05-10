@@ -2,6 +2,8 @@
 
 <script lang="coffee">
     zouti = require "zouti"
+    Moment = require "moment"
+
     Tasks =
         items: []
         data: ->
@@ -10,13 +12,14 @@
                 deletePopupIsShowing: false
                 taskToDelete: null
                 columnName: null
-                tasks: [ { title: "not loaded yet" } ]
+                messages: [ { title: "not loaded yet" } ]
              }
 
         asyncData: ( resolve, reject ) ->
-            socket.emit "task.getAll", ( oReturnedTasks ) ->
-                this.items = Object.keys( oReturnedTasks ).map( ( key ) -> return oReturnedTasks[ key ] )
-                resolve { tasks: this.items }
+            socket.emit "chat.getAll", ( oReturnedMessages ) ->
+                console.log oReturnedMessages
+                this.items = Object.keys( oReturnedMessages ).map( ( key ) -> return oReturnedMessages[ key ] )
+                resolve { messages: this.items }
 
         ready: ->
 
@@ -71,6 +74,10 @@
                         console.log task.title, task.position
 
                 this.popupIsShowing = false
+
+        filters:
+            hour: ( value ) ->
+                return Moment(value).format('H:mm');
 
     module.exports = Tasks
 

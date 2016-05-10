@@ -1,33 +1,30 @@
 div.container.view#view-projectchat
     include ./includes/chatbar.jade
-    h1.page-title General Chat - Project Name
 
     div.chat
         div.chat__messages
-            div.chat__message
-                p.user__name Adrien
-                time.message__time 08:14
-                p.message No. We're on the top. Please, Don-Bot… look into your hard drive, and open your mercy file! And when we woke up, we had these bodies. Oh, but you can. But you may have to metaphorically make a deal with the devil. And by "devil", I mean Robot Devil. And by "metaphorically", I mean get your coat.
+            div.chat__message(v-for="message in messages | orderBy 'createdAt'")
+                p.chat__message__user {{ message.user.username }}
+                div.chat__message__body
+                    div.chat__message__avatar-container
+                        img.chat__message__avatar(src="../img/user1.png", alt="")
+                    time.chat__message__time {{ message.createdAt | hour }}
+                    p.chat__message__text {{ message.text }}
+            //- div.chat__message
+            //-     p.chat__message__user Adrien
+            //-     div.chat__message__body
+            //-         div.chat__message__avatar-container
+            //-             img.chat__message__avatar(src="../img/user1.png", alt="")
+            //-         time.chat__message__time 08:14
+            //-         p.chat__message__text No.
+            //- div.chat__message
+            //-     p.chat__message__user Adrien
+            //-     div.chat__message__body
+            //-         div.chat__message__avatar-container
+            //-             img.chat__message__avatar(src="../img/user1.png", alt="")
+            //-         time.chat__message__time 08:14
+            //-         p.chat__message__text No. We're on the top. Please, Don-Bot… look into your hard drive.
 
-            div.chat__message
-                p.user__name Zoidberg
-                time.message__time 08:16
-                p.message Is that a cooking show?
-
-            div.chat__message
-                p.user__name Bender
-                time.message__time 08:16
-                p.message Why would I want to know that?
-
-            div.chat__message
-                p.user__name Farnsworth
-                time.message__time 08:18
-                p.message Bender? You stole the atom. Too much work. Let's burn it and say we dumped it in the sewer. Meh. We'll need to have a look inside you with this camera.
-
-            div.chat__message
-                p.user__name Adrien
-                time.message__time 08:21
-                p.message Good news, everyone!
 
         form.input-area
             input.input-area__textfield(type="text" placeholder="Type your message...")
