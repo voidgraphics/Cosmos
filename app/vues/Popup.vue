@@ -28,7 +28,7 @@
                     field.value = picker.getMoment().format "YYYY-MM-DD"
                     that.hasDeadline = true
                     that.deadline = picker.getMoment().format "YYYY-MM-DD"
-            })
+            } )
             this.state = this.columnname
             field.parentNode.insertBefore( picker.el, field.nextSibling )
 

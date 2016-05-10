@@ -54,7 +54,7 @@
                     return ( task.state == column ) && ( task.position >= iNewPosition ) && ( task.id != index )
 
                 for task in currentColumnTasks
-                    ++task.position
+                    task.position++
 
                 # Send modified tasks to server
                 oTasks = that.tasks
@@ -89,15 +89,20 @@
                 this.deletePopupIsShowing = false
 
         filters:
-            formatted: (value) ->
+            formatted: ( value ) ->
                 return Moment(value).fromNow();
 
         events:
             hidePopup: ->
+                this.taskToEdit = null
                 this.popupIsShowing = false
 
             hideDeletePopup: ->
                 this.deletePopupIsShowing = false
+
+            showDelete: ( task ) ->
+                this.showDeletePopup( task )
+                console.log 'delettttteeeee', task
 
             confirmDelete: ->
                 this.delete()
