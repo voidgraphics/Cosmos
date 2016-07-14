@@ -1,32 +1,38 @@
 <!DOCTYPE html>
 html(lang="en")
-head
-    meta(charset="UTF-8")
-    title Cosmos
-    link(rel="stylesheet", href="../css/pikaday.css")
-    link(rel="stylesheet", href="../css/dragula.css")
-    link(rel="stylesheet", href="../css/main.css")
-    script(src="http://localhost:12345/socket.io/socket.io.js")
-    script(src="../js/socket.js")
-    
-body
-    div#app
-        div.navbar
-            div.team
-                span.team__name WhiteCube
-                span.team__separator
-                span.team__project Kabas
-            div.links
-                a(href="#" v-link="{path: '/dashboard'}") Dashboard
-                a(href="#" v-link="{path: '/tasks'}")
-                    img.tasks-icon(src="../img/tasks.svg" width="13" height="15")
-                    |Tasks
-                a(href="#" v-link="{path: '/mockups'}") UI
-                a(href="#" v-link="{path: '/chat'}") Chat
-        router-view
+    head
+        meta(charset="UTF-8")
+        title Cosmos
+        link(rel="stylesheet", href="../css/pikaday.css")
+        link(rel="stylesheet", href="../css/dragula.css")
+        link(rel="stylesheet", href="../css/main.css")
+        script(src="http://localhost:12345/socket.io/socket.io.js")
+        script(src="../js/socket.js")
+        
+    body
+        div#app
+            div.navbar
+                div.team
+                    span.team__name WhiteCube
+                    span.team__separator
+                    span.team__project Kabas
+                div.navbar__links
+                    a.navbar__link.navbar__link--dashboard(href="#" v-link="{path: '/dashboard'}")
+                        //- img.dashboard-icon(src="../img/dashboard.svg" height="13")
+                        |Dashboard
+                    a.navbar__link.navbar__link--tasks(href="#" v-link="{path: '/tasks'}")
+                        //- img.tasks-icon(src="../img/tasks.svg" width="13" height="15")
+                        |Tasks
+                    a.navbar__link.navbar__link--ui(href="#" v-link="{path: '/mockups'}")
+                        //- img.ui-icon(src="../img/ui.svg" width="18" height="14")
+                        |UI
+                    a.navbar__link.navbar__link--chat(href="#" v-link="{path: '/chat'}")
+                        //- img.chat-icon(src="../img/chat.svg" width="17" height="15")
+                        |Chat
+            router-view
 
-    script(src="../js/bundle.js")
+        script(src="../js/bundle.js")
 
-    script require('electron-connect').client.create()
-    
-    
+        script require('electron-connect').client.create()
+        
+        
