@@ -5,7 +5,7 @@
     Moment = require "moment"
     Vue = require "vue"
 
-    Tasks =
+    Chat =
         items: []
         data: ->
             return {
@@ -26,7 +26,6 @@
                 that.messages.push( message )
             @scroll()
 
-
         methods:
             sendMessage: ->
                 message =
@@ -41,24 +40,6 @@
                 if( container )
                     container.scrollTop = container.scrollHeight
 
-        events:
-            hideDeletePopup: ->
-                this.deletePopupIsShowing = false
-
-            confirmDelete: ->
-                this.delete()
-
-            submitTask: ( oTask ) ->
-                console.log oTask
-                oTask.id = zouti.uuid()
-                socket.emit "task.save", oTask
-                this.tasks.push( oTask )
-                for task in this.tasks
-                    if task.state == oTask.state && task.id != oTask.id
-                        task.position++
-                        console.log task.title, task.position
-
-                this.popupIsShowing = false
 
         filters:
             hour: ( value ) ->
@@ -74,6 +55,6 @@
                 else
                     # TODO: Show scroll tip
 
-    module.exports = Tasks
+    module.exports = Chat
 
 </script>
