@@ -1,4 +1,3 @@
-<<<<<<< HEAD
 *.html
 *.css
 *.js
@@ -8,4 +7,3 @@ app/js/bundle/js/map
 node_modules
 *
 !app
-
