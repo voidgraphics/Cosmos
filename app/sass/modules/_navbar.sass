@@ -3,7 +3,7 @@
     top: 0
     left: 0
     right: 0
-    height: 60px
+    height: 80px
     background-color: $cDarkBlue
     text-transform: uppercase
     color: $cWhite
@@ -11,15 +11,15 @@
     z-index: 999999999
 
 .team,
-.links,
+.navbar__links,
 .account
     position: absolute
-    top: 50%
+    top: 65%
     transform: translateY(-65%)
     letter-spacing: ps_ls(120)
 
 .team
-    left: 40px
+    left: 30px
 
     &__separator
         vertical-align: middle
@@ -35,14 +35,80 @@
     &__project
         color: $cLightBlue
 
-.links
+.navbar__links
     left: 280px
 
     a
         display: inline
-        padding: 15px
+        padding: 20px
         font-size: inherit
         color: $cWhite
+        // transition: color .3s ease-in-out
+        //
+        // &:hover
+        //     color: $cOrange
+        //     transition: color .3s ease-in-out
+
+.dashboard-icon,
+.tasks-icon,
+.ui-icon,
+.chat-icon
+    position: relative
+
+.tasks-icon,
+.ui-icon,
+.dashboard-icon
+    top: 2px
+    right: 8px
+
+.chat-icon
+    top: 3px
+    right: 8px
+
+.navbar__link
+    &--dashboard:before,
+    &--tasks:before,
+    &--ui:before,
+    &--chat:before
+        content: ''
+        display: inline-block
+        position: relative
+        top: 2px
+        right: 6px
+
+    &--dashboard:before
+        width: 13px
+        height: 13px
+        background: url(../img/dashboard.svg) no-repeat center center
+
+    &--dashboard.v-link-active:before
+        background-image: url(../img/dashboard-active.svg)
+
+    &--tasks:before
+        width: 13px
+        height: 15px
+        background: url(../img/tasks.svg) no-repeat center center
+
+    &--tasks.v-link-active:before
+        background-image: url(../img/tasks-active.svg)
+
+    &--ui:before
+        width: 18px
+        height: 14px
+        background: url(../img/ui.svg) no-repeat center center
+
+    &--ui.v-link-active:before
+        background-image: url(../img/ui-active.svg)
+
+    &--chat:before
+        top: 3px
+        width: 17px
+        height: 15px
+        background: url(../img/chat.svg) no-repeat center center
+
+    &--chat.v-link-active:before
+        background-image: url(../img/chat-active.svg)
+
 
 .account
     right: 25px
