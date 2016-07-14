@@ -46,6 +46,7 @@ div
                 
                 div.form-group.submit-container
                     input.task-submit.submit-btn(type="submit" id="new-task__submit" value="Add this task")
+                    a(href="#" v-if="hasDeleteButton" v-on:click="deleteTask" style="margin-top: 40px;") Delete task
                 
     div.popup-overlay( v-on:click="hidePopup" )
-    //- pre {{ $data | json }}
+    pre {{ $data | json }}
