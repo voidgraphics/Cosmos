@@ -4,7 +4,8 @@
 
     &__body
         position: relative
-        background-color: $cWhite
+        background-color: $cDarkBlue
+        color: $cLightBlue2
         border-radius: 3px
         padding: 10px
         padding-right: 65px
@@ -18,7 +19,7 @@
         display: inline-block
         font-size: 14px
         font-weight: 600
-        color: $cLightBlue3
+        color: $cLightBlue
         font-size: s($s1)
         font-family: $fOpenRegular
         letter-spacing: ps_ls(20)
@@ -39,7 +40,7 @@
         right: 15px
         top: 18px
         text-align: right
-        color: $cLightBlue3
+        color: $cLightBlue
         font-size: s($s1)
         letter-spacing: ps_ls(20)
 
@@ -59,14 +60,25 @@
 
 .input-area__textfield
     border: none
-    padding: 10px
+    padding: 15px 25px
     font-size: 14px
-    font-family: $font
-    border-radius: 5px
+    font-family: $fOpenRegular
+    border-radius: 3px
+    background-color: $cDarkBlue
+    color: $cWhite
 
 .input-area__submit
     border: none
-    background-color: $cOrange
+    background-color: $cDarkBlue
     color: $cWhite
     font-family: $font
-    border-radius: 5px
+    font-size: s($s1)
+    letter-spacing: ps_ls(80)
+    border-radius: 3px
+    text-transform: uppercase
+    cursor: pointer
+    transition: color .3s ease-in-out
+
+    &:hover
+        color: $cOrange
+        transition: color .2s ease-in-out

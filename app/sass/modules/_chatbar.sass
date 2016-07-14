@@ -1,7 +1,7 @@
 .chatbar
     background-color: $cMediumBlue1
     color: $cWhite
-    padding: 25px
+    padding: 25px 30px
 
 .chatbar__section
     margin-bottom: 35px
@@ -26,9 +26,21 @@
     &__active
         color: $cWhite
 
+.chat-users
+    margin-top: 10px
+
 .chat-user
-    margin-bottom: 3px
+    margin-bottom: 2px
 
 .chat-user .user__name
     display: inline-block
     margin-left: 10px
+    font-family: $fOpenRegular
+    font-size: s($s2)
+    color: $cLightBlue
+    letter-spacing: ps_ls(20)
+    vertical-align: middle
+
+.chat-user .account__picture
+    width: 24px
+    height: 24px

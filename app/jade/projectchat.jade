@@ -1,31 +1,16 @@
-div.container.view#view-projectchat
+div.container.animated.view#view-projectchat
     include ./includes/chatbar.jade
 
     div.chat
         div.chat__messages
-            div.chat__message(v-for="message in messages | orderBy 'createdAt'")
+            div.chat__message(v-for="message in messages | orderBy 'createdAt'" v-scrolldown transition="fadeSlideUp")
                 p.chat__message__user {{ message.user.username }}
                 div.chat__message__body
                     div.chat__message__avatar-container
                         img.chat__message__avatar(src="../img/user1.png", alt="")
                     time.chat__message__time {{ message.createdAt | hour }}
                     p.chat__message__text {{ message.text }}
-            //- div.chat__message
-            //-     p.chat__message__user Adrien
-            //-     div.chat__message__body
-            //-         div.chat__message__avatar-container
-            //-             img.chat__message__avatar(src="../img/user1.png", alt="")
-            //-         time.chat__message__time 08:14
-            //-         p.chat__message__text No.
-            //- div.chat__message
-            //-     p.chat__message__user Adrien
-            //-     div.chat__message__body
-            //-         div.chat__message__avatar-container
-            //-             img.chat__message__avatar(src="../img/user1.png", alt="")
-            //-         time.chat__message__time 08:14
-            //-         p.chat__message__text No. We're on the top. Please, Don-Bot… look into your hard drive.
 
-
-        form.input-area
-            input.input-area__textfield(type="text" placeholder="Type your message...")
+        form.input-area( v-on:submit="sendMessage" )
+            input.input-area__textfield(type="text" placeholder="Type your message..." v-model="newMessage")
             input.input-area__submit(type="submit" value="Send")

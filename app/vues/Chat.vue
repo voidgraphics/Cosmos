@@ -3,60 +3,45 @@
 <script lang="coffee">
     zouti = require "zouti"
     Moment = require "moment"
+    Vue = require "vue"
 
     Tasks =
         items: []
         data: ->
             return {
-                popupIsShowing: false
-                deletePopupIsShowing: false
-                taskToDelete: null
-                columnName: null
-                messages: [ { title: "not loaded yet" } ]
+                newMessage: ""
+                messages: []
+                scrollTip: false
              }
 
         asyncData: ( resolve, reject ) ->
             socket.emit "chat.getAll", ( oReturnedMessages ) ->
-                console.log oReturnedMessages
                 this.items = Object.keys( oReturnedMessages ).map( ( key ) -> return oReturnedMessages[ key ] )
                 resolve { messages: this.items }
 
         ready: ->
+            that = this
+            socket.on "chat.new", ( message, user ) ->
+                message.user = user
+                that.messages.push( message )
+            @scroll()
+
 
         methods:
-            addPopup: ( event ) ->
-                column = event.target.parentNode.id
-                console.log column
+            sendMessage: ->
+                message =
+                    userId: "60c63097-6ce9-41a4-a1b0-a361597c2bc8"
+                    text: @newMessage
 
-            editPopup: ( event ) ->
-                console.log 'editing', event.target.parentNode
+                socket.emit "chat.newMessage", message
+                @newMessage = ""
 
-            showPopup: ( event )  ->
-                this.columnName = event.target.parentNode.id
-                this.popupIsShowing = true
-
-            showEditPopup: ( oTask ) ->
-                this.taskToEdit = oTask
-                console.log "Editing:", oTask
-                this.popupIsShowing = true
-
-            showDeletePopup: ( task ) ->
-                this.taskToDelete = task
-                this.deletePopupIsShowing = true
-
-            delete: ->
-                # Deleting client-side
-                this.tasks.$remove( this.taskToDelete )
-
-                # Deleting server-side
-                socket.emit "task.delete", this.taskToDelete.id
-
-                this.deletePopupIsShowing = false
+            scroll: ->
+                container = document.getElementsByClassName( "chat__messages" )[0]
+                if( container )
+                    container.scrollTop = container.scrollHeight
 
         events:
-            hidePopup: ->
-                this.popupIsShowing = false
-
             hideDeletePopup: ->
                 this.deletePopupIsShowing = false
 
@@ -78,6 +63,16 @@
         filters:
             hour: ( value ) ->
                 return Moment(value).format('H:mm');
+
+        directives:
+            scrolldown: ->
+                container = document.getElementsByClassName( "chat__messages" )[0]
+                if container && container.scrollTop == ( container.scrollHeight - container.offsetHeight )
+                    Vue.nextTick( ->
+                        container.scrollTop = container.scrollHeight
+                    )
+                else
+                    # TODO: Show scroll tip
 
     module.exports = Tasks
 
