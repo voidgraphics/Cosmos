@@ -1,6 +1,6 @@
 <template src="../html/popup.html">
-
 </template>
+
 <script lang="coffee">
     Pikaday = require "pikaday"
     Moment = require "moment"
@@ -15,11 +15,21 @@
                 users: []
                 hasDeadline: false
                 state: ""
+                hasDeleteButton: false
             }
 
-        props: [ "columnname" ]
+        props: [ "columnname", "task" ]
 
         ready: ->
+            if( @task )
+                this.taskName = @task.title
+                this.deadline = @task.deadline
+                this.users = @task.users
+                this.hasDeadline = @task.deadline != ""
+                this.hasDeleteButton = true
+            else
+                this.hasDeleteButton = false
+
             field = this.$els.datepicker
             that = this
             picker = new Pikaday( {
@@ -30,11 +40,13 @@
                     that.deadline = picker.getMoment().format "YYYY-MM-DD"
             } )
             this.state = this.columnname
+
             field.parentNode.insertBefore( picker.el, field.nextSibling )
 
 
         methods:
             hidePopup: ->
+                @task = null
                 this.$dispatch "hidePopup"
 
             clearDeadline: ( event ) ->
@@ -52,8 +64,12 @@
                     state: @state
                     position: 0
 
-                # console.log "Submitting task :", oTask
                 this.$dispatch "submitTask", oTask
+
+            deleteTask: ( event ) ->
+                event.preventDefault()
+                this.$dispatch "hidePopup"
+                this.$dispatch "showDelete", @task
 
         filters:
             dateFromNow: ( value ) ->
