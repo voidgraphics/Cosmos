@@ -27,14 +27,14 @@ div
                 div.form-group
                     input#taskID(type="hidden" value="")
                     label.form-body__label(for="new-task__name") Task
-                    input.form-body__input(type="text" v-model="taskName" id="newtask__name" placeholder="Task description...")
+                    input.form-body__input(type="text" v-model="taskName" id="newtask__name" placeholder="Task description..." value="{{ taskName }}")
                     
                 div.form-group
                     input.form-body__input(type="checkbox" id="new-task__hasDeadline" v-model="hasDeadline" v-on:click="clearDeadline")
                     label.form-body__label(for="new-task__hasDeadline") Deadline
                     p.currentDate#currentDate( v-if="hasDeadline" ) Deadline is {{ deadline | dateFromNow }}
                     p.currentDate#currentDate( v-else ) Today is {{ deadline | dateForHumans }}
-                    input.form-body__input(type="text" id="datepicker" v-el:datepicker placeholder="Select a date below...")
+                    input.form-body__input(type="text" id="datepicker" v-el:datepicker placeholder="Select a date below..." value="{{ deadline }}")
                     
                 div.form-group
                     input.form-body__input(type="radio" name="new-task__state" id="state-todo" value="todo" v-model="state")
