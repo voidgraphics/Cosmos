@@ -2,6 +2,7 @@ Vue = require "vue"
 VueRouter = require "vue-router"
 VueAsyncData = require "vue-async-data"
 
+NavbarView = require "../vues/Navbar.vue"
 SignInView = require "../vues/SignIn.vue"
 SignUpView = require "../vues/SignUp.vue"
 DeletePopup = require "../vues/DeletePopup.vue"
@@ -21,6 +22,7 @@ App = Vue.extend {}
 
 router = new VueRouter()
 
+Navbar = Vue.component "navbar", NavbarView
 SignInView  = Vue.component "signin-component", SignInView
 SignUpView  = Vue.component "signup-component", SignUpView
 DeletePopupView   = Vue.component "delete-popup", DeletePopup
