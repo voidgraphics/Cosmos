@@ -1,11 +1,12 @@
 .mockup-item
-    background-color: #fff
+    background-color: $cDarkBlue
     border-radius: 5px
-    width: 29%
+    width: 27%
     position: relative
-    height: 232px
+    height: 242px
     overflow: hidden
-    margin-bottom: 25px
+    margin-bottom: 55px
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .1)
 
 .thumbnail-container
     height: 185px
@@ -14,21 +15,32 @@
     position: absolute
     top: 0
 
+.mockup-item__link
+    display: block
+    padding: 0
+    z-index: 15
+    font-size: 16px
+    transition: all .2s ease-in-out
+
+    &:hover
+        transform: scale(1.07)
+        transition: all .3s $bounce
+
 .mockup-item__thumbnail
     width: 100%
 
 .mockup-item__comment-count
+    color: $cLightBlue4
+    font-size: s($s1)
+    text-transform: uppercase
     position: absolute
-    top: 10px
-    right: 10px
-    background-color: $cOrange
-    color: #fff
-    border-radius: 5px
-    padding: 5px 10px
-    font-size: 14px
+    bottom: 13px
+    left: 20px
 
 .mockup-item__title
     position: absolute
-    bottom: 10px
-    left: 15px
-    color: $cDarkBlue
+    bottom: 30px
+    left: 20px
+    color: $cWhite
+    font-family: $fOpenRegular
+    font-size: s($s2)
