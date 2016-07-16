@@ -45,6 +45,20 @@
             hour: ( value ) ->
                 return Moment(value).format('H:mm');
 
+            format: ( text ) ->
+                # Check for underscores
+                text = text.replace /(_).[^\*]*(_)/g, ( text, p1, p2 ) ->
+                    if( p1 && p2 )
+                        return "<em>#{text.split('_').join('')}</em>"
+
+                # Check for asterisks
+                text = text.replace /(\*).[^\_]*(\*)/g, ( text, p1, p2 ) ->
+                    if( p1 && p2 )
+                        return "<strong>#{text.split('*').join('')}</strong>"
+
+                console.log text
+                return text
+
         directives:
             scrolldown: ->
                 container = document.getElementsByClassName( "chat__messages" )[0]
@@ -52,6 +66,7 @@
                     Vue.nextTick( ->
                         container.scrollTop = container.scrollHeight
                     )
+
                 else
                     # TODO: Show scroll tip
 

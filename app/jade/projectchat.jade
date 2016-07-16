@@ -9,7 +9,7 @@ div.container.animated.view#view-projectchat
                     div.chat__message__avatar-container
                         img.chat__message__avatar(src="../img/user1.png", alt="")
                     time.chat__message__time {{ message.createdAt | hour }}
-                    p.chat__message__text {{ message.text }}
+                    p.chat__message__text {{{ message.text | format }}}
 
         form.input-area( v-on:submit="sendMessage" )
             input.input-area__textfield(type="text" placeholder="Type your message..." v-model="newMessage")
