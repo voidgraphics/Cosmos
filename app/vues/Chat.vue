@@ -24,6 +24,7 @@
             socket.on "chat.new", ( message, user ) ->
                 message.user = user
                 that.messages.push( message )
+                # that.handleNotification( message.text, user.username )
             @scroll()
 
         methods:
@@ -40,6 +41,9 @@
                 if( container )
                     container.scrollTop = container.scrollHeight
 
+            handleNotification: ( message, username ) ->
+                title = "#general - #{username}:"
+                notification = new Notification title, { body: message }
 
         filters:
             hour: ( value ) ->
