@@ -13,14 +13,12 @@ MockupsView = require "../vues/Mockups.vue"
 MockupView = require "../vues/Mockup.vue"
 ChatView = require "../vues/Chat.vue"
 
-Vue.config.debug = false
+Vue.config.debug = true
 
 Vue.use VueRouter
 Vue.use VueAsyncData
-
 App = Vue.extend {}
 
-router = new VueRouter()
 
 Navbar = Vue.component "navbar", NavbarView
 SignInView  = Vue.component "signin-component", SignInView
@@ -33,13 +31,13 @@ MockupsView   = Vue.component "mockups-component", MockupsView
 MockupView   = Vue.component "mockup-component", MockupView
 ChatView   = Vue.component "chat-component", ChatView
 
-router.redirect { "/": "/dashboard" }
-
+router = new VueRouter()
+router.redirect { "/": "/signin" }
 router.map {
-    # '/signin':
-    #     component: SignInView
-    # '/signup':
-    #     component: SignUpView
+    '/signin':
+        component: SignInView
+    '/signup':
+        component: SignUpView
     '/dashboard':
         component: DashboardView
     '/tasks':
