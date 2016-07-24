@@ -30,7 +30,7 @@
         methods:
             sendMessage: ->
                 message =
-                    userId: "60c63097-6ce9-41a4-a1b0-a361597c2bc8"
+                    userId: localStorage.id
                     text: @newMessage
 
                 socket.emit "chat.newMessage", message
@@ -60,7 +60,6 @@
                     if( p1 && p2 )
                         return "<strong>#{text.split('*').join('')}</strong>"
 
-                console.log text
                 return text
 
         directives:
