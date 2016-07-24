@@ -1,17 +1,19 @@
 div.container.view#view-signin
     .content
-        div
-            h1 Welcome to Cosmos
-            h2 Please sign in
-            form
+        div.signin
+            h1.signin__title Welcome to Cosmos
+            h2.signin__subtitle Please sign in
+            form.form(@submit.prevent="submit")
                 div
                     label(for="username") Username
-                    input(type="text" name="username" id="username")
+                    input(type="text" name="username" id="username" v-model="username")
+                    span(v-show="usernameError") {{ usernameError }}
 
                     label(for="password") Password
-                    input(type="password" name="password" id="password")
+                    input(type="password" name="password" id="password" v-model="password")
+                    span(v-show="passwordError") {{ passwordError }}
 
-                    a(href="jointeam.html", class="submit-btn") Log in
+                    input(type="submit" class="submit-btn" value="Log in")
 
                     a#signup-link(href="#" v-link="{path: '/signup'}") Don't have an account?
                     a(href="forgotpassword.html") Forgot your password?
