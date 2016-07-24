@@ -9,11 +9,6 @@
                 mockups: []
              }
 
-        # asyncData: ( resolve, reject ) ->
-            # socket.emit "mockup.getAll", ( oReturnedMockups ) ->
-            #     this.items = Object.keys( oReturnedMockups ).map( ( key ) -> return oReturnedMockups[ key ] )
-            #     resolve { tasks: this.items }
-
         ready: ->
             socket.emit "mockup.getAll"
             that = this
