@@ -3,18 +3,24 @@ div.container.view#view-signup
         div
             h1 Welcome to Cosmos
             h2 Please create an account
-            form
+            form(@submit.prevent="register")
                 div
                     label(for="username") Username
-                    input(type="text" name="username" id="username")
+                    input(type="text" name="username" id="username" v-model="username")
                     
                     label(for="email") E-mail
-                    input(type="email" name="email" id="email")
+                    input(type="email" name="email" id="email" v-model="email")
+                    
+                    label(for="firstname") First name
+                    input(type="firstname" name="firstname" id="firstname" v-model="firstname")
+                    
+                    label(for="lastname") Last name
+                    input(type="lastname" name="lastname" id="lastname" v-model="lastname")
 
                     label(for="password") Password
-                    input(type="password" name="password" id="password")
+                    input(type="password" name="password" id="password" v-model="password")
 
-                    a(href="jointeam.html", class="submit-btn") Log in
+                    input(type="submit" href="jointeam.html" class="submit-btn" value="Create account")
 
                     a#signin-link(href="#" v-link="{path: '/signin'}") Already have an account?
                     a(href="forgotpassword.html") Forgot your password?
