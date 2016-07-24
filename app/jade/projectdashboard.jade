@@ -5,20 +5,20 @@ div.container.view#view-projectdashboard
             h2.task-items__section__title Recently added
             div.task-item(v-for="task in tasks | orderBy 'position'" v-if="task.state == 'todo'" data-id="{{ task.id }}")
                 p.task-item__name {{ task.title }}
-                date.task-item__deadline {{ task.deadline }}
+                time.task-item__deadline {{ task.deadline }}
 
         div.task-items__section
             h2.task-items__section__title Recently started
             div.task-item(v-for="task in tasks | orderBy 'position'" v-if="task.state == 'inprogress'" data-id="{{ task.id }}")
                 p.task-item__name {{ task.title }}
-                date.task-item__deadline {{ task.deadline }}
+                time.task-item__deadline {{ task.deadline }}
 
 
         div.task-items__section
             h2.task-items__section__title Recently finished
             div.task-item(v-for="task in tasks | orderBy 'position'" v-if="task.state == 'finished'" data-id="{{ task.id }}")
                 p.task-item__name {{ task.title }}
-                date.task-item__deadline {{ task.deadline }}
+                time.task-item__deadline {{ task.deadline }}
 
     div.chatroom-items
         h2.chatroom-items__section-title Available chatrooms
