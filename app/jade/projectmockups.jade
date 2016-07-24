@@ -1,28 +1,10 @@
 div.container.view#view-projectmockups
     a.add-btn(href="#") +
     span.header-btn(href="") Mockups
-    div.mockup-items
-        a.mockup-item.mockup-item__link(v-link="{path: '/mockups/0161e0f0-be49-11e5-a837-0800200c9a66'}")
+    div.mockup-items(v-if="mockups")
+        a.mockup-item.mockup-item__link(v-for="mockup in mockups" v-link="{path: '/mockups'}")
             div.thumbnail-container
-                img.mockup-item__thumbnail(src="../img/mockups/fullsize/nutri-home.png")
-            span.mockup-item__title(href="projectmockup.html") Homepage
+                img.mockup-item__thumbnail(v-bind:src="mockup.src")
+            span.mockup-item__title {{ mockup.title }}
             p.mockup-item__comment-count 6 comments
             
-        a.mockup-item.mockup-item__link(v-link="{path: '/mockups/0161e0f0-be49-11e5-a837-0800200c9a66'}")
-            div.thumbnail-container
-                img.mockup-item__thumbnail(src="../img/mockups/fullsize/nutri-home.png")
-            span.mockup-item__title(href="projectmockup.html") Homepage
-            p.mockup-item__comment-count 6 comments
-
-        a.mockup-item.mockup-item__link(v-link="{path: '/mockups/0161e0f0-be49-11e5-a837-0800200c9a66'}")
-            div.thumbnail-container
-                img.mockup-item__thumbnail(src="../img/mockups/fullsize/nutri-home.png")
-            span.mockup-item__title(href="projectmockup.html") Homepage
-            p.mockup-item__comment-count 6 comments
-    
-        a.mockup-item.mockup-item__link(v-link="{path: '/mockups/0161e0f0-be49-11e5-a837-0800200c9a66'}")
-            div.thumbnail-container
-                img.mockup-item__thumbnail(src="../img/mockups/fullsize/nutri-home.png")
-            span.mockup-item__title(href="projectmockup.html") Homepage
-            p.mockup-item__comment-count 6 comments
-    
