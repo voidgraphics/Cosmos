@@ -11,6 +11,6 @@ div.container.animated.view#view-projectchat
                     time.chat__message__time {{ message.createdAt | hour }}
                     p.chat__message__text {{{ message.text | format }}}
 
-        form.input-area( v-on:submit="sendMessage" )
+        form.input-area( @submit.prevent="sendMessage" )
             input.input-area__textfield(type="text" placeholder="Type your message..." v-model="newMessage")
             input.input-area__submit(type="submit" value="Send")
