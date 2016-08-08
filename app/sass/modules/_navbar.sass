@@ -1,3 +1,5 @@
+@import "account-pane"
+
 .navbar
     position: fixed
     top: 0
@@ -17,6 +19,7 @@
     top: 65%
     transform: translateY(-65%)
     letter-spacing: ps_ls(120)
+    -webkit-user-select: none
 
 .team
     left: 30px
@@ -24,8 +27,8 @@
     &__separator
         vertical-align: middle
         display: inline-block
-        margin: 0 s(8, $s1)
-        width: s(5, $s1)
+        margin: 0 s(7, $s1)
+        width: s(4, $s1)
         height: s(8, $s1)
         background-repeat: no-repeat
         background-position: center center
@@ -36,11 +39,12 @@
         color: $cLightBlue
 
 .navbar__links
-    left: 280px
+    left: auto
+    right: 0
 
-    a
+    > a
         display: inline
-        padding: 20px
+        padding: 23px
         font-size: inherit
         color: $cWhite
 
@@ -115,4 +119,36 @@
         border-radius: 50%
         text-align: center
 
+.navbar__username
+    cursor: pointer
+    margin-left: 30px
+    margin-right: 50px
 
+    &:after
+        content: ''
+        vertical-align: middle
+        display: inline-block
+        margin: 0 s(8, $s1)
+        width: s(5, $s1)
+        height: s(9, $s1)
+        position: relative
+        top: -1px
+        background-repeat: no-repeat
+        background-position: center center
+        background-image: url('../img/right-arrow.svg')
+        background-size: 100%
+        transform: rotate(90deg)
+
+.navbar__avatar-container
+    width: 36px
+    height: 36px
+    border-radius: 4px 4px
+    overflow: hidden
+    position: absolute
+    top: -8px
+    right: 30px
+
+.navbar__avatar
+    width: 100%
+    min-width: 36px
+    min-height: 36px
