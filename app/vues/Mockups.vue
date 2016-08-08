@@ -11,11 +11,10 @@
 
         ready: ->
             socket.emit "mockup.getAll"
-            that = this
-            socket.on "mockup.sent", ( oMockup ) ->
-                console.log oMockup
+            socket.on "mockup.sent", ( oMockup ) =>
                 oMockup.src = "data:image/png;base64,#{oMockup.image}"
-                that.mockups.push oMockup
+                oMockup.href = "/mockups/#{oMockup.id}"
+                @mockups.push oMockup
 
 
     module.exports = Tasks
