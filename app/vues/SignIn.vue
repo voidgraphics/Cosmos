@@ -14,7 +14,7 @@
         ready: ->
             that = this
             socket.on "user.logged", ( oUserData ) ->
-                localStorage.id = oUserData.id
+                localStorage.id = oUserData.uuid
                 localStorage.username = oUserData.username
                 localStorage.firstname = oUserData.firstname
                 localStorage.lastname = oUserData.lastname
