@@ -20,10 +20,10 @@ gulp.task('serve', function() {
     gulp.watch("./app/sass/**/*.sass", ['sass']);
     gulp.watch("./app/coffee/**/*.coffee", ['webpack']);
     gulp.watch("./app/vues/**/*.vue", ['webpack']);
-    gulp.watch("./app/jade/**/*.jade", ['jade']);
+    gulp.watch("./app/jade/**/*.jade", ['jade', 'webpack']);
     gulp.watch("./app/js/bundle.js").on('change', electron.reload);
     gulp.watch("./app/css/*.css").on('change', electron.reload);
-    gulp.watch("./app/html/*.html").on('change', electron.reload);
+    // gulp.watch("./app/html/*.html").on('change', electron.reload);
 
 });
 
@@ -53,7 +53,7 @@ gulp.task('jade', function () {
       pretty: false
     }))
     .pipe(gulp.dest('./app/html/'))
-})
+});
 
 gulp.task('webpack', ['coffee'], function() {
     webpack( wpConfig , function( err, stats ) {
