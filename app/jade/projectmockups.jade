@@ -2,7 +2,7 @@ div.container.view#view-projectmockups
     a.add-btn(href="#") +
     span.header-btn(href="") Mockups
     div.mockup-items(v-if="mockups")
-        a.mockup-item.mockup-item__link(v-for="mockup in mockups" v-link="{path: '/mockups'}")
+        a.mockup-item.mockup-item__link(v-for="mockup in mockups" v-link="{path: '/mockups/' + mockup.id}")
             div.thumbnail-container
                 img.mockup-item__thumbnail(v-bind:src="mockup.src")
             span.mockup-item__title {{ mockup.title }}
