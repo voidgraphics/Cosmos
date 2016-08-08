@@ -1,6 +1,18 @@
 div.container#view-projectmockup
-    h1.page-title Homepage Mockup - Project Name
-    p.header-info Click anywhere on the image to leave a comment.
-    div.mockup
-        img.mockup__image(src="")
-        
+    div.content
+        p.mockup__info
+            span.mockup__name {{ mockup.title }}
+            span.mockup__comment-count {{ comments.length }} comment{{ comments.length != 1 ? "s" : "" }}
+        p.mockup__tip Click anywhere on the image to leave a comment.
+        div.mockup
+            img#mockup.mockup__image(v-bind:src="mockup.src" @click="getCoordinates")
+            
+            div#overlay.mockup__comments
+                form.add-comment(@submit.prevent="sendComment" v-show="showForm" style="position: absolute; top: {{ formPos.y }}%; left: {{ formPos.x }}%;")
+                    div
+                        button.add-comment__close(@click.prevent="showForm = false")
+                        textarea.add-comment__textfield(v-model="newMessage")
+                        input.add-comment__submit(type="submit" value="Send")
+                a.mockup__comment(v-for="comment in comments" style="top: {{ comment.y }}%; left: {{ comment.x }}%;" @click.stop="toggle( comment, $event )")
+                    div.comment__body(v-show="comment.isShowing" class="{{ comment.class }}")
+                        p {{ comment.text }}
