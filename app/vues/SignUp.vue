@@ -25,7 +25,7 @@
 
                     socket.emit "user.register", oUserInfo, ( oResult ) ->
                         console.log oResult
-                        
+
                 else
                     console.error "Missing info"
 
