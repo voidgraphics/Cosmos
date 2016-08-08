@@ -2,77 +2,120 @@
 
 <script lang="coffee">
     zouti = require "zouti"
-    Tasks =
+    Mockup =
         items: []
         data: ->
             return {
-                popupIsShowing: false
-                deletePopupIsShowing: false
-                taskToDelete: null
-                columnName: null
-                tasks: [ { title: "not loaded yet" } ]
+                mockup: {}
+                $mockup: null
+                showForm: false
+                formPos: { x: 0, y: 0 }
+                newMessage: ""
+                comments: []
              }
 
-        asyncData: ( resolve, reject ) ->
-            socket.emit "mockup.getAll", ( oReturnedMockups ) ->
-                this.items = Object.keys( oReturnedMockups ).map( ( key ) -> return oReturnedMockups[ key ] )
-                console.log oReturnedMockups
-                resolve { tasks: this.items }
-
         ready: ->
+            @$mockup = document.getElementById "mockup"
+            @$overlay = document.getElementById "overlay"
+            console.log zouti.uuid()
+
+            # Getting mockup
+            socket.emit "mockup.get", @$route.params.id
+            socket.on "mockup.sent", ( oMockup ) =>
+                oMockup.src = "data:image/png;base64,#{oMockup.image}"
+                @mockup = oMockup
+                this.$nextTick () ->
+                    @positionOverlay()
+            socket.on "mockup.error", ( sError ) ->
+                console.log sError
+
+            # Getting comments
+            socket.emit "comment.get", 1, ( aComments ) =>
+                for oComment in aComments
+                    oComment.isShowing = false
+                    if oComment.x > 75
+                        oComment.class = "flipped"
+                    else
+                        oComment.class = ""
+                    @comments.push oComment
+
+            # Listen for window resizing
+            window.addEventListener "resize", @positionOverlay
 
         methods:
-            addPopup: ( event ) ->
-                column = event.target.parentNode.id
-                console.log column
+            positionOverlay: ->
+                pos = @getMockupPosition()
 
-            editPopup: ( event ) ->
-                console.log 'editing', event.target.parentNode
+                @$overlay.style.top = pos.top + "px"
+                @$overlay.style.left = pos.left + "px"
+                @$overlay.style.width = pos.width + "px"
+                @$overlay.style.height = pos.height + "px"
 
-            showPopup: ( event )  ->
-                this.columnName = event.target.parentNode.id
-                this.popupIsShowing = true
+            getMockupPosition: ->
+                rect = @$mockup.getBoundingClientRect()
 
-            showEditPopup: ( oTask ) ->
-                this.taskToEdit = oTask
-                console.log "Editing:", oTask
-                this.popupIsShowing = true
+                scrollTop = window.pageYOffset
+                scrollLeft = window.pageXOffset
+                return {
+                    top: rect.top + scrollTop
+                    height: @$mockup.height
+                    left: rect.left + scrollLeft
+                    width: @$mockup.width
+                }
 
-            showDeletePopup: ( task ) ->
-                this.taskToDelete = task
-                this.deletePopupIsShowing = true
+            getCoordinates: ( e ) ->
+                xPos = e.x + window.pageXOffset
+                yPos = e.y + window.pageYOffset
 
-            delete: ->
-                # Deleting client-side
-                this.tasks.$remove( this.taskToDelete )
+                xPos -= @$mockup.offsetLeft
+                yPos -= @$mockup.offsetTop
 
-                # Deleting server-side
-                socket.emit "task.delete", this.taskToDelete.id
+                mockupWidth = @$mockup.width
+                mockupHeight = @$mockup.height
 
-                this.deletePopupIsShowing = false
+                xPercent = ( xPos / mockupWidth ) * 100
+                yPercent = ( yPos / mockupHeight ) * 100
 
-        events:
-            hidePopup: ->
-                this.popupIsShowing = false
+                @addComment( xPercent, yPercent )
 
-            hideDeletePopup: ->
-                this.deletePopupIsShowing = false
+            addComment: ( xPos, yPos ) ->
+                @formPos.x = xPos
+                @formPos.y = yPos
+                @showForm = true
 
-            confirmDelete: ->
-                this.delete()
+            sendComment: ->
+                console.log @newMessage
+                console.log @formPos
 
-            submitTask: ( oTask ) ->
-                console.log oTask
-                oTask.id = zouti.uuid()
-                socket.emit "task.save", oTask
-                this.tasks.push( oTask )
-                for task in this.tasks
-                    if task.state == oTask.state && task.id != oTask.id
-                        task.position++
-                        console.log task.title, task.position
+                comment = {
+                    x: @formPos.x
+                    y: @formPos.y
+                    mockup:
+                        id: 1
+                    author:
+                        id: "eae67478-b360-4ca5-8f41-f0553795938d"
+                        username: "Void"
+                    text: @newMessage
+                    isShowing: false
+                }
 
-                this.popupIsShowing = false
+                @comments.push comment
 
-    module.exports = Tasks
+                socket.emit "comment.submit", comment
+
+                @newMessage = ""
+                @showForm = false
+
+            toggle: ( comment, event ) ->
+                $el = event.target
+                el = event.target.tagName
+                while el isnt "A"
+                    el = $el.parentNode.tagName
+                    $el = $el.parentNode
+
+                $el.classList.toggle "mockup__comment--showing"
+                comment.isShowing = !comment.isShowing
+
+    module.exports = Mockup
 
 </script>
