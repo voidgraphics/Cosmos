@@ -1,9 +1,9 @@
 div.container.view#view-signup
     .content
-        div
-            h1 Welcome to Cosmos
-            h2 Please create an account
-            form(@submit.prevent="register")
+        div.signup
+            h1.signup__title Welcome to Cosmos
+            h2.signup__subtitle Please create an account
+            form.form(@submit.prevent="register")
                 div
                     label(for="username") Username
                     input(type="text" name="username" id="username" v-model="username")
@@ -12,10 +12,10 @@ div.container.view#view-signup
                     input(type="email" name="email" id="email" v-model="email")
                     
                     label(for="firstname") First name
-                    input(type="firstname" name="firstname" id="firstname" v-model="firstname")
+                    input(type="text" name="firstname" id="firstname" v-model="firstname")
                     
                     label(for="lastname") Last name
-                    input(type="lastname" name="lastname" id="lastname" v-model="lastname")
+                    input(type="text" name="lastname" id="lastname" v-model="lastname")
 
                     label(for="password") Password
                     input(type="password" name="password" id="password" v-model="password")
