@@ -4,7 +4,8 @@ div.container.animated.view#view-projectchat
     div.chat
         div.chat__messages
             div.chat__message(v-for="message in messages | orderBy 'createdAt'" v-scrolldown transition="fadeSlideUp")
-                p.chat__message__user {{ message.user.username }}
+                p.chat__message__user(v-if="message.user") {{ message.user.username }}
+                p.chat__message__user(v-else) User not found
                 div.chat__message__body
                     div.chat__message__avatar-container
                         img.chat__message__avatar(src="../img/user1.png", alt="")
