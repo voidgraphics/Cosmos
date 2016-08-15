@@ -1,5 +1,6 @@
 div.container#view-projectmockup
     div.content
+        a.mockup__back-link(v-link="{path: '/mockups'}") Back to list
         p.mockup__info
             span.mockup__name {{ mockup.title }}
             span.mockup__comment-count {{ comments.length }} comment{{ comments.length != 1 ? "s" : "" }}
@@ -8,7 +9,7 @@ div.container#view-projectmockup
             img#mockup.mockup__image(v-bind:src="mockup.src" @click="getCoordinates")
             
             div#overlay.mockup__comments
-                form.add-comment(@submit.prevent="sendComment" v-show="showForm" style="position: absolute; top: {{ formPos.y }}%; left: {{ formPos.x }}%;")
+                form.add-comment(@submit.prevent="sendComment" v-if="showForm" style="position: absolute; top: {{ formPos.y }}%; left: {{ formPos.x }}%;")
                     div
                         button.add-comment__close(@click.prevent="showForm = false")
                         textarea.add-comment__textfield(v-model="newMessage")
