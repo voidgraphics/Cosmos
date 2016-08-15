@@ -1,10 +1,23 @@
 div.container.view#view-projectmockups
-    a.add-btn(href="#") +
-    span.header-btn(href="") Mockups
+    a.add-btn(@click.prevent="togglePopup") Mockups
     div.mockup-items(v-if="mockups")
-        a.mockup-item.mockup-item__link(v-for="mockup in mockups" v-link="{path: '/mockups/' + mockup.id}")
+        a.mockup-item.mockup-item__link(v-for="mockup in mockups" v-link="{path: '/mockups/' + mockup.uuid}")
             div.thumbnail-container
                 img.mockup-item__thumbnail(v-bind:src="mockup.src")
             span.mockup-item__title {{ mockup.title }}
-            p.mockup-item__comment-count 6 comments
+            p.mockup-item__comment-count {{ mockup.commentCount }} comment{{ mockup.commentCount != 1 ? "s" : "" }}
             
+    div.popup-overlay(v-show="popupIsShowing" @click="togglePopup")
+    div.popup(v-show="popupIsShowing")
+        form(@submit.prevent="addMockup")
+            fieldset.form-body.form-body--nosidebar
+                h2.popup-title Add mockup
+                button.close-popup(@click.prevent="togglePopup")
+                div.form-ground
+                    label.form-body__label(for="name") Name
+                    input.form-body__input(type="text" id="name" name="name" v-model="newMockup.name")
+                div.form-group
+                    label.form-body__label(for="image") Image
+                    input.form-body__input(type="file" id="image" name="image" @change="detectFile")
+                div.form-group.submit-container
+                    input.task-submit.submit-btn(type="submit" value="Add mockup")
