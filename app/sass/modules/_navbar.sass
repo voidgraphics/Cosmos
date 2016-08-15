@@ -14,12 +14,16 @@
 
 .team,
 .navbar__links,
-.account
-    position: absolute
-    top: 65%
-    transform: translateY(-65%)
+.team__dropdown-toggle
     letter-spacing: ps_ls(120)
     -webkit-user-select: none
+
+.team__dropdown-toggle
+    float: left
+    margin-top: 35px
+    margin-left: 30px
+    padding-top: 11px
+    padding-bottom: 11px
 
 .team
     left: 30px
@@ -39,10 +43,10 @@
         color: $cLightBlue
 
 .navbar__links
-    left: auto
-    right: 0
+    float: right
+    margin-top: 35px
 
-    > a
+    > .navbar__link
         display: inline
         padding: 23px
         font-size: inherit
@@ -122,7 +126,12 @@
 .navbar__username
     cursor: pointer
     margin-left: 30px
-    margin-right: 50px
+    padding-right: 7px
+    display: inline
+    font-size: inherit
+    color: $cWhite
+    padding: 23px
+    padding-right: 7px
 
     &:after
         content: ''
@@ -144,11 +153,43 @@
     height: 36px
     border-radius: 4px 4px
     overflow: hidden
-    position: absolute
-    top: -8px
-    right: 30px
+    margin-right: 30px
+    display: inline-block
+    vertical-align: middle
+    transform: translateY(-5px)
 
 .navbar__avatar
     width: 100%
     min-width: 36px
     min-height: 36px
+
+.team__dropdown
+    position: absolute
+    background-color: $cWhite
+    padding: 15px 20px
+    border-radius: 3px
+    width: 250px
+    top: 80px
+    left: 30px
+
+    &__item
+        cursor: pointer
+
+    &__group
+        margin-bottom: 30px
+
+    &-toggle
+        cursor: pointer
+
+.group
+    &__name
+        color: black
+    &__link
+        display: block
+        font-family: $fOpenRegular
+        text-transform: none
+        color: $cDarkBlue
+        letter-spacing: ps_ls(20)
+        cursor: pointer
+        padding: 15px 0
+        border-bottom: 1px dashed #eee
