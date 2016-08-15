@@ -5,7 +5,7 @@
     right: 0
     bottom: 0
     background-color: rgba( 0, 0, 0, .3 )
-    z-index: 0
+    z-index: 99998
 
 .hidden + .popup-overlay
     display: none
@@ -37,6 +37,7 @@
     height: 515px
     margin-left: -225px
     margin-top: -257.5px
+    z-index: 99999
 
 .deletePopup
     width: 300px
@@ -148,12 +149,14 @@
     margin-left: 80px
     padding: 20px 40px
 
+    &--nosidebar
+        margin-left: 0
+
 .form-group
     position: relative
     margin-bottom: 20px
 
 .form-body__label
-    // display: block
     font-size: 14px
     -webkit-user-select: none
 
@@ -198,7 +201,8 @@
     position: absolute
     bottom: 0
     height: 50px
-    width: calc(100% - 160px)
+    right: 40px
+    left: 40px
 
 .task-submit
     display: block
