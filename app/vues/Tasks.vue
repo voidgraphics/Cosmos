@@ -16,33 +16,33 @@
              }
 
         asyncData: ( resolve, reject ) ->
-            socket.emit "task.getAll", ( oReturnedTasks ) ->
+            sProjectId = localStorage.selectedProject
+            socket.emit "task.getAll", sProjectId, ( oReturnedTasks ) ->
                 this.items = Object.keys( oReturnedTasks ).map( ( key ) -> return oReturnedTasks[ key ] )
                 resolve { tasks: this.items }
 
         ready: ->
             drake = Dragula( [ document.querySelector( '#todo-column__items' ), document.querySelector( '#progress-column__items' ), document.querySelector( '#finished-column__items' ) ] )
-            that = this
 
-            drake.on "drag", ( element ) ->
+            drake.on "drag", ( element ) =>
                 # Decrease position of all tasks after the one we're dragging
                 iOldPosition = [].indexOf.call element.parentNode.children, element
                 index = parseInt element.dataset.id
                 column = element.parentNode.parentNode.id
 
-                currentColumnTasks = that.tasks.filter ( task ) ->
+                currentColumnTasks = this.tasks.filter ( task ) ->
                     return ( task.state == column ) && ( task.position >= iOldPosition ) && ( task.id != index )
 
                 for task in currentColumnTasks
                     --task.position
 
-            drake.on "dragend", ( element ) ->
+            drake.on "dragend", ( element ) =>
                 # Handle new position
                 sNewState = element.parentNode.parentNode.id
                 index = element.dataset.id
                 iNewPosition = [].indexOf.call element.parentNode.children, element
 
-                for task in that.tasks
+                for task in this.tasks
                     if task.id == index
                         task.state = sNewState
                         task.position = iNewPosition
@@ -50,14 +50,14 @@
 
                 column = element.parentNode.parentNode.id
 
-                currentColumnTasks = that.tasks.filter ( task ) ->
+                currentColumnTasks = this.tasks.filter ( task ) ->
                     return ( task.state == column ) && ( task.position >= iNewPosition ) && ( task.id != index )
 
                 for task in currentColumnTasks
                     task.position++
 
                 # Send modified tasks to server
-                oTasks = that.tasks
+                oTasks = this.tasks
                 socket.emit "task.saveAll", oTasks
 
         methods:
@@ -108,8 +108,8 @@
                 this.delete()
 
             submitTask: ( oTask ) ->
-                console.log oTask
                 oTask.id = zouti.uuid()
+                oTask.projectId = localStorage.selectedProject
                 socket.emit "task.save", oTask
                 this.tasks.push( oTask )
                 for task in this.tasks
@@ -118,6 +118,10 @@
                         console.log task.title, task.position
 
                 this.popupIsShowing = false
+
+            changeProject: ( oTeam, oProject ) ->
+                socket.emit "task.getAll", oProject.uuid, ( aTasks ) =>
+                    @tasks = aTasks
 
     module.exports = Tasks
 

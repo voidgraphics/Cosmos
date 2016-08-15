@@ -17,7 +17,6 @@
         ready: ->
             @$mockup = document.getElementById "mockup"
             @$overlay = document.getElementById "overlay"
-            console.log zouti.uuid()
 
             # Getting mockup
             socket.emit "mockup.get", @$route.params.id
@@ -30,7 +29,7 @@
                 console.log sError
 
             # Getting comments
-            socket.emit "comment.get", 1, ( aComments ) =>
+            socket.emit "comment.get", @$route.params.id, ( aComments ) =>
                 for oComment in aComments
                     oComment.isShowing = false
                     if oComment.x > 75
@@ -84,14 +83,11 @@
                 @showForm = true
 
             sendComment: ->
-                console.log @newMessage
-                console.log @formPos
-
                 comment = {
                     x: @formPos.x
                     y: @formPos.y
                     mockup:
-                        id: 1
+                        id: @$route.params.id
                     author:
                         id: "eae67478-b360-4ca5-8f41-f0553795938d"
                         username: "Void"
@@ -115,6 +111,10 @@
 
                 $el.classList.toggle "mockup__comment--showing"
                 comment.isShowing = !comment.isShowing
+
+        events:
+            changeProject: ( oTeam, oProject ) ->
+                @$route.router.go "/mockups"
 
     module.exports = Mockup
 

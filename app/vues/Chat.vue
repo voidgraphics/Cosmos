@@ -15,7 +15,9 @@
              }
 
         asyncData: ( resolve, reject ) ->
-            socket.emit "chat.getAll", ( oReturnedMessages ) ->
+            sProjectId = localStorage.getItem('selectedProject')
+            console.log sProjectId
+            socket.emit "chat.getAll", sProjectId, ( oReturnedMessages ) ->
                 this.items = Object.keys( oReturnedMessages ).map( ( key ) -> return oReturnedMessages[ key ] )
                 resolve { messages: this.items }
 
@@ -32,6 +34,8 @@
                 message =
                     userId: localStorage.id
                     text: @newMessage
+                    projectId: localStorage.selectedProject
+
 
                 socket.emit "chat.newMessage", message
                 @newMessage = ""
@@ -44,6 +48,11 @@
             handleNotification: ( message, username ) ->
                 title = "#general - #{username}:"
                 notification = new Notification title, { body: message }
+
+        events:
+            changeProject: ( oTeam, oProject ) ->
+                socket.emit "chat.getAll", oProject.uuid, ( aMessages ) =>
+                    @messages = aMessages
 
         filters:
             hour: ( value ) ->
