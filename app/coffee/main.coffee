@@ -13,11 +13,16 @@ MockupsView = require "../vues/Mockups.vue"
 MockupView = require "../vues/Mockup.vue"
 ChatView = require "../vues/Chat.vue"
 
-Vue.config.debug = true
+# Vue.config.debug = true
 
 Vue.use VueRouter
 Vue.use VueAsyncData
-App = Vue.extend {}
+App = Vue.extend({
+    events:
+        changeProject: ( oTeam, oProject ) ->
+            localStorage.setItem "selectedProject", oProject.uuid
+            this.$broadcast "changeProject", oTeam, oProject
+})
 
 
 Navbar = Vue.component "navbar", NavbarView
