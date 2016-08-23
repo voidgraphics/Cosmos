@@ -1,31 +1,38 @@
 div.container.animated.view#view-projecttasks
     div.content
         div.task-items
+            //- pre(style="color: white;") {{ tasks | json }}
             div.task-items__section#todo(data-section="To do")
-                a.add-task-btn(id="add-todo", v-on:click="showPopup") +
-                h2.task-items__section__title To do
+                a.add-btn(id="add-todo", v-on:click="showPopup") To do
                 div.task-items__cards#todo-column__items
-                    div.task-item(v-for="task in tasks | orderBy 'position'" v-if="task.state == 'todo'" data-id="{{ task.id }}" id="{{ task.id }}" v-on:click="showEditPopup( task )")
+                    div.task-item(v-for="task in tasks | orderBy 'position'" v-if="task.state == 'todo'" data-id="{{ task.uuid }}" id="{{ task.uuid }}" v-on:click.stop="showEditPopup( task, 'todo' )")
                         p.task-item__name {{ task.title }}
                         time.task-item__deadline Due {{ task.deadline | formatted }}
+                        div.task-item__users
+                            div.task-item__user(v-for="user in task.users")
+                                img.task-item__user__avatar(v-bind:src="findUserSrc(user)")
 
             div.task-items__section#inprogress(data-section="In progress")
-                a.add-task-btn(id="add-inprogress" v-on:click="showPopup") +
-                h2.task-items__section__title In progress
+                a.add-btn(id="add-inprogress" v-on:click="showPopup") In progress
                 div.task-items__cards#progress-column__items
-                    div.task-item(v-for="task in tasks | orderBy 'position'" v-if="task.state == 'inprogress'" data-id="{{ task.id }}" id="{{ task.id }}" v-on:click="showEditPopup( task )")
+                    div.task-item(v-for="task in tasks | orderBy 'position'" v-if="task.state == 'inprogress'" data-id="{{ task.uuid }}" id="{{ task.uuid }}" v-on:click.stop="showEditPopup( task, 'inprogress' )")
                         p.task-item__name {{ task.title }}
                         time.task-item__deadline Due {{ task.deadline | formatted }}
+                        div.task-item__users
+                            div.task-item__user(v-for="user in task.users")
+                                img.task-item__user__avatar(v-bind:src="findUserSrc(user)")
 
             div.task-items__section#finished(data-section="Finished")
-                a.add-task-btn(id="add-finished" v-on:click="showPopup") +
-                h2.task-items__section__title Completed
+                a.add-btn(id="add-finished" v-on:click="showPopup") Completed
                 div.task-items__cards#finished-column__items
-                    div.task-item(v-for="task in tasks | orderBy 'position'" v-if="task.state == 'finished'" data-id="{{ task.id }}" id="{{ task.id }}" v-on:click="showEditPopup( task )")
+                    div.task-item(v-for="task in tasks | orderBy 'position'" v-if="task.state == 'finished'" data-id="{{ task.uuid }}" id="{{ task.uuid }}" v-on:click.stop="showEditPopup( task, 'finished' )")
                         p.task-item__name {{ task.title }}
                         time.task-item__deadline Due {{ task.deadline | formatted }}
+                        div.task-item__users
+                            div.task-item__user(v-for="user in task.users")
+                                img.task-item__user__avatar(v-bind:src="findUserSrc(user)")
 
         delete-popup( v-if="deletePopupIsShowing" )
-        popup( v-if="popupIsShowing" transition="fade" v-bind:columnname="columnName" v-bind:task="taskToEdit")
+        popup( v-if="popupIsShowing" v-bind:columnname="columnName" v-bind:task="taskToEdit" v-bind:users="users")
 
         

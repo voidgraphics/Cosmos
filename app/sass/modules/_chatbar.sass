@@ -1,7 +1,7 @@
 .chatbar
     background-color: $cMediumBlue1
     color: $cWhite
-    padding: 25px 30px
+    padding: 25px 0 25px 30px
 
 .chatbar__section
     margin-bottom: 35px
@@ -23,9 +23,24 @@
     letter-spacing: ps_ls(80)
     font-size: s($s1)
     display: block
+    margin: 7px 0
 
-    &__active
+    &--active
         color: $cWhite
+
+    &__unreadCount
+            display: inline-block
+            background-color: $cLightBlue
+            width: 16px
+            height: 16px
+            font-size: 9px
+            border-radius: 50%
+            text-align: center
+            color: $cWhite
+            margin-left: 4px
+            line-height: 16px
+            position: relative
+            top: -1px
 
 .chat-users
     margin-top: 10px
@@ -46,3 +61,4 @@
     width: 24px
     height: 24px
     vertical-align: middle
+    border-radius: 3px

@@ -12,15 +12,18 @@ TasksView = require "../vues/Tasks.vue"
 MockupsView = require "../vues/Mockups.vue"
 MockupView = require "../vues/Mockup.vue"
 ChatView = require "../vues/Chat.vue"
+TeamsView = require "../vues/Teams.vue"
+JoinTeamView = require "../vues/JoinTeam.vue"
 
-# Vue.config.debug = true
+Vue.config.debug = true
 
 Vue.use VueRouter
 Vue.use VueAsyncData
 App = Vue.extend({
     events:
         changeProject: ( oTeam, oProject ) ->
-            localStorage.setItem "selectedProject", oProject.uuid
+            localStorage.selectedProject = oProject.uuid
+            localStorage.selectedTeam = oTeam.uuid
             this.$broadcast "changeProject", oTeam, oProject
 })
 
@@ -35,6 +38,8 @@ TasksView   = Vue.component "tasks-component", TasksView
 MockupsView   = Vue.component "mockups-component", MockupsView
 MockupView   = Vue.component "mockup-component", MockupView
 ChatView   = Vue.component "chat-component", ChatView
+TeamsView   = Vue.component "teams-component", TeamsView
+JoinTeamView   = Vue.component "jointeam-component", JoinTeamView
 
 router = new VueRouter()
 router.redirect { "/": "/signin" }
@@ -53,6 +58,10 @@ router.map {
         component: MockupView
     '/chat':
         component: ChatView
+    '/teams':
+        component: TeamsView
+    '/joinTeam':
+        component: JoinTeamView
 }
 
 router.start App, "#app"

@@ -8,10 +8,10 @@ div.container.animated.view#view-projectchat
                 p.chat__message__user(v-else) User not found
                 div.chat__message__body
                     div.chat__message__avatar-container
-                        img.chat__message__avatar(src="../img/user1.png", alt="")
+                        img.chat__message__avatar(v-bind:src="findUserSrc(message.user)")
                     time.chat__message__time {{ message.createdAt | hour }}
                     p.chat__message__text {{{ message.text | format }}}
 
         form.input-area( @submit.prevent="sendMessage" )
-            input.input-area__textfield(type="text" placeholder="Type your message..." v-model="newMessage")
+            input.input-area__textfield(type="text" placeholder="Type your message..." v-model="newMessage" v-focus-auto)
             input.input-area__submit(type="submit" value="Send")

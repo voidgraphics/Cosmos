@@ -1,30 +1,27 @@
 div.chatbar
     div.chatbar__section
-        a.add-btn(href="#") +
-        p.chatbar__section__title Chatrooms
+        a.add-btn(@click.prevent="toggleForm") Chatrooms
         div.chatrooms
-            a.chatroom.chatroom__active(href="#") #General        
-            a.chatroom(href="#") #UI
-            a.chatroom(href="#") #Front-end
+            form.inline-form(@submit.prevent="addChatroom" v-show="showForm" transition="fadeFromTop")
+                div
+                    input(type="text" v-model="newChatroom" v-focus="showForm" class="inline-form__textfield" placeholder="New chatroom...")
+                    input.inline-form__submit(type="submit" value="Submit")
+                    a(@click.prevent="toggleForm" class="inline-form__close")
+            a.chatroom(
+                href="#" 
+                v-for="chatroom in chatrooms | orderBy 'name'" 
+                class="{{ selectedChatroom.uuid == chatroom.uuid ? 'chatroom--active' : '' }}"
+                @click.prevent="changeChatroom(chatroom)"
+            ) {{ '#' + chatroom.name }} 
+                span.chatroom__unreadCount(v-if="chatroom.unreadCount") {{ chatroom.unreadCount }}
         
     div.chatbar__section
         p.chatbar__section__title Users
         div.chat-users
-            div.chat-user
-                img.account__picture(src="../img/user1.png")
-                a.user__name(href="#") Adrien
-            div.chat-user
-                img.account__picture(src="../img/user1.png")
-                a.user__name(href="#") Bender
-            div.chat-user
-                img.account__picture(src="../img/user1.png")
-                a.user__name(href="#") Fry
-            div.chat-user
-                img.account__picture(src="../img/user1.png")
-                a.user__name(href="#") Leela
-            div.chat-user
-                img.account__picture(src="../img/user1.png")
-                a.user__name(href="#") Zoidberg
+            div.chat-user(v-for="user in users | orderBy 'username' ")
+                img.account__picture(v-bind:src="user.avatar")
+                a.user__name {{ user.username }}
+            
 
     div.chatbar__section
         p.chatbar__scrolltip(v-if="scrollTip") Scroll to see new messages

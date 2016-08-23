@@ -35,9 +35,15 @@
                     projectId: localStorage.selectedProject
                 }
                 socket.emit "mockup.create", oMockup
+                @popupIsShowing = false
+                @newMockup.name = ""
+                @newMockup.file = null
 
             detectFile: ( e ) ->
                 @newMockup.fileName = e.target.files[0].name
+                ext = @newMockup.fileName.match(/\.([^\.]+)$/)[1]
+                if ext != "gif" and ext != "jpeg" and ext != "jpg" and ext != "png"
+                    e.target.value = ""
                 reader = new FileReader()
                 reader.onload = ( e ) =>
                     @newMockup.file = e.target.result

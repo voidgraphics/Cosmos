@@ -7,8 +7,8 @@
             return {
                 username: ""
                 password: ""
-                usernameError: ""
-                passwordError: ""
+                usernameError: false
+                passwordError: false
             }
 
         ready: ->
@@ -19,21 +19,19 @@
                 localStorage.firstname = oUserData.firstname
                 localStorage.lastname = oUserData.lastname
 
-                that.$route.router.go "/tasks"
-
         methods:
             submit: ->
                 if @username && @password
                     socket.emit "user.login", { username: @username, password: @password }
                 else
                     if !@username
-                        @usernameError = "Please enter your username"
+                        @usernameError = true
                     else
-                        @usernameError = ""
+                        @usernameError = false
                     if !@password
-                        @passwordError = "Please enter your password"
+                        @passwordError = true
                     else
-                        @passwordError = ""
+                        @passwordError = false
 
     module.exports = SignIn
 </script>

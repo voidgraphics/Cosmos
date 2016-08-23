@@ -6,21 +6,30 @@ div.container.view#view-signup
             form.form(@submit.prevent="register")
                 div
                     label(for="username") Username
+                    p.form__error(v-if="usernameError") You must enter a username
                     input(type="text" name="username" id="username" v-model="username")
                     
                     label(for="email") E-mail
+                    p.form__error(v-if="emailError") You must enter a valid e-mail
                     input(type="email" name="email" id="email" v-model="email")
                     
                     label(for="firstname") First name
+                    p.form__error(v-if="firstnameError") You must enter your first name
                     input(type="text" name="firstname" id="firstname" v-model="firstname")
                     
                     label(for="lastname") Last name
+                    p.form__error(v-if="lastnameError") You must enter your last name
                     input(type="text" name="lastname" id="lastname" v-model="lastname")
 
                     label(for="password") Password
+                    p.form__error(v-if="passwordError") You must enter a password
                     input(type="password" name="password" id="password" v-model="password")
+
+                    label(for="avatar") Avatar
+                    p.form__error(v-if="avatarError") You must choose an avatar
+                    input(type="file" name="avatar" id="avatar" accept="image/gif, image/jpeg, image/png" @change="detectFile")
 
                     input(type="submit" href="jointeam.html" class="submit-btn" value="Create account")
 
                     a#signin-link(href="#" v-link="{path: '/signin'}") Already have an account?
-                    a(href="forgotpassword.html") Forgot your password?
+                    //- a(href="forgotpassword.html") Forgot your password?

@@ -1,20 +1,30 @@
 div.container.setup#view-jointeam
-    h1 You need to be part of a team.
-    h2 This app is all about teamwork!
-    form
-        legend Find an exisiting team
+    .content
         div
-            label(for="search_team_name") Team name
-            input(type="text" name="search_team_name" id="search_team_name")
+            h1 You need to be part of a team.
+            h2 This app is all about teamwork!
+            form.form(@submit.prevent="findTeam")
+                fieldset.form-body
+                    div.form-group
+                        label.form-body__label(for="search_team_name") Find an exisiting team
+                        input.form-body__input(type="text" name="search_team_name" id="search_team_name" v-model="teamToFind.name")
 
-            a(href="searchteam.html" class="submit-btn") Search for this team
+                        input(type="submit" class="submit-btn" value="Search for this team")
 
-    form
-        legend Create your own team
-        div
-            label(for="create_team_name") Team name
-            input(type="text" name="create_team_name" id="create_team_name")
+            form.form(@submit.prevent="projectPopupIsShowing = true")
+                fieldset.form-body
+                    div.form-group
+                        label.form-body__label(for="create_team_name") Create a team
+                        input.form-body__input(type="text" name="create_team_name" id="create_team_name" v-model="teamToCreate.name")
 
-            a(href="teamprojects.html" class="submit-btn") Create this team
+                        input(type="submit" class="submit-btn" value="Create this team")
 
-    h3.pending You have 3 pending team requests
+            div.projectPopup(v-if="projectPopupIsShowing")
+                form.form(@submit.prevent="createTeam")
+                    h2 Just one more thing! You'll need a project within your team.
+                    fieldset.form-body
+                        div.form-group
+                            label.form-body__label(for="name") Project name
+                            input.form-body__input(type="text" id="name" v-model="projectToCreate.name")
+                            input(type="submit" value="Create team and project")
+            div.popup-overlay(v-if="projectPopupIsShowing" @click="projectPopupIsShowing = false")

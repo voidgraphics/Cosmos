@@ -10,32 +10,84 @@
         data: ->
             return {
                 newMessage: ""
+                chatrooms: []
                 messages: []
+                users: []
+                selectedChatroom: {
+                    uuid: ""
+                }
                 scrollTip: false
-             }
+                showForm: false
+                newChatroom: ""
+            }
 
         asyncData: ( resolve, reject ) ->
-            sProjectId = localStorage.getItem('selectedProject')
-            console.log sProjectId
-            socket.emit "chat.getAll", sProjectId, ( oReturnedMessages ) ->
-                this.items = Object.keys( oReturnedMessages ).map( ( key ) -> return oReturnedMessages[ key ] )
-                resolve { messages: this.items }
+            sProjectId = localStorage.selectedProject
+            sTeamId = localStorage.selectedTeam
+            socket.emit "chat.getAll", sProjectId, sTeamId, ( aChatrooms, aGeneralMessages, aUsers ) ->
+                selected = ""
+                for chatroom in aChatrooms
+                    chatroom.unreadCount = 0
+                    if chatroom.name == "General"
+                        selected = chatroom
+                resolve {
+                    users: aUsers
+                    selectedChatroom: selected
+                    chatrooms: aChatrooms
+                    messages: aGeneralMessages
+                }
+
+        detached: ->
+            socket.off "chat.new"
+            socket.off "user.receiveAvatar"
 
         ready: ->
-            that = this
-            socket.on "chat.new", ( message, user ) ->
-                message.user = user
-                that.messages.push( message )
-                # that.handleNotification( message.text, user.username )
+            socket.on "chat.new", ( oMessage, oUser ) =>
+                oMessage.user = oUser
+                if oMessage.chatroomUuid == @selectedChatroom.uuid
+                    @messages.push( oMessage )
+                else
+                    for chatroom in @chatrooms
+                        if oMessage.chatroomUuid == chatroom.uuid
+                            chatroom.unreadCount++
+                # that.handleNotification( oMessage.text, oUser.username )
+
+            socket.on "chat.newChatroom", ( oChatroom ) =>
+                oChatroom.unreadCount = 0
+                @chatrooms.push oChatroom
+
+            socket.on "user.receiveAvatar", ( oUser ) =>
+                for user in @users
+                    if user.uuid == oUser.uuid
+                        user.avatar = "data:image/png;base64,#{oUser.avatar}"
             @scroll()
 
         methods:
+            addChatroom: () ->
+                oChatroom = {
+                    uuid: zouti.uuid()
+                    projectUuid: localStorage.selectedProject
+                    name: @newChatroom
+                }
+
+                @showForm = false
+                @newChatroom = ""
+                socket.emit "chat.createChatroom", oChatroom
+
+            selectChatroom: ( aChatrooms ) ->
+                selected = ""
+                for chatroom in aChatrooms
+                    chatroom.unreadCount = 0
+                    if chatroom.name == "General"
+                        selected = chatroom
+                return selected
+
             sendMessage: ->
                 message =
                     userId: localStorage.id
                     text: @newMessage
                     projectId: localStorage.selectedProject
-
+                    chatroomId: @selectedChatroom.uuid
 
                 socket.emit "chat.newMessage", message
                 @newMessage = ""
@@ -49,10 +101,28 @@
                 title = "#general - #{username}:"
                 notification = new Notification title, { body: message }
 
+            changeChatroom: ( oChatroom ) ->
+                @selectedChatroom = oChatroom
+                socket.emit "chat.getMessages", oChatroom.uuid, ( aMessages ) =>
+                    @messages = aMessages
+                    @selectedChatroom.unreadCount = 0
+
+            toggleForm: () ->
+                @showForm = !@showForm
+
+            findUserSrc: ( oUser ) ->
+                for user in @users
+                    id = if typeof oUser is "string" then oUser else oUser.uuid
+                    if id == user.uuid then return user.avatar
+
         events:
             changeProject: ( oTeam, oProject ) ->
-                socket.emit "chat.getAll", oProject.uuid, ( aMessages ) =>
-                    @messages = aMessages
+                socket.emit "user.join", oProject.uuid
+                socket.emit "chat.getAll", oProject.uuid, oTeam.uuid, ( aChatrooms, aGeneralMessages, aUsers ) =>
+                    @users = aUsers
+                    @chatrooms = aChatrooms
+                    @messages = aGeneralMessages
+                    @selectedChatroom = @selectChatroom aChatrooms
 
         filters:
             hour: ( value ) ->
@@ -72,6 +142,8 @@
                 return text
 
         directives:
+            focus: (require "vue-focus").focus
+            focusAuto: (require "vue-focus").focusAuto
             scrolldown: ->
                 container = document.getElementsByClassName( "chat__messages" )[0]
                 if container && container.scrollTop == ( container.scrollHeight - container.offsetHeight )

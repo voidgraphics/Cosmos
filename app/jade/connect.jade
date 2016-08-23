@@ -6,14 +6,16 @@ div.container.view#view-signin
             form.form(@submit.prevent="submit")
                 div
                     label(for="username") Username
+                    p.form__error(v-if="usernameError") Please enter your username
                     input(type="text" name="username" id="username" v-model="username")
                     span(v-show="usernameError") {{ usernameError }}
 
                     label(for="password") Password
+                    p.form__error(v-if="passwordError") Please enter your password
                     input(type="password" name="password" id="password" v-model="password")
                     span(v-show="passwordError") {{ passwordError }}
 
                     input(type="submit" class="submit-btn" value="Log in")
 
                     a#signup-link(href="#" v-link="{path: '/signup'}") Don't have an account?
-                    a(href="forgotpassword.html") Forgot your password?
+                    //- a(href="forgotpassword.html") Forgot your password?

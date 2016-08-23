@@ -1,52 +1,41 @@
-div
-    div.popup
-        button.close-popup( v-on:click="hidePopup" )
-        form#task-form( v-on:submit="submitTask" )
-            fieldset.popup-sidebar
-                p.popup-sidebar__title Assign
-                div.assign-user__container
-                    input.assign-user__check(type="checkbox" id="user1" value="user1" v-model="users")
-                    label.assign-user(for="user1") 
-                        img.assign-user__image(src="../img/user1.png", alt="Adrien Leloup")
-                div.assign-user__container
-                    input.assign-user__check(type="checkbox" id="user2" value="user2" v-model="users")
-                    label.assign-user(for="user2") 
-                        img.assign-user__image(src="../img/user2.png", alt="Adrien Leloup")
-                div.assign-user__container
-                    input.assign-user__check(type="checkbox" id="user3" value="user3" v-model="users")
-                    label.assign-user(for="user3") 
-                        img.assign-user__image(src="../img/user3.png", alt="Adrien Leloup")
-                div.assign-user__container
-                    input.assign-user__check(type="checkbox" id="user4" value="user4" v-model="users")
-                    label.assign-user(for="user4") 
-                        img.assign-user__image(src="../img/user4.png", alt="Adrien Leloup")
+
+div.popup
+    button.close-popup( @click="hidePopup" )
+    form#task-form.form( @submit.prevent="submitTask" )
+        fieldset.popup-sidebar
+            p.popup-sidebar__title Assign
+            div.assign-user__container(v-for="user in users | orderBy username")
+                input.assign-user__check(type="checkbox" id="{{ user.uuid }}" value="{{ user.uuid }}" v-model="selectedUsers")
+                label.assign-user(for="{{ user.uuid }}") 
+                    img.assign-user__image(v-bind:src="user.src", alt="{{ user.username }}")
+                    span.assign-user__tooltip {{ user.username }} ({{ user.firstname }} {{ user.lastname }})
+            
+        fieldset.form-body
+            h2.popup-title {{ task ? 'Edit task' : 'New task' }}
+            
+            div.form-group
+                input#taskID(type="hidden" value="")
+                label.form-body__label(for="new-task__name") Task
+                input.form-body__input(type="text" v-model="taskName" id="newtask__name" placeholder="Task description..." value="{{ taskName }}")
                 
-            fieldset.form-body
-                h2.popup-title Add task
+            div.form-group
+                input.form-body__input(type="checkbox" id="new-task__hasDeadline" v-model="hasDeadline" v-on:click="clearDeadline")
+                label.form-body__label(for="new-task__hasDeadline") Deadline
+                p.currentDate#currentDate( v-if="hasDeadline" ) Deadline is {{ deadline | dateFromNow }}
+                p.currentDate#currentDate( v-else ) Today is {{ deadline | dateForHumans }}
+                input.form-body__input(type="text" id="datepicker" v-el:datepicker placeholder="Select a date below..." value="{{ deadline }}")
                 
-                div.form-group
-                    input#taskID(type="hidden" value="")
-                    label.form-body__label(for="new-task__name") Task
-                    input.form-body__input(type="text" v-model="taskName" id="newtask__name" placeholder="Task description..." value="{{ taskName }}")
-                    
-                div.form-group
-                    input.form-body__input(type="checkbox" id="new-task__hasDeadline" v-model="hasDeadline" v-on:click="clearDeadline")
-                    label.form-body__label(for="new-task__hasDeadline") Deadline
-                    p.currentDate#currentDate( v-if="hasDeadline" ) Deadline is {{ deadline | dateFromNow }}
-                    p.currentDate#currentDate( v-else ) Today is {{ deadline | dateForHumans }}
-                    input.form-body__input(type="text" id="datepicker" v-el:datepicker placeholder="Select a date below..." value="{{ deadline }}")
-                    
-                div.form-group
-                    input.form-body__input(type="radio" name="new-task__state" id="state-todo" value="todo" v-model="state")
-                    label.form-body__label(for="state-todo") To do
-                    input.form-body__input(type="radio" name="new-task__state" id="state-inprogress" value="inprogress" v-model="state")
-                    label.form-body__label(for="state-inprogress") In progress
-                    input.form-body__input(type="radio" name="new-task__state" id="state-finished" value="finished" v-model="state")
-                    label.form-body__label(for="state-finished") Finished
-                
-                div.form-group.submit-container
-                    input.task-submit.submit-btn(type="submit" id="new-task__submit" value="Add this task")
-                    a(href="#" v-if="hasDeleteButton" v-on:click="deleteTask" style="margin-top: 40px;") Delete task
-                
-    div.popup-overlay( v-on:click="hidePopup" )
-    pre {{ $data | json }}
+            div.form-group
+                input.form-body__input(type="radio" name="new-task__state" id="state-todo" value="todo" v-model="state")
+                label.form-body__label(for="state-todo") To do
+                input.form-body__input(type="radio" name="new-task__state" id="state-inprogress" value="inprogress" v-model="state")
+                label.form-body__label(for="state-inprogress") In progress
+                input.form-body__input(type="radio" name="new-task__state" id="state-finished" value="finished" v-model="state")
+                label.form-body__label(for="state-finished") Finished
+            
+            div.form-group.submit-container.submit-container--sidebar
+                input(type="submit" id="new-task__submit" class="task-submit submit-btn {{ task ? 'submit-btn--half' : '' }}" value="Add this task")
+                a.delete-btn(href="#" v-if="hasDeleteButton" @click.prevent="deleteTask" style="margin-top: 40px;") Delete task
+            
+div.popup-overlay( @click="hidePopup" )
+//- pre(style="color: white;") {{ columnname  | json }}

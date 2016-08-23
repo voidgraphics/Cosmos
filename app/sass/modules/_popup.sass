@@ -4,24 +4,27 @@
     left: 0
     right: 0
     bottom: 0
-    background-color: rgba( 0, 0, 0, .3 )
+    background-color: $cOverlay
     z-index: 99998
 
 .hidden + .popup-overlay
     display: none
 
 .popup,
-.deletePopup
+.deletePopup,
+.leavePopup,
+.searchPopup,
+.projectPopup
     position: fixed
     top: 50%
     left: 50%
 
-    background-color: #fff
+    background-color: $cMediumBlue1
     border-radius: 5px
     box-shadow: 0 0 10px rgba( 0, 0, 0, .3 )
 
     overflow: hidden
-    z-index: 1
+    z-index: 99999
 
     &::after
         content: ""
@@ -47,7 +50,7 @@
     padding: 20px
 
 .deletePopup h2
-    color: $cDarkBlue
+    color: $cWhite
 
 #confirmDelete,
 #cancelDelete
@@ -66,12 +69,12 @@
     left: 20px
 
 #cancelDelete
-    background-color: $cMediumBlue1
+    background-color: $cDarkBlue
     right: 20px
 
 .popup-title
     font-weight: 400
-    color: $cDarkBlue
+    color: $cWhite
     font-size: 16px
 
 .close-popup
@@ -104,10 +107,11 @@
     left: 0
     top: 0px
     bottom: 0
-    background-color: $cMediumBlue1
+    background-color: $cDarkBlue
 
 .assign-user__container
     position: relative
+    text-align: center
 
 .assign-user
     display: block
@@ -120,6 +124,7 @@
     border: 2px solid transparent
     transition: border-color .3s ease
     cursor: pointer
+    margin-right: 0 !important
 
     &::before
         content: ""
@@ -128,20 +133,22 @@
         height: 22px
         border-radius: 50%
         position: absolute
-        bottom: 0
+        bottom: 5px
         right: 10px
         opacity: 0
+        background-color: transparent !important
+        border-color: transparent !important
         transition: opacity .2s ease
-        background: url( "../img/check.svg" )
+        // background: url( "../img/check.svg" )
 
 .assign-user__image
     width: 100%
+    -webkit-user-select: none
 
 .assign-user__check
     display: none
 
     &:checked + .assign-user::before
-
         opacity: 1
         transition: opacity .2s ease
 
@@ -157,34 +164,39 @@
     margin-bottom: 20px
 
 .form-body__label
-    font-size: 14px
+    font-size: 11px
+    color: $cWhite
     -webkit-user-select: none
+    text-transform: uppercase
+    letter-spacing: ps_ls(80)
 
 .form-body__input
     display: block
-    border-radius: 5px
-    border: 1px solid #ddd !important
-    background: $cWhite
-    font-size: 14px
-    padding: 5px 10px
-    font-family: $font
+    border-radius: 3px
+    border: none
+    background: $cDarkBlue
+    color: $cLightBlue2
+    letter-spacing: ps_ls(20)
+    font-size: 12px
+    padding: 12px 15px
+    font-family: $fOpenRegular
     width: 100%
     margin: 5px 0 10px
 
-    &[type="checkbox"]
-        display: inline
-        width: auto
-        vertical-align: top
+    // &[type="checkbox"]
+    //     display: inline
+    //     width: auto
+    //     vertical-align: top
 
-    &[type="radio"]
-        display: inline
-        width: auto
-        vertical-align: top
-
-        & + .form-body__label
-            font-size: 13px
-            margin-left: 3px
-            margin-right: 20px
+    // &[type="radio"]
+    //     display: inline
+    //     width: auto
+    //     vertical-align: top
+    //
+    //     & + .form-body__label
+    //         font-size: 13px
+    //         margin-left: 3px
+    //         margin-right: 20px
 
 
 .currentDate
@@ -193,9 +205,52 @@
     font-size: 12px
     right: 0
     top: 3px
+    color: $cLightBlue
 
 #datepicker
     display: none
+
+.pika-single
+    background-color: $cDarkBlue
+    border: none
+    font-family: $fOpenRegular
+    border-radius: 3px
+
+.pika-table th
+    color: $cLightBlue
+    font-family: $fOpenRegular
+    letter-spacing: ps_ls(20)
+
+.pika-lendar
+    float: none
+    margin: 10px auto
+
+.pika-label
+    background-color: transparent
+    color: $cWhite
+    font-size: 12px
+    letter-spacing: ps_ls(20)
+
+.is-today .pika-button
+    font-style: italic
+    color: $cLightBlue2
+
+.is-selected .pika-button
+    background: $cOrange
+    color: $cWhite
+    box-shadow: none
+
+.pika-button
+    background-color: transparent
+    color: $cLightBlue2
+    font-family: $fOpenRegular
+    text-align: center
+    transition: all .05s ease-in-out
+
+    &:hover
+        transition: all .05s ease-in-out
+        background: $cMediumBlue1
+        color: $cWhite
 
 .submit-container
     position: absolute
@@ -204,12 +259,25 @@
     right: 40px
     left: 40px
 
+    &--sidebar
+        left: 120px
+
 .task-submit
+    right: 0
+    bottom: 0
+
+.delete-btn
+    left: 0
+    bottom: 0
+    margin-bottom: 0
+
+.task-submit,
+.delete-btn
     display: block
     border: none
     background-color: $cOrange
     color: $cWhite
-    border-radius: 5px
+    border-radius: 3px
     padding: 12px 0
     width: 100%
     font-family: $font

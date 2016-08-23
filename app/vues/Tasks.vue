@@ -13,6 +13,7 @@
                 taskToDelete: null
                 columnName: null
                 tasks: [ { title: "not loaded yet" } ]
+                users: []
              }
 
         asyncData: ( resolve, reject ) ->
@@ -31,7 +32,7 @@
                 column = element.parentNode.parentNode.id
 
                 currentColumnTasks = this.tasks.filter ( task ) ->
-                    return ( task.state == column ) && ( task.position >= iOldPosition ) && ( task.id != index )
+                    return ( task.state == column ) && ( task.position >= iOldPosition ) && ( task.uuid != index )
 
                 for task in currentColumnTasks
                     --task.position
@@ -43,7 +44,7 @@
                 iNewPosition = [].indexOf.call element.parentNode.children, element
 
                 for task in this.tasks
-                    if task.id == index
+                    if task.uuid == index
                         task.state = sNewState
                         task.position = iNewPosition
                         break
@@ -51,7 +52,7 @@
                 column = element.parentNode.parentNode.id
 
                 currentColumnTasks = this.tasks.filter ( task ) ->
-                    return ( task.state == column ) && ( task.position >= iNewPosition ) && ( task.id != index )
+                    return ( task.state == column ) && ( task.position >= iNewPosition ) && ( task.uuid != index )
 
                 for task in currentColumnTasks
                     task.position++
@@ -60,19 +61,20 @@
                 oTasks = this.tasks
                 socket.emit "task.saveAll", oTasks
 
+            socket.emit "team.getUsers", localStorage.selectedTeam
+
+            socket.on "team.receiveUser", ( oUser ) =>
+                oUser.src = "data:image/png;base64,#{oUser.avatar}"
+                @users.push oUser
+
         methods:
-            addPopup: ( event ) ->
-                column = event.target.parentNode.id
-
-            editPopup: ( event ) ->
-                console.log 'editing', event.target.parentNode
-
             showPopup: ( event )  ->
                 this.columnName = event.target.parentNode.id
                 this.popupIsShowing = true
 
-            showEditPopup: ( oTask ) ->
+            showEditPopup: ( oTask, sColumn ) ->
                 this.taskToEdit = oTask
+                this.columnName = sColumn
                 this.popupIsShowing = true
 
             showDeletePopup: ( task ) ->
@@ -84,9 +86,14 @@
                 this.tasks.$remove( this.taskToDelete )
 
                 # Deleting server-side
-                socket.emit "task.delete", this.taskToDelete.id
+                socket.emit "task.delete", this.taskToDelete.uuid
 
                 this.deletePopupIsShowing = false
+
+            findUserSrc: ( oUser ) ->
+                for user in @users
+                    id = if typeof oUser is "string" then oUser else oUser.id
+                    if id == user.uuid then return user.src
 
         filters:
             formatted: ( value ) ->
@@ -102,24 +109,42 @@
 
             showDelete: ( task ) ->
                 this.showDeletePopup( task )
-                console.log 'delettttteeeee', task
 
             confirmDelete: ->
                 this.delete()
 
+            editTask: ( oTask ) ->
+                for task in @tasks
+                    if task.uuid == oTask.uuid
+                        task.title = oTask.title
+                        task.deadline = oTask.deadline
+                        task.users = []
+                        for user in oTask.users
+                            u = {
+                                id: user
+                            }
+                            task.users.push u
+                        task.state = oTask.state
+                        task.position = oTask.position
+                        break
+
+                socket.emit "task.update", oTask
+                this.popupIsShowing = false
+
             submitTask: ( oTask ) ->
-                oTask.id = zouti.uuid()
+                oTask.uuid = zouti.uuid()
                 oTask.projectId = localStorage.selectedProject
                 socket.emit "task.save", oTask
                 this.tasks.push( oTask )
                 for task in this.tasks
-                    if task.state == oTask.state && task.id != oTask.id
+                    if task.state == oTask.state && task.uuid != oTask.id
                         task.position++
-                        console.log task.title, task.position
 
                 this.popupIsShowing = false
 
             changeProject: ( oTeam, oProject ) ->
+                @users = []
+                socket.emit "team.getUsers", oTeam.uuid
                 socket.emit "task.getAll", oProject.uuid, ( aTasks ) =>
                     @tasks = aTasks
 

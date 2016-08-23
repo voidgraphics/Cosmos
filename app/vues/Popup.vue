@@ -12,33 +12,36 @@
             return {
                 deadline: ""
                 taskName: ""
-                users: []
+                selectedUsers: []
                 hasDeadline: false
                 state: ""
                 hasDeleteButton: false
             }
 
-        props: [ "columnname", "task" ]
+        props: [ "columnname", "task", "users" ]
 
         ready: ->
-            if( @task )
-                this.taskName = @task.title
-                this.deadline = @task.deadline
-                this.users = @task.users
-                this.hasDeadline = @task.deadline != ""
-                this.hasDeleteButton = true
-            else
-                this.hasDeleteButton = false
+            that = this
 
             field = this.$els.datepicker
-            that = this
             picker = new Pikaday( {
-                minDate: new Date(),
                 onSelect: ( date ) ->
                     field.value = picker.getMoment().format "YYYY-MM-DD"
                     that.hasDeadline = true
                     that.deadline = picker.getMoment().format "YYYY-MM-DD"
             } )
+
+            if( @task )
+                this.taskName = @task.title
+                this.deadline = @task.deadline
+                picker.setDate @deadline
+                for user in @task.users
+                    @selectedUsers.push user.id
+                this.hasDeadline = @task.deadline != ""
+                this.hasDeleteButton = true
+            else
+                this.hasDeleteButton = false
+
             this.state = this.columnname
 
             field.parentNode.insertBefore( picker.el, field.nextSibling )
@@ -56,15 +59,18 @@
                     this.deadline = picker.getMoment().format "YYYY-MM-DD"
 
             submitTask: ( event ) ->
-                event.preventDefault()
                 oTask =
                     title: @taskName
                     deadline: @deadline
-                    users: @users
+                    users: @selectedUsers
                     state: @state
                     position: 0
-
-                this.$dispatch "submitTask", oTask
+                if @task
+                    oTask.uuid = @task.uuid
+                    oTask.position = @task.position
+                    this.$dispatch "editTask", oTask
+                else
+                    this.$dispatch "submitTask", oTask
 
             deleteTask: ( event ) ->
                 event.preventDefault()
