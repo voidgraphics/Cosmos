@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.0.0, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+	 viewBox="0 0 52 78" style="enable-background:new 0 0 52 78;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#EA6A47;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+	.st1{fill:none;stroke:#EA6A47;stroke-width:3;stroke-linecap:round;stroke-linejoin:round;stroke-miterlimit:10;}
+</style>
+<g id="Rocket_4_">
+	<g id="Fire_2_">
+		<path id="Fire_5_" class="st0" d="M25.9,69.4c2.6-2.7,3.2-4.7,2.4-8.3c0.5,2,0.7,2.4,2.2,3.5c0.6-2.4,1.3-4-0.2-6.6
+			c0.8,1.1,1.4,1.5,2.6,1.7c-0.4-2.1-1.5-4.6-3.1-5.8"/>
+		<path id="Fire_4_" class="st0" d="M25.9,69.4c-2.6-2.7-3.2-4.7-2.4-8.3c-0.5,2-0.7,2.4-2.2,3.5c-0.6-2.4-1.3-4,0.2-6.6
+			c-0.8,1.1-1.4,1.5-2.6,1.7c0.4-2.1,1.5-4.6,3.1-5.8"/>
+	</g>
+	<polygon id="engine_4_" class="st1" points="33.9,54.2 17.8,54.2 20.9,46.8 30.9,46.8 	"/>
+	<path id="left_side_4_" class="st1" d="M20.9,46.8c-7.5-9.3-7.9-21.6,4.9-37.3"/>
+	<path id="right_side_4_" class="st1" d="M30.7,46.8c7.5-9.3,7.9-21.6-4.9-37.3"/>
+	<circle id="Window_4_" class="st0" cx="25.9" cy="30.1" r="3.2"/>
+	<path id="XMLID_26_" class="st0" d="M15.3,30.6c-3.7,3.5-4.9,7.8-4.7,8.9c2.1-0.7,5-1.1,5-1.1"/>
+	<path id="XMLID_13_" class="st0" d="M36.5,30.6c3.7,3.5,4.9,7.8,4.7,8.9c-2.1-0.7-5-1.1-5-1.1"/>
+</g>
+</svg>

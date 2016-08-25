@@ -1,0 +1,35 @@
+@import "vars"
+
+.fadeSlideUp-transition
+    transition: all .13s ease-out
+    opacity: 1
+
+.fadeSlideUp-enter, .fadeSlideUp-leave
+    opacity: 0
+    transform: translateX(-10%)
+
+.fadeSlideUp-leave
+    transition: none
+
+.fadeFromTop-transition
+    transition: all .2s $bounce
+    opacity: 1
+
+.fadeFromTop-enter, .fadeFromTop-leave
+    opacity: 0
+    transform: translateY(-60%)
+
+.fadeFromTop2-transition
+    transition: all .2s $bounce
+    opacity: 1
+
+.fadeFromTop2-enter, .fadeFromTop2-leave
+    opacity: 0
+    transform: translateY(-50px)
+
+.fade-transition
+    transition: opacity .2s ease-in-out
+    opacity: 1
+
+.fade-enter, .fade-leave
+    opacity: 0

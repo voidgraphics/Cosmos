@@ -5,5 +5,4 @@
 app/js/bundle.js
 app/js/bundle/js/map
 node_modules
-*
 !app

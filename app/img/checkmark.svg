@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Generator: Adobe Illustrator 19.2.1, SVG Export Plug-In . SVG Version: 6.00 Build 0)  -->
+<svg version="1.1" id="Calque_1" xmlns:sketch="http://www.bohemiancoding.com/sketch/ns"
+	 xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px" viewBox="0 0 22 22"
+	 style="enable-background:new 0 0 22 22;" xml:space="preserve">
+<style type="text/css">
+	.st0{fill:none;stroke:#FFFFFF;stroke-width:2;stroke-linecap:square;}
+</style>
+<title>check</title>
+<desc>Created with Sketch.</desc>
+<g id="Page-1" sketch:type="MSPage">
+	<g id="Wireframes" transform="translate(-396.000000, -7621.000000)" sketch:type="MSArtboardGroup">
+		<g id="Project-tasks---add-task" transform="translate(50.000000, 7426.000000)" sketch:type="MSLayerGroup">
+			<g id="popup" transform="translate(299.000000, 121.000000)" sketch:type="MSShapeGroup">
+				<g id="Assign" transform="translate(3.000000, 2.000000)">
+					<g id="User-checked" transform="translate(17.000000, 46.000000)">
+						<g id="check" transform="translate(27.000000, 26.000000)">
+							<path id="Line-Copy-3" class="st0" d="M8,11l2.5,2.5"/>
+							<path id="Line-Copy-2" class="st0" d="M10.5,13.5L15,9"/>
+						</g>
+					</g>
+				</g>
+			</g>
+		</g>
+	</g>
+</g>
+</svg>

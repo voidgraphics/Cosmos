@@ -1,0 +1,103 @@
+#view-projectmockups
+    .header-btn
+        text-transform: uppercase
+        font-size: s($s1)
+        letter-spacing: ps_ls(80)
+        color: $cWhite
+
+    .mockup
+        &__cta
+            margin-top: 10px
+
+            &:before
+                content: ''
+                float: left
+                width: 16px
+                height: 32px
+                margin-left: 1px
+                margin-right: 15px
+                background-image: url("../img/top-arrow.svg")
+                background-repeat: no-repeat
+                background-position: center center
+
+            &__text
+                color: $cWhite
+                font-size: s($s1)
+                line-height: 1.7
+                font-style: italic
+                font-family: $fOpenRegular
+
+
+#view-projectmockup
+    .mockup
+        cursor: crosshair
+
+        &__name,
+        &__comment-count
+            text-transform: uppercase
+            font-size: s($s1)
+            color: $cLightBlue2
+            letter-spacing: ps_ls(80)
+
+        &__name
+            &:after
+                content: ''
+                display: inline-block
+                width: 4px
+                height: 4px
+                border-radius: 50%
+                background-color: $cOrange
+                position: relative
+                bottom: 2px
+                margin: 0 8px
+
+        &__tip
+            text-align: center
+            color: $cLightBlue2
+            font-family: $fOpenRegular
+            font-size: s($s2)
+
+        &__comment
+            text-align: left
+            position: absolute
+            background-color: $cDarkBlue
+            border: 3px solid $cOrange
+            width: 30px
+            height: 30px
+            border-radius: 50%
+            transform: translate(-50%, -50%)
+            cursor: pointer
+            pointer-events: all
+            background-image: url("../img/message.svg")
+            background-repeat: no-repeat
+            background-position: center center
+            background-size: 12px 11px
+            transition: transform .2s $bounce
+            transform-origin: 12% 12%
+
+            &:hover
+                transition: transform .2s $bounce
+                transform: scale(1.2) translate(-50%, -50%)
+                z-index: 50
+
+            &--showing
+                z-index: 15
+                background-image: url("../img/x.svg")
+
+
+    .comment__body
+        background-color: $cWhite
+        min-width: 200px
+        border-radius: 4px
+        padding: 10px 15px
+        color: $cDarkBlue
+        font-family: $fOpenRegular
+        border: 3px solid $cDarkBlue
+        box-shadow: 0 0 10px rgba(0, 0, 0, .1)
+        position: relative
+        left: 25px
+        top: 25px
+        z-index: 50
+
+        &.flipped
+            transform: translateX(calc(-100% - 30px))

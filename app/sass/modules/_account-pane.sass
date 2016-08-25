@@ -1,0 +1,23 @@
+.account-pane
+    position: absolute
+    top: 80px
+    right: 30px
+    border-radius: 3px
+    padding: 15px 20px
+    width: 200px
+    background-color: $cDarkBlue
+    z-index: 99999
+
+    &__link
+        cursor: pointer
+        color: $cLightBlue2
+        font-size: 11px
+        display: block
+        // text-transform: none
+        // font-family: $fOpenRegular
+        letter-spacing: ps_ls(80)
+        transition: color .3s ease-in-out
+
+        &:hover
+            transition: color .2s ease-in-out
+            color: $cOrange

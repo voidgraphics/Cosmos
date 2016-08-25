@@ -1,0 +1,41 @@
+div.navbar(v-if="shownavbar")
+    div.team
+        div.team__dropdown-toggle(@click="toggleTeamDropdown")
+            span.team__name {{ selectedTeam.name }}
+            span.team__separator
+            span.team__project {{ selectedProject.name }}
+        div.team__dropdown(v-show="isTeamDropdownVisible" transition="fadeFromTop2")
+            div.team__dropdown__group(v-for="team in user.teams | caseInsensitiveOrderBy 'name'")
+                a.group__add.add-btn(@click.prevent="showInput(team)") {{ team.name }}
+                form.inline-form(v-show="team.showInput" transition="fadeFromTop" @submit.prevent="addProject(team)")
+                    div
+                        input.inline-form__textfield.inline-form__textfield--lighter(
+                            type="text" 
+                            class="group__new__textfield" 
+                            id="textfield--{{ team.uuid }}" 
+                            v-focus="team.showInput" 
+                            v-model="team.newProject"
+                            placeholder="New project..."
+                        )
+                        input.inline-form__submit(type="submit" value="submit")
+                        a.inline-form__close(@click.prevent="hideInput(team)") x
+                a.group__empty(v-if="team.projects.length == 0" @click.prevent="showInput(team)") No projects. Click to add one.
+                a.group__link(v-for="project in team.projects | orderBy 'name'" @click="changeProject(team, project)") {{ project.name }}
+        div.popup-overlay( @click="toggleTeamDropdown" v-show="isTeamDropdownVisible" transition="fade")
+                
+    div.navbar__links
+        //- a.navbar__link.navbar__link--dashboard(href="#" v-link="{path: '/dashboard'}") Dashboard
+        a.navbar__link.navbar__link--tasks(href="#" v-link="{path: '/tasks'}") Tasks
+        a.navbar__link.navbar__link--ui(href="#" v-link="{path: '/mockups'}") UI
+        a.navbar__link.navbar__link--chat(href="#" v-link="{path: '/chat'}") Chat
+            span.navbar__link--chat-count(v-show="messages.count") {{ messages.count }}
+        
+        
+        
+        a.navbar__username(@click="toggleUserDropdown") {{ user.username }}
+        div.navbar__avatar-container
+            img.navbar__avatar(v-bind:src="user.src")
+        div.account-pane(v-show="isUserDropdownVisible" transition="fadeFromTop2")
+            a.account-pane__link(v-link="{path: '/teams'}" @click="toggleUserDropdown") Manage teams
+            a.account-pane__link(@click="signout") Sign out
+        div.popup-overlay( @click="toggleUserDropdown" v-show="isUserDropdownVisible" transition="fade")
