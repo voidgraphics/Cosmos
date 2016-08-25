@@ -13,6 +13,8 @@
                 newMessage: ""
                 comments: []
              }
+        directives:
+            focus: (require "vue-focus").focus
 
         ready: ->
             @$mockup = document.getElementById "mockup"

@@ -3,12 +3,19 @@ div.container.animated.view#view-projectchat
 
     div.chat
         div.chat__messages
+            div.chat__message(v-if="messages.length < 1")
+                p.chat__message__user Cosmos
+                div.chat__message__body
+                    div.chat__message__avatar-container
+                        img.chat__message__avatar(src="../img/default.png")
+                    p.chat__message__text It's so quiet in here! You could perhaps say hello to your team.
+                    
             div.chat__message(v-for="message in messages | orderBy 'createdAt'" v-scrolldown transition="fadeSlideUp")
                 p.chat__message__user(v-if="message.user") {{ message.user.username }}
                 p.chat__message__user(v-else) User not found
                 div.chat__message__body
                     div.chat__message__avatar-container
-                        img.chat__message__avatar(v-bind:src="findUserSrc(message.user)")
+                        img.chat__message__avatar(v-bind:src="message.user.avatar ? findUserSrc(message.user) : '../img/default.png'")
                     time.chat__message__time {{ message.createdAt | hour }}
                     p.chat__message__text {{{ message.text | format }}}
 

@@ -12,7 +12,7 @@ div.container#view-projectmockup
                 form.add-comment(@submit.prevent="sendComment" v-if="showForm" style="position: absolute; top: {{ formPos.y }}%; left: {{ formPos.x }}%;")
                     div
                         button.add-comment__close(@click.prevent="showForm = false")
-                        textarea.add-comment__textfield(v-model="newMessage")
+                        textarea.add-comment__textfield(v-model="newMessage" v-focus="showForm")
                         input.add-comment__submit(type="submit" value="Send")
                 a.mockup__comment(v-for="comment in comments" style="top: {{ comment.y }}%; left: {{ comment.x }}%;" @click.stop="toggle( comment, $event )")
                     div.comment__body(v-show="comment.isShowing" class="{{ comment.class }}")

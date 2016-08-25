@@ -9,7 +9,7 @@ div.chatbar
                     a(@click.prevent="toggleForm" class="inline-form__close")
             a.chatroom(
                 href="#" 
-                v-for="chatroom in chatrooms | orderBy 'name'" 
+                v-for="chatroom in chatrooms | caseInsensitiveOrderBy 'name'" 
                 class="{{ selectedChatroom.uuid == chatroom.uuid ? 'chatroom--active' : '' }}"
                 @click.prevent="changeChatroom(chatroom)"
             ) {{ '#' + chatroom.name }} 

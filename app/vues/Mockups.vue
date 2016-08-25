@@ -1,6 +1,7 @@
 <template src="../html/projectmockups.html"></template>
 
 <script lang="coffee">
+    Vue = require "vue"
     zouti = require "zouti"
     Tasks =
         items: []
@@ -34,10 +35,11 @@
                     image: @newMockup.fileName
                     projectId: localStorage.selectedProject
                 }
+                console.log oMockup
                 socket.emit "mockup.create", oMockup
                 @popupIsShowing = false
                 @newMockup.name = ""
-                @newMockup.file = null
+                # @newMockup.file = null
 
             detectFile: ( e ) ->
                 @newMockup.fileName = e.target.files[0].name
@@ -46,6 +48,7 @@
                     e.target.value = ""
                 reader = new FileReader()
                 reader.onload = ( e ) =>
+                    console.log e.target.result
                     @newMockup.file = e.target.result
                 reader.readAsDataURL e.target.files[0]
 
@@ -54,6 +57,25 @@
                 console.log @mockups
                 @mockups = []
                 socket.emit "mockup.getAll", oProject.uuid
+
+        filters:
+            caseInsensitiveOrderBy: (arr, sortKey, reverse) ->
+                if !sortKey then return arr
+                order = if reverse && reverse < 0 then -1 else 1
+                order = if reverse then -1 else 1
+
+                return arr.slice().sort (a, b) ->
+                    if sortKey != '$key'
+                        if (Vue.util.isObject(a) && '$value' in a) then a = a.$value
+                        if (Vue.util.isObject(b) && '$value' in b) then b = b.$value
+
+                    if Vue.util.isObject(a) then a = Vue.parsers.path.getPath(a, sortKey) else a = a
+                    if Vue.util.isObject(b) then b = Vue.parsers.path.getPath(b, sortKey) else b = b
+
+                    a = a.toLowerCase()
+                    b = b.toLowerCase()
+
+                    if a == b then return 0 else if a > b then return order else return -order
 
     module.exports = Tasks
 

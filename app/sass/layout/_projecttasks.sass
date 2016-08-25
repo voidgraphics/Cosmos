@@ -17,6 +17,28 @@
         align-items: stretch
         height: 74vh
 
+        &__cta
+            text-align: center
+            position: fixed
+            top: 50%
+
+            &__arrow
+                display: block
+                width: 16px
+                height: 32px
+                margin-top: 10px
+                margin-left: 2px
+                background-image: url("../img/top-arrow.svg")
+                background-repeat: no-repeat
+                background-position: center center
+
+            &__text
+                color: $cWhite
+                font-size: s($s1)
+                line-height: 1.7
+                font-style: italic
+                font-family: $fOpenRegular
+
     #todo-column__items,
     #progress-column__items,
     #finished-column__items

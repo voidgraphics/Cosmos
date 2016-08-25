@@ -28,3 +28,14 @@ div.container.setup#view-jointeam
                             input.form-body__input(type="text" id="name" v-model="projectToCreate.name")
                             input(type="submit" value="Create team and project")
             div.popup-overlay(v-if="projectPopupIsShowing" @click="projectPopupIsShowing = false")
+            
+            div.searchPopup(v-show="searchPopupIsShowing")
+                h2.searchPopup__title Your search for "{{ teamToFind.name }}" gave these results
+                div.teams__items
+                    div.teams__item(v-for="result in searchResults")
+                        p.teams__item__name {{ result.name }}
+                        a.teams__item__button.teams__item__requested(v-if="result.status") {{ result.status }}
+                        a.teams__item__button(@click.prevent="joinTeam(result)" v-else) Join this team
+            div.popup-overlay(v-show="searchPopupIsShowing" v-on:click="hidePopup('search')")
+
+            a.back-link(v-link="{path: '/signin'}") Back to sign in page

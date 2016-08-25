@@ -18,11 +18,26 @@
                 lastnameError: false
                 passwordError: false
                 avatarError: false
+                usernameTaken: false
             }
+
+        ready: ->
+            socket.on "user.logged", ( oUserData ) =>
+                localStorage.id = oUserData.uuid
+                localStorage.username = oUserData.username
+                localStorage.firstname = oUserData.firstname
+                localStorage.lastname = oUserData.lastname
+                @$route.router.go "/joinTeam"
 
         methods:
             register: ->
-                if @username && @email && @password
+                if @username && @firstname && @lastname && @email && @password && @file
+                    @usernameError = false
+                    @emailError = false
+                    @firstnameError = false
+                    @lastnameError = false
+                    @passwordError = false
+                    @avatarError = false
                     console.log "Registering #{@username}..."
                     oUserInfo =
                         username: @username
@@ -33,8 +48,15 @@
                         avatar: @fileName
                         file: @file
 
-                    socket.emit "user.register", oUserInfo, ( oResult ) ->
+                    socket.emit "user.register", oUserInfo, ( oResult ) =>
                         console.log oResult
+                        if oResult.code == 200
+                            console.log "log you in here"
+
+                        if oResult.code == 500
+                            if oResult.error == "SequelizeUniqueConstraintError"
+                                @usernameError
+                                @usernameTaken = true
 
                 else
                     if !@username

@@ -24,6 +24,8 @@
     font-size: s($s1)
     display: block
     margin: 7px 0
+    transition: all .3s $bounce
+    transform-origin: left center
 
     &--active
         color: $cWhite
@@ -41,6 +43,10 @@
             line-height: 16px
             position: relative
             top: -1px
+
+    &:hover
+        transform: scale(1.07)
+        transition: all .3s $bounce
 
 .chat-users
     margin-top: 10px

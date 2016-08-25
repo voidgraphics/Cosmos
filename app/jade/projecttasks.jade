@@ -1,9 +1,11 @@
 div.container.animated.view#view-projecttasks
     div.content
+        
         div.task-items
             //- pre(style="color: white;") {{ tasks | json }}
             div.task-items__section#todo(data-section="To do")
                 a.add-btn(id="add-todo", v-on:click="showPopup") To do
+                em.task-items__cta__arrow(v-if="tasks.length < 1")
                 div.task-items__cards#todo-column__items
                     div.task-item(v-for="task in tasks | orderBy 'position'" v-if="task.state == 'todo'" data-id="{{ task.uuid }}" id="{{ task.uuid }}" v-on:click.stop="showEditPopup( task, 'todo' )")
                         p.task-item__name {{ task.title }}
@@ -14,6 +16,7 @@ div.container.animated.view#view-projecttasks
 
             div.task-items__section#inprogress(data-section="In progress")
                 a.add-btn(id="add-inprogress" v-on:click="showPopup") In progress
+                em.task-items__cta__arrow(v-if="tasks.length < 1")
                 div.task-items__cards#progress-column__items
                     div.task-item(v-for="task in tasks | orderBy 'position'" v-if="task.state == 'inprogress'" data-id="{{ task.uuid }}" id="{{ task.uuid }}" v-on:click.stop="showEditPopup( task, 'inprogress' )")
                         p.task-item__name {{ task.title }}
@@ -21,9 +24,13 @@ div.container.animated.view#view-projecttasks
                         div.task-item__users
                             div.task-item__user(v-for="user in task.users")
                                 img.task-item__user__avatar(v-bind:src="findUserSrc(user)")
+                div.task-items__cta(v-if="tasks.length < 1")
+                    p.task-items__cta__text There are no tasks yet!
+                    p.task-items__cta__text You can add some using these buttons.
 
             div.task-items__section#finished(data-section="Finished")
                 a.add-btn(id="add-finished" v-on:click="showPopup") Completed
+                em.task-items__cta__arrow(v-if="tasks.length < 1")
                 div.task-items__cards#finished-column__items
                     div.task-item(v-for="task in tasks | orderBy 'position'" v-if="task.state == 'finished'" data-id="{{ task.uuid }}" id="{{ task.uuid }}" v-on:click.stop="showEditPopup( task, 'finished' )")
                         p.task-item__name {{ task.title }}
@@ -32,6 +39,8 @@ div.container.animated.view#view-projecttasks
                             div.task-item__user(v-for="user in task.users")
                                 img.task-item__user__avatar(v-bind:src="findUserSrc(user)")
 
+        
+            
         delete-popup( v-if="deletePopupIsShowing" )
         popup( v-if="popupIsShowing" v-bind:columnname="columnName" v-bind:task="taskToEdit" v-bind:users="users")
 

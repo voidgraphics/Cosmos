@@ -34,7 +34,7 @@ div.popup
                 label.form-body__label(for="state-finished") Finished
             
             div.form-group.submit-container.submit-container--sidebar
-                input(type="submit" id="new-task__submit" class="task-submit submit-btn {{ task ? 'submit-btn--half' : '' }}" value="Add this task")
+                input(type="submit" id="new-task__submit" class="task-submit submit-btn {{ task ? 'submit-btn--half' : '' }}" value="{{ task ? 'Edit this task' : 'Add this task' }}")
                 a.delete-btn(href="#" v-if="hasDeleteButton" @click.prevent="deleteTask" style="margin-top: 40px;") Delete task
             
 div.popup-overlay( @click="hidePopup" )

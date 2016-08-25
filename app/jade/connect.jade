@@ -5,15 +5,15 @@ div.container.view#view-signin
             h2.signin__subtitle Please sign in
             form.form(@submit.prevent="submit")
                 div
-                    label(for="username") Username
-                    p.form__error(v-if="usernameError") Please enter your username
-                    input(type="text" name="username" id="username" v-model="username")
-                    span(v-show="usernameError") {{ usernameError }}
+                    div.form-group
+                        label(for="username") Username
+                        p.form__error(v-if="usernameError") Please enter your username
+                        input(type="text" name="username" id="username" v-model="username")
 
-                    label(for="password") Password
-                    p.form__error(v-if="passwordError") Please enter your password
-                    input(type="password" name="password" id="password" v-model="password")
-                    span(v-show="passwordError") {{ passwordError }}
+                    div.form-group
+                        label(for="password") Password
+                        p.form__error(v-if="passwordError") Please enter your password
+                        input(type="password" name="password" id="password" v-model="password")
 
                     input(type="submit" class="submit-btn" value="Log in")
 

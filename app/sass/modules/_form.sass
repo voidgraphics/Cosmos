@@ -22,6 +22,7 @@
     input[type="submit"],
     input[type="password"],
     input[type="submit"],
+    input[type="file"],
     .submit-btn,
     .delete-btn
         border-radius: 3px
@@ -39,6 +40,8 @@
     input[type="submit"]
         background-color: $cOrange
         cursor: pointer
+        max-width: 400px
+        margin: 0 auto
 
     input[type="checkbox"],
     input[type="radio"],
@@ -84,12 +87,27 @@
     input[type="radio"] + label:before
         border-radius: 50%
 
+    .form-group
+        position: relative
+        max-width: 400px
+        margin: 0 auto
+
     .form__error
         color: #dd3625
         font-family: $fOpenRegular
         letter-spacing: ps_ls(20)
         font-size: 12px
         padding-bottom: 5px
+        text-align: right
+        position: absolute
+        right: 0
+        top: 2px
+
+    .form__column
+        width: 47%
+        float: left
+        &:first-child
+            margin-right: 6%
 
     .submit-btn
         text-decoration: none

@@ -4,31 +4,42 @@ div.container.view#view-signup
             h1.signup__title Welcome to Cosmos
             h2.signup__subtitle Please create an account
             form.form(@submit.prevent="register")
+                div.form__column
+                    div.form-group
+                        label(for="username") Username
+                        p.form__error(v-if="usernameError") You must enter a username
+                        p.form__error(v-if="usernameTaken") This username is already taken!
+                        input(type="text" name="username" id="username" v-model="username")
+                    
+                    div.form-group
+                        label(for="firstname") First name
+                        p.form__error(v-if="firstnameError") You must enter your first name
+                        input(type="text" name="firstname" id="firstname" v-model="firstname")
+                    
+                    div.form-group
+                        label(for="lastname") Last name
+                        p.form__error(v-if="lastnameError") You must enter your last name
+                        input(type="text" name="lastname" id="lastname" v-model="lastname")
+                    
+                    
+                
+                div.form__column    
+                    div.form-group
+                        label(for="email") E-mail
+                        p.form__error(v-if="emailError") You must enter a valid e-mail
+                        input(type="email" name="email" id="email" v-model="email")
+
+                    div.form-group
+                        label(for="password") Password
+                        p.form__error(v-if="passwordError") You must enter a password
+                        input(type="password" name="password" id="password" v-model="password")
+                    
+                    div.form-group
+                        label(for="avatar") Avatar
+                        p.form__error(v-if="avatarError") You must choose an avatar
+                        input(type="file" name="avatar" id="avatar" accept="image/gif, image/jpeg, image/png" @change="detectFile")
+                    
                 div
-                    label(for="username") Username
-                    p.form__error(v-if="usernameError") You must enter a username
-                    input(type="text" name="username" id="username" v-model="username")
-                    
-                    label(for="email") E-mail
-                    p.form__error(v-if="emailError") You must enter a valid e-mail
-                    input(type="email" name="email" id="email" v-model="email")
-                    
-                    label(for="firstname") First name
-                    p.form__error(v-if="firstnameError") You must enter your first name
-                    input(type="text" name="firstname" id="firstname" v-model="firstname")
-                    
-                    label(for="lastname") Last name
-                    p.form__error(v-if="lastnameError") You must enter your last name
-                    input(type="text" name="lastname" id="lastname" v-model="lastname")
-
-                    label(for="password") Password
-                    p.form__error(v-if="passwordError") You must enter a password
-                    input(type="password" name="password" id="password" v-model="password")
-
-                    label(for="avatar") Avatar
-                    p.form__error(v-if="avatarError") You must choose an avatar
-                    input(type="file" name="avatar" id="avatar" accept="image/gif, image/jpeg, image/png" @change="detectFile")
-
                     input(type="submit" href="jointeam.html" class="submit-btn" value="Create account")
 
                     a#signin-link(href="#" v-link="{path: '/signin'}") Already have an account?

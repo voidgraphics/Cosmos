@@ -1,11 +1,14 @@
 div.container.view#view-projectmockups
     a.add-btn(@click.prevent="togglePopup") Mockups
-    div.mockup-items(v-if="mockups")
-        a.mockup-item.mockup-item__link(v-for="mockup in mockups" v-link="{path: '/mockups/' + mockup.uuid}")
+    div.mockup-items(v-if="mockups.length >= 1")
+        a.mockup-item.mockup-item__link(v-for="mockup in mockups | caseInsensitiveOrderBy 'title'" v-link="{path: '/mockups/' + mockup.uuid}")
             div.thumbnail-container
                 img.mockup-item__thumbnail(v-bind:src="mockup.src")
             span.mockup-item__title {{ mockup.title }}
             p.mockup-item__comment-count {{ mockup.commentCount }} comment{{ mockup.commentCount != 1 ? "s" : "" }}
+    div.mockup__cta(v-else)
+        p.mockup__cta__text Looks like there are no mockups yet!
+        p.mockup__cta__text Click this button to add one.
             
     div.popup-overlay(v-show="popupIsShowing" @click="togglePopup")
     div.popup(v-show="popupIsShowing")

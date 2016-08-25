@@ -141,6 +141,24 @@
 
                 return text
 
+            caseInsensitiveOrderBy: (arr, sortKey, reverse) ->
+                if !sortKey then return arr
+                order = if reverse && reverse < 0 then -1 else 1
+                order = if reverse then -1 else 1
+
+                return arr.slice().sort (a, b) ->
+                    if sortKey != '$key'
+                        if (Vue.util.isObject(a) && '$value' in a) then a = a.$value
+                        if (Vue.util.isObject(b) && '$value' in b) then b = b.$value
+
+                    if Vue.util.isObject(a) then a = Vue.parsers.path.getPath(a, sortKey) else a = a
+                    if Vue.util.isObject(b) then b = Vue.parsers.path.getPath(b, sortKey) else b = b
+
+                    a = a.toLowerCase()
+                    b = b.toLowerCase()
+
+                    if a == b then return 0 else if a > b then return order else return -order
+
         directives:
             focus: (require "vue-focus").focus
             focusAuto: (require "vue-focus").focusAuto

@@ -14,3 +14,113 @@
 
     .form-body
         margin-left: 0
+
+    .projectPopup
+        width: 400px
+        height: 350px
+        margin-left: -200px
+        margin-top: -175px
+        padding: 50px 25px
+
+        .form
+            width: 100%
+
+    .back-link
+        display: block
+        text-align: center
+
+    .searchPopup
+        padding: 40px 30px
+        width: 80vw
+        height: 80vh
+        position: absolute
+        top: 0
+        bottom: 0
+        right: 0
+        left: 0
+        margin: auto
+        overflow-y: scroll
+
+        &__title
+            margin-bottom: 40px
+
+
+    .teams
+        &__list
+            padding-left: 40px
+
+            &__title
+                margin-bottom: 18px
+
+        &__item
+            border-radius: 3px
+            width: 29.333333333%
+            margin-bottom: 30px
+            height: 180px
+            padding-top: 25px
+            position: relative
+            display: inline-block
+            vertical-align: top
+            margin: 0 2% 3%
+
+
+            &__requests
+                display: block
+                width: 75%
+                margin: 0 auto
+                padding: 12px 0
+                border-radius: 3px
+                position: absolute
+                bottom: 75px
+                right: 0
+                left: 0
+
+            &__button
+                display: block
+                width: 75%
+                margin: 0 auto
+                padding: 12px 0
+                border-radius: 3px
+                position: absolute
+                bottom: 25px
+                right: 0
+                left: 0
+
+
+    .teams
+        &__list
+            width: 70%
+            height: 80vh
+            float: right
+
+            &__title
+                color: $cWhite
+                text-transform: uppercase
+                letter-spacing: ps_ls(80)
+                font-size: s($s1)
+                color: $cLightBlue2
+
+        &__item
+            background-color: $cDarkBlue
+
+            &__name
+                color: $cWhite
+                text-align: center
+                font-family: $fOpenRegular
+                letter-spacing: ps_ls(20)
+
+            &__button
+                background-color: $cOrange
+                color: $cWhite
+                text-align: center
+                cursor: pointer
+
+            &__requests
+                background-color: $cMediumBlue1
+                color: $cWhite
+                text-align: center
+                cursor: pointer
+
+            &__requested
+                background-color: $cMediumBlue1
+                cursor: default

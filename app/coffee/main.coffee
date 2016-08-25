@@ -25,6 +25,8 @@ App = Vue.extend({
             localStorage.selectedProject = oProject.uuid
             localStorage.selectedTeam = oTeam.uuid
             this.$broadcast "changeProject", oTeam, oProject
+        leftTeam: ( sTeamId ) ->
+            this.$broadcast "leftTeam", sTeamId
 })
 
 
