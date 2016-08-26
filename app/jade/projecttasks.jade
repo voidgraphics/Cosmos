@@ -9,7 +9,7 @@ div.container.animated.view#view-projecttasks
                 div.task-items__cards#todo-column__items
                     div.task-item(v-for="task in tasks | orderBy 'position'" v-if="task.state == 'todo'" data-id="{{ task.uuid }}" id="{{ task.uuid }}" v-on:click.stop="showEditPopup( task, 'todo' )")
                         p.task-item__name {{ task.title }}
-                        time.task-item__deadline Due {{ task.deadline | formatted }}
+                        time.task-item__deadline(v-if="task.deadline != '0000-00-00'") Due {{ task.deadline | formatted }}
                         div.task-item__users
                             div.task-item__user(v-for="user in task.users")
                                 img.task-item__user__avatar(v-bind:src="findUserSrc(user)")
@@ -20,7 +20,7 @@ div.container.animated.view#view-projecttasks
                 div.task-items__cards#progress-column__items
                     div.task-item(v-for="task in tasks | orderBy 'position'" v-if="task.state == 'inprogress'" data-id="{{ task.uuid }}" id="{{ task.uuid }}" v-on:click.stop="showEditPopup( task, 'inprogress' )")
                         p.task-item__name {{ task.title }}
-                        time.task-item__deadline Due {{ task.deadline | formatted }}
+                        time.task-item__deadline(v-if="task.deadline != '0000-00-00'") Due {{ task.deadline | formatted }}
                         div.task-item__users
                             div.task-item__user(v-for="user in task.users")
                                 img.task-item__user__avatar(v-bind:src="findUserSrc(user)")
@@ -34,7 +34,7 @@ div.container.animated.view#view-projecttasks
                 div.task-items__cards#finished-column__items
                     div.task-item(v-for="task in tasks | orderBy 'position'" v-if="task.state == 'finished'" data-id="{{ task.uuid }}" id="{{ task.uuid }}" v-on:click.stop="showEditPopup( task, 'finished' )")
                         p.task-item__name {{ task.title }}
-                        time.task-item__deadline Due {{ task.deadline | formatted }}
+                        time.task-item__deadline(v-if="task.deadline != '0000-00-00'") Due {{ task.deadline | formatted }}
                         div.task-item__users
                             div.task-item__user(v-for="user in task.users")
                                 img.task-item__user__avatar(v-bind:src="findUserSrc(user)")

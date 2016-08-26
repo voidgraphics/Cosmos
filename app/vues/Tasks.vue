@@ -132,9 +132,12 @@
                 this.popupIsShowing = false
 
             submitTask: ( oTask ) ->
+                console.log oTask
+                if oTask.title == "" then return
                 oTask.uuid = zouti.uuid()
                 oTask.projectId = localStorage.selectedProject
                 socket.emit "task.save", oTask
+                if oTask.deadline == '' then oTask.deadline = '0000-00-00'
                 this.tasks.push( oTask )
                 for task in this.tasks
                     if task.state == oTask.state && task.uuid != oTask.id
