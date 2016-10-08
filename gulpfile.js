@@ -30,9 +30,13 @@ gulp.task('serve', function() {
 gulp.task('sass', function() {
 
     var compile = function(){
-        gulp.src("./app/sass/**/*")
+        gulp.src("./app/sass/dark.sass")
             .pipe(sass({outputStyle: 'indented'}))
-            .pipe(gulp.dest("./app/css/"))
+            .pipe(gulp.dest("./app/css"))
+            .pipe(browserSync.stream());
+        gulp.src("./app/sass/light.sass")
+            .pipe(sass({outputStyle: 'indented'}))
+            .pipe(gulp.dest("./app/css"))
             .pipe(browserSync.stream());
     };
 

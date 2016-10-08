@@ -1,0 +1,136 @@
+.form
+
+    legend
+        margin-top: 10px
+        margin-bottom: 20px
+        font-size: 18px
+
+    label
+        display: inline-block
+        margin-bottom: 7px
+        font-size: 14px
+        color: $cDarkBlue
+        text-transform: uppercase
+        font-size: s($s1)
+        letter-spacing: ps_ls(80)
+
+    fieldset
+        border: none
+
+    input[type="text"],
+    input[type="email"],
+    input[type="submit"],
+    input[type="password"],
+    input[type="submit"],
+    input[type="file"],
+    .submit-btn,
+    .delete-btn
+        border-radius: 3px
+        display: block
+        border: none
+        width: 100%
+        padding: 11px
+        font-size: 12px
+        font-family: $fOpenRegular
+        letter-spacing: ps_ls(20)
+        margin-bottom: 30px
+        background-color: $cWhite
+        border: 1px solid rgba(0, 0, 0, .25)
+        color: $cDarkBlue
+
+    input[type="submit"]
+        background-color: $cOrange
+        cursor: pointer
+        max-width: 400px
+        margin: 0 auto
+
+    input[type="checkbox"],
+    input[type="radio"],
+        display: none
+
+    input[type="checkbox"] + label,
+    input[type="radio"] + label,
+        font-family: $fOpenSemiBold
+        text-transform: none
+        letter-spacing: ps_ls(20)
+        font-size: s($s1)
+        margin-right: 20px
+
+        &:before
+            content: ''
+            display: inline-block
+            width: 16px
+            height: 16px
+            background-color: $cWhite
+            vertical-align: middle
+            margin-right: 5px
+            border: 1px solid rgba(0, 0, 0, .25)
+
+    input[type="checkbox"]:checked + label,
+    input[type="radio"]:checked + label
+        &:before
+            border-color: rgba(0, 0, 0, .15) !important
+            background-color: $cOrange !important
+            background-repeat: no-repeat
+            background-position: center center
+
+    input[type="checkbox"] + label:before
+        border-radius: 3px
+
+    input[type="checkbox"]:checked + label:before
+        background-image: url("../img/checkmark.svg")
+        background-size: 21px
+
+    input[type="radio"]:checked + label:before
+        background-image: url("../img/radio-check.svg")
+        background-size: 14px
+
+    input[type="radio"] + label:before
+        border-radius: 50%
+
+    .form-group
+        position: relative
+        max-width: 400px
+        margin: 0 auto 20px
+
+    .form__error
+        color: #dd3625
+        font-family: $fOpenRegular
+        letter-spacing: ps_ls(20)
+        font-size: 12px
+        padding-bottom: 5px
+        text-align: right
+        position: absolute
+        right: 0
+        top: 2px
+
+    .form__column
+        width: 47%
+        float: left
+        &:first-child
+            margin-right: 6%
+
+    .submit-btn
+        text-decoration: none
+        margin-top: 35px
+        background-color: $cOrange
+        text-align: center
+        color: $cWhite
+        padding: 12px 0 14px
+        font-size: 14px
+        margin-bottom: 0 !important
+
+        &--half
+            float: right
+            width: 45% !important
+
+    .delete-btn
+        width: 50%
+        float: left
+        background-color: $cDarkBlue
+        text-align: center
+        margin-bottom: 0
+        color: $cWhite
+
+    a
+        text-align: center

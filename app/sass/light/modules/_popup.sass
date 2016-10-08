@@ -1,0 +1,278 @@
+.popup-overlay
+    position: fixed
+    top: 0
+    left: 0
+    right: 0
+    bottom: 0
+    background-color: $cOverlay
+    z-index: 99998
+
+.hidden + .popup-overlay
+    display: none
+
+.popup,
+.deletePopup,
+.leavePopup,
+.searchPopup,
+.projectPopup
+    position: fixed
+    top: 50%
+    left: 50%
+
+    background: linear-gradient(135deg, $cLightBlueGradient)
+    border-radius: 5px
+    box-shadow: 0 0 10px rgba( 0, 0, 0, .3 )
+
+    overflow: hidden
+    z-index: 99999
+
+    &::after
+        content: ""
+        display: block
+        position: absolute
+
+
+    &.hidden
+        display: none
+
+.popup
+    width: 450px
+    height: 515px
+    margin-left: -225px
+    margin-top: -257.5px
+    z-index: 99999
+
+.deletePopup
+    width: 300px
+    height: 150px
+    margin-left: -150px
+    margin-top: -75px
+    padding: 20px
+
+.deletePopup h2
+    color: $cWhite
+
+#confirmDelete,
+#cancelDelete
+    display: inline-block
+    padding: 12px 15px
+    border-radius: 5px
+    color: #fff
+    position: absolute
+    bottom: 20px
+    width: 120px
+    text-align: center
+    cursor: pointer
+
+#confirmDelete
+    background-color: $cOrange
+    left: 20px
+
+#cancelDelete
+    background-color: $cDarkBlue
+    right: 20px
+
+.popup-title
+    font-weight: 400
+    color: $cDarkBlue
+    font-size: 16px
+
+.close-popup
+    position: absolute
+    top: 15px
+    right: 15px
+    width: 16px
+    height: 16px
+    background-color: transparent
+    border: none
+    background-image: url( "../img/close.svg" )
+    background-size: 14px 14px
+    background-repeat: no-repeat
+    cursor: pointer
+
+.popup-sidebar__title
+    color: $cWhite
+    font-size: 12px
+    text-transform: uppercase
+    text-align: center
+    margin: 15px
+    font-weight: 300
+
+.popup fieldset
+    border: none
+
+.popup-sidebar
+    width: 80px
+    position: absolute
+    left: 0
+    top: 0px
+    bottom: 0
+    background-color: $cMediumBlue1
+
+.assign-user__container
+    position: relative
+    text-align: center
+
+.assign-user
+    display: block
+    margin: auto
+    width: 50px
+    height: 50px
+    border-radius: 50%
+    overflow: hidden
+    margin-bottom: 10px
+    border: 2px solid transparent
+    transition: border-color .3s ease
+    cursor: pointer
+    margin-right: 0 !important
+
+    &::before
+        content: ""
+        display: block
+        width: 22px
+        height: 22px
+        border-radius: 50%
+        position: absolute
+        bottom: 5px
+        right: 10px
+        opacity: 0
+        background-color: transparent !important
+        border-color: transparent !important
+        transition: opacity .2s ease
+        // background: url( "../img/check.svg" )
+
+.assign-user__image
+    width: 100%
+    -webkit-user-select: none
+
+.assign-user__check
+    display: none
+
+    &:checked + .assign-user::before
+        opacity: 1
+        transition: opacity .2s ease
+
+.form-body
+    margin-left: 80px
+    padding: 20px 40px
+
+    &--nosidebar
+        margin-left: 0
+
+.form-group
+    position: relative
+    margin-bottom: 20px
+
+.form-body__label
+    font-size: 11px
+    color: $cDarkBlue
+    -webkit-user-select: none
+    text-transform: uppercase
+    letter-spacing: ps_ls(80)
+
+.form-body__input
+    display: block
+    border-radius: 3px
+    border: none
+    background: $cWhite
+    color: $cDarkBlue
+    letter-spacing: ps_ls(20)
+    font-size: 12px
+    padding: 12px 15px
+    font-family: $fOpenRegular
+    width: 100%
+    margin: 5px 0 10px
+
+
+.currentDate
+    display: inline-block
+    position: absolute
+    font-size: 12px
+    right: 0
+    top: 3px
+    color: $cLightBlue
+
+#datepicker
+    display: none
+
+.pika-single
+    background-color: $cWhite
+    border: 1px solid rgba(0, 0, 0, .20)
+    font-family: $fOpenRegular
+    border-radius: 3px
+
+.pika-table th
+    color: $cLightBlue
+    font-family: $fOpenRegular
+    letter-spacing: ps_ls(20)
+
+.pika-lendar
+    float: none
+    margin: 10px auto
+
+.pika-label
+    background-color: transparent
+    color: $cDarkBlue
+    font-size: 12px
+    letter-spacing: ps_ls(20)
+
+.is-today .pika-button
+    font-style: italic
+    color: $cMediumBlue1
+
+.is-selected .pika-button
+    background: $cOrange
+    color: $cWhite
+    box-shadow: none
+
+.pika-button
+    background-color: transparent
+    color: $cMediumBlue1
+    font-family: $fOpenRegular
+    text-align: center
+    transition: all .05s ease-in-out
+
+    &:hover
+        transition: all .05s ease-in-out
+        background: $cMediumBlue1
+        color: $cWhite
+
+.submit-container
+    position: absolute
+    bottom: 22px
+    height: 50px
+    right: 40px
+    left: 40px
+
+    &--sidebar
+        left: 0
+
+
+.task-submit
+    right: 0
+    bottom: 0
+
+.delete-btn
+    left: 0
+    bottom: 0
+    margin-bottom: 0
+
+.task-submit,
+.delete-btn
+    display: block
+    border: none
+    background-color: $cOrange
+    color: $cWhite
+    border-radius: 3px
+    padding: 12px 0
+    width: 100%
+    font-family: $font
+    font-size: 12px
+    font-weight: 300
+    cursor: pointer
+    position: absolute
+    bottom: 0
+
+::-webkit-input-placeholder
+    font-weight: 300
+    font-size: 12px

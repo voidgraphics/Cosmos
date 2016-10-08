@@ -1,0 +1,83 @@
+.chat__message
+    margin-bottom: 20px
+    clear: both
+
+    &__body
+        position: relative
+        background-color: $cWhite
+        color: $cDarkBlue
+        border-radius: 3px
+        padding: 10px
+        padding-right: 65px
+        padding-left: 55px
+        min-height: 50px
+        display: inline-block
+        box-shadow: 0 2px 10px rgba(0, 0, 0, .05)
+        @include clearfix()
+
+    &__user
+        display: inline-block
+        font-size: 14px
+        font-weight: 600
+        color: $cLightBlue
+        font-size: s($s1)
+        font-family: $fOpenRegular
+        letter-spacing: ps_ls(20)
+        margin-bottom: 3px
+        display: block
+
+    &__text
+        display: inline-block
+        font-size: 12px
+        font-family: $fOpenRegular
+        margin-top: 4px
+        line-height: 20px
+        letter-spacing: ps_ls(20)
+
+    &__time
+        position: absolute
+        right: 15px
+        top: 18px
+        text-align: right
+        color: $cLightBlue
+        font-size: s($s1)
+        letter-spacing: ps_ls(20)
+
+    &__avatar-container
+        width: 30px
+        height: 30px
+        border-radius: 4px
+        overflow: hidden
+        float: left
+        margin-right: 15px
+        position: absolute
+        left: 10px
+
+    &__avatar
+        width: 100%
+
+
+.input-area__textfield
+    border: none
+    padding: 15px 25px
+    font-size: 14px
+    font-family: $fOpenRegular
+    border-radius: 3px
+    background-color: $cWhite
+    color: $cDarkBlue
+
+.input-area__submit
+    border: none
+    background-color: $cDarkBlue
+    color: $cWhite
+    font-family: $font
+    font-size: s($s1)
+    letter-spacing: ps_ls(80)
+    border-radius: 3px
+    text-transform: uppercase
+    cursor: pointer
+    transition: color .3s ease-in-out
+
+    &:hover
+        color: $cOrange
+        transition: color .2s ease-in-out

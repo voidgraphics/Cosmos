@@ -36,6 +36,7 @@ div.navbar(v-if="shownavbar")
         div.navbar__avatar-container
             img.navbar__avatar(v-bind:src="user.src")
         div.account-pane(v-show="isUserDropdownVisible" transition="fadeFromTop2")
+            a.account-pane__link(v-link="{path: '/settings'}" @click="toggleUserDropdown") Settings
             a.account-pane__link(v-link="{path: '/teams'}" @click="toggleUserDropdown") Manage teams
             a.account-pane__link(@click="signout") Sign out
         div.popup-overlay( @click="toggleUserDropdown" v-show="isUserDropdownVisible" transition="fade")

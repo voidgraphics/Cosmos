@@ -1,0 +1,123 @@
+#view-teams
+    &.container
+        padding: 25px
+        padding-top: 120px
+        position: relative
+        width: 100%
+
+    .teams
+        &__list
+            padding-left: 40px
+
+            &__title
+                margin-bottom: 18px
+
+        &__item
+            border-radius: 3px
+            width: 29.333333333%
+            margin-bottom: 30px
+            height: 180px
+            padding-top: 25px
+            position: relative
+            display: inline-block
+            vertical-align: top
+            margin: 0 2% 3%
+
+
+            &__requests
+                display: block
+                width: 75%
+                margin: 0 auto
+                padding: 12px 0
+                border-radius: 3px
+                position: absolute
+                bottom: 75px
+                right: 0
+                left: 0
+
+            &__button
+                display: block
+                width: 75%
+                margin: 0 auto
+                padding: 12px 0
+                border-radius: 3px
+                position: absolute
+                bottom: 25px
+                right: 0
+                left: 0
+
+    .forms
+        width: 30%
+        float: left
+        padding-right: 40px
+
+    .form-body
+        margin-left: 0
+        padding: 0
+
+        &__input
+            margin-bottom: 15px
+
+    .form-group
+        margin-bottom: 0
+
+    .submit-btn
+        margin-top: 0
+
+    .create
+        margin-bottom: 55px
+
+    .leavePopup
+        width: 400px
+        height: 240px
+        position: absolute
+        top: 0
+        bottom: 0
+        left: 0
+        right: 0
+        margin: auto
+        padding: 35px
+
+        &__subtitle
+            margin-bottom: 25px
+
+        #confirmDelete,
+        #cancelDelete
+            width: 160px
+
+    .searchPopup
+        padding: 40px 30px
+        width: 80vw
+        height: 80vh
+        position: absolute
+        top: 0
+        bottom: 0
+        right: 0
+        left: 0
+        margin: auto
+        overflow-y: scroll
+
+        &__title
+            margin-bottom: 40px
+
+    .requests-popup
+        background-color: $cDarkBlue
+        padding: 20px 25px
+        border-radius: 3px
+        position: fixed
+        width: 40%
+        height: 50%
+        z-index: 99999
+        top: 0
+        bottom: 0
+        right: 0
+        left: 0
+        margin: auto
+
+        &__item
+            position: relative
+
+        &__accept
+            padding: 5px 10px
+            position: absolute
+            right: 0

@@ -42,7 +42,6 @@
 
             socket.on "user.logged", ( oUserData ) =>
                 setTimeout( () =>
-                    console.log oUserData
                     if oUserData.teams.length < 1
                         @user.username = oUserData.username
                         @user.src = "data:image/png;base64,#{oUserData.avatar}"
@@ -76,8 +75,10 @@
 
             signout: ->
                 previousProject = localStorage.selectedProject
+                previousTheme = localStorage.selectedTheme
                 localStorage.clear()
                 localStorage.previousProject = previousProject
+                localStorage.selectedTheme = previousTheme
                 @user.username = ""
                 @user.teams = []
                 @selectedTeam = {name: ""}
@@ -133,10 +134,13 @@
                     teamId: oTeam.uuid
                 }
 
+
                 socket.emit "project.create", project, ( oResult ) =>
                     oTeam.projects.push oResult
                     oTeam.newProject = ""
                     oTeam.showInput = false
+
+                    socket.emit "user.join", oResult.uuid, oResult.teamUuid
 
                     @changeProject oTeam, oResult
 

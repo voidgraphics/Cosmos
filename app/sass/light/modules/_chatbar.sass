@@ -1,0 +1,71 @@
+.chatbar
+    background-color: transparent
+    color: $cWhite
+    padding: 25px 0 25px 30px
+
+.chatbar__section
+    margin-bottom: 35px
+    position: relative
+
+.chatbar__section__title
+    font-size: s($s1)
+    letter-spacing: ps_ls(80)
+    text-transform: uppercase
+    margin-bottom: 10px
+    display: inline
+    color: $cDarkBlue
+
+.chatrooms
+    margin-top: 15px
+
+.chatroom
+    color: $cLightBlue
+    text-transform: uppercase
+    letter-spacing: ps_ls(80)
+    font-size: s($s1)
+    display: block
+    margin: 7px 0
+    transition: all .3s $bounce
+    transform-origin: left center
+
+    &--active
+        color: $cDarkBlue
+
+    &__unreadCount
+            display: inline-block
+            background-color: $cLightBlue
+            width: 16px
+            height: 16px
+            font-size: 9px
+            border-radius: 50%
+            text-align: center
+            color: $cWhite
+            margin-left: 4px
+            line-height: 16px
+            position: relative
+            top: -1px
+
+    &:hover
+        transform: scale(1.07)
+        transition: all .3s $bounce
+
+.chat-users
+    margin-top: 10px
+
+.chat-user
+    margin-bottom: 2px
+
+.chat-user .user__name
+    display: inline-block
+    margin-left: 10px
+    font-family: $fOpenRegular
+    font-size: s($s2)
+    color: $cMediumBlue1
+    letter-spacing: ps_ls(20)
+    vertical-align: middle
+
+.chat-user .account__picture
+    width: 24px
+    height: 24px
+    vertical-align: middle
+    border-radius: 3px

@@ -45,6 +45,7 @@
     "coffee-loader": "^0.7.2",
     "cross-env": "^1.0.5",
     "css-loader": "^0.23.0",
+    "devtron": "^1.3.0",
     "file-loader": "^0.8.5",
     "gulp": "^3.9.0",
     "gulp-coffee": "^2.3.1",

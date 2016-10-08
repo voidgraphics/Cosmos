@@ -1,0 +1,35 @@
+a.add-btn
+    color: $cDarkBlue
+    text-transform: uppercase
+    letter-spacing: ps_ls(80)
+    cursor: pointer
+    font-size: s($s1)
+    display: block
+    -webkit-user-select: none
+    transition: all .3s $bounce
+    transform-origin: left center
+    margin: 0
+
+
+    &:before
+        content: '+'
+        color: #fff
+        display: inline-block
+        width: s(20, 12)
+        height: s(20, 12)
+        background-color: $cOrange
+        display: inline-block
+        border-radius: s(3, 12)
+        margin-right: s(10, 12)
+        text-align: center
+        line-height: s(20, 12)
+        transition: all .3s ease-in-out
+
+
+    &:hover
+        transform: scale(1.07)
+        transition: all .3s $bounce
+
+        &:before
+            transform: rotate(90deg)
+            transition: all .3s ease-in-out

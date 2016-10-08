@@ -1,0 +1,23 @@
+#view-settings
+    &.container
+        padding-top: 120px
+
+    .overlay
+        position: absolute
+        top: 0
+        bottom: 0
+        right: 0
+        left: 0
+        z-index: -5
+
+        @for $i from 0 through 27
+            #box#{$i}
+                fill: lighten($cDarkBlue, ($i % 2.2956) * $i / 1.7)
+                opacity: 0
+                transition: opacity 80ms, transform 80ms ease-in-out
+                transform: scale(.5)
+                transform-origin: center center
+
+                &.show
+                    opacity: 1
+                    transform: scale(1)

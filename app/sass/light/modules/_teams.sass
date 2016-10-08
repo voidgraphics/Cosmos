@@ -1,0 +1,59 @@
+#view-teams
+    .teams
+        &__list
+            width: 70%
+            height: 80vh
+            float: right
+
+            &__title
+                color: $cWhite
+                text-transform: uppercase
+                letter-spacing: ps_ls(80)
+                font-size: s($s1)
+                color: $cLightBlue2
+
+        &__item
+            background-color: $cDarkBlue
+
+            &__name
+                color: $cWhite
+                text-align: center
+                font-family: $fOpenRegular
+                letter-spacing: ps_ls(20)
+
+            &__button
+                background-color: $cOrange
+                color: $cWhite
+                text-align: center
+                cursor: pointer
+
+            &__requests
+                background-color: $cMediumBlue1
+                color: $cWhite
+                text-align: center
+                cursor: pointer
+
+            &__requested
+                background-color: $cMediumBlue1
+                cursor: default
+
+    .leavePopup
+        &__title
+            font-family: $fOpenRegular
+
+        &__subtitle
+            color: $cWhite
+            text-align: center
+
+    .requests-popup
+        &__item
+            color: $cWhite
+            font-family: $fOpenRegular
+            letter-spacing: ps_ls(20)
+
+        &__accept
+            color: $cWhite
+            border-radius: 3px
+            background-color: $cOrange
+            cursor: pointer
+            margin: 0

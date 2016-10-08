@@ -1,0 +1,233 @@
+@import "account-pane"
+
+.navbar
+    position: fixed
+    top: 0
+    left: 0
+    right: 0
+    height: 80px
+    background-color: $cDarkBlue
+    text-transform: uppercase
+    color: $cWhite
+    font-size: s($s1)
+    z-index: 99
+
+.team,
+.navbar__links,
+.team__dropdown-toggle
+    letter-spacing: ps_ls(120)
+    -webkit-user-select: none
+
+.team__dropdown-toggle
+    float: left
+    margin-top: 35px
+    margin-left: 30px
+    padding-top: 11px
+    padding-bottom: 11px
+
+.team
+    left: 30px
+
+    &__separator
+        vertical-align: middle
+        display: inline-block
+        margin: 0 s(7, $s1)
+        width: s(4, $s1)
+        height: s(8, $s1)
+        background-repeat: no-repeat
+        background-position: center center
+        background-image: url('../img/right-arrow.svg')
+        background-size: 100%
+
+    &__project
+        color: $cLightBlue
+
+.navbar__links
+    float: right
+    margin-top: 35px
+
+    > .navbar__link
+        display: inline
+        padding: 23px
+        font-size: inherit
+        color: $cWhite
+
+.dashboard-icon,
+.tasks-icon,
+.ui-icon,
+.chat-icon
+    position: relative
+
+.tasks-icon,
+.ui-icon,
+.dashboard-icon
+    top: 2px
+    right: 8px
+
+.chat-icon
+    top: 3px
+    right: 8px
+
+.navbar__link
+    &--dashboard:before,
+    &--tasks:before,
+    &--ui:before,
+    &--chat:before
+        content: ''
+        display: inline-block
+        position: relative
+        top: 2px
+        right: 6px
+
+    &--dashboard:before
+        width: 13px
+        height: 13px
+        background: url(../img/dashboard.svg) no-repeat center center
+
+    &--dashboard.v-link-active:before
+        background-image: url(../img/dashboard-active.svg)
+
+    &--tasks:before
+        width: 13px
+        height: 15px
+        background: url(../img/tasks.svg) no-repeat center center
+
+    &--tasks.v-link-active:before
+        background-image: url(../img/tasks-active.svg)
+
+    &--ui:before
+        width: 18px
+        height: 14px
+        background: url(../img/ui.svg) no-repeat center center
+
+    &--ui.v-link-active:before
+        background-image: url(../img/ui-active.svg)
+
+    &--chat:before
+        top: 3px
+        width: 17px
+        height: 15px
+        background: url(../img/chat.svg) no-repeat center center
+
+    &--chat.v-link-active:before
+        background-image: url(../img/chat-active.svg)
+
+    &--chat-count
+        display: inline-block
+        width: 18px
+        height: 18px
+        line-height: 18px
+        margin-left: 5px
+        color: $cLightBlue2
+        background-color: $cMediumBlue1
+        border-radius: 50%
+        text-align: center
+
+.navbar__username
+    cursor: pointer
+    margin-left: 30px
+    padding-right: 7px
+    display: inline
+    font-size: inherit
+    color: $cWhite
+    padding: 23px
+    padding-right: 7px
+
+    &:after
+        content: ''
+        vertical-align: middle
+        display: inline-block
+        margin: 0 s(8, $s1)
+        width: s(5, $s1)
+        height: s(9, $s1)
+        position: relative
+        top: -1px
+        background-repeat: no-repeat
+        background-position: center center
+        background-image: url('../img/right-arrow.svg')
+        background-size: 100%
+        transform: rotate(90deg)
+
+.navbar__avatar-container
+    width: 36px
+    height: 36px
+    border-radius: 4px 4px
+    overflow: hidden
+    margin-right: 30px
+    display: inline-block
+    vertical-align: middle
+    transform: translateY(-5px)
+
+.navbar__avatar
+    width: 100%
+    min-width: 36px
+    min-height: 36px
+
+.team__dropdown
+    position: absolute
+    background-color: $cDarkBlue
+    color: $cWhite
+    padding: 15px 20px
+    border-radius: 3px
+    min-width: 250px
+    top: 95px
+    left: 15px
+    z-index: 99999
+    max-height: 75vh
+    overflow-y: scroll
+
+    // &:before
+    //     content: ''
+    //     display: block
+    //     background-color: $cDarkBlue
+    //     position: absolute
+    //     top: -10px
+    //     left: 10px
+    //     width: 10px
+    //     height: 10px
+    //     transform: rotate(45deg)
+    //     transform-origin: bottom left
+
+    &__item
+        cursor: pointer
+
+    &__group
+        margin-bottom: 45px
+
+    &-toggle
+        cursor: pointer
+
+.group
+    &__name
+        color: $cWhite
+
+    &__empty
+        font-family: $fOpenRegular
+        font-style: italic
+        color: $cLightBlue
+        text-transform: none
+        letter-spacing: ps_ls(20)
+        cursor: pointer
+
+
+    &__add.add-btn
+        font-size: 1em
+        margin-top: 5px
+        margin-bottom: 10px
+        color: $cWhite
+
+    &__link
+        display: block
+        font-family: $fOpenRegular
+        text-transform: none
+        color: $cLightBlue
+        letter-spacing: ps_ls(20)
+        cursor: pointer
+        padding: 10px 0 15px
+        border-bottom: 1px dashed #3F4446
+        transition: padding-left .3s $bounce, color .3s ease-in-out
+
+        &:hover
+            transition: padding-left .3s $bounce, color .3s ease-in-out
+            padding-left: 5px
+            color: $cWhite

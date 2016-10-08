@@ -1,0 +1,46 @@
+.mockup-item
+    background-color: $cDarkBlue
+    border-radius: 5px
+    width: 27%
+    position: relative
+    height: 242px
+    overflow: hidden
+    margin-bottom: 55px
+    box-shadow: 0 10px 20px rgba(0, 0, 0, .1)
+
+.thumbnail-container
+    height: 185px
+    overflow: hidden
+    width: 100%
+    position: absolute
+    top: 0
+
+.mockup-item__link
+    display: block
+    padding: 0
+    z-index: 15
+    font-size: 16px
+    transition: all .2s $bounce
+
+    &:hover
+        transform: scale(1.07)
+        transition: all .3s $bounce
+
+.mockup-item__thumbnail
+    width: 100%
+
+.mockup-item__comment-count
+    color: $cLightBlue4
+    font-size: s($s1)
+    text-transform: uppercase
+    position: absolute
+    bottom: 13px
+    left: 20px
+
+.mockup-item__title
+    position: absolute
+    bottom: 30px
+    left: 20px
+    color: $cWhite
+    font-family: $fOpenRegular
+    font-size: s($s2)

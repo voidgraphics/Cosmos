@@ -14,12 +14,32 @@ MockupView = require "../vues/Mockup.vue"
 ChatView = require "../vues/Chat.vue"
 TeamsView = require "../vues/Teams.vue"
 JoinTeamView = require "../vues/JoinTeam.vue"
+SettingsView = require "../vues/Settings.vue"
 
 Vue.config.debug = true
 
 Vue.use VueRouter
 Vue.use VueAsyncData
 App = Vue.extend({
+    data: ->
+        return {
+            theme: ''
+        }
+
+    ready: ->
+        @theme = localStorage.selectedTheme
+        @switchLinkTag @theme
+
+    watch:
+        theme: (val, oldVal) ->
+            @switchLinkTag val
+
+    methods:
+        switchLinkTag: ( sTheme ) ->
+            localStorage.selectedTheme = sTheme
+            $link = document.querySelector '#theme'
+            $link.href = "../css/#{ sTheme }.css"
+
     events:
         changeProject: ( oTeam, oProject ) ->
             localStorage.selectedProject = oProject.uuid
@@ -27,6 +47,8 @@ App = Vue.extend({
             this.$broadcast "changeProject", oTeam, oProject
         leftTeam: ( sTeamId ) ->
             this.$broadcast "leftTeam", sTeamId
+        changeTheme: ( sTheme ) ->
+            @switchLinkTag sTheme
 })
 
 
@@ -42,6 +64,7 @@ MockupView   = Vue.component "mockup-component", MockupView
 ChatView   = Vue.component "chat-component", ChatView
 TeamsView   = Vue.component "teams-component", TeamsView
 JoinTeamView   = Vue.component "jointeam-component", JoinTeamView
+SettingsView   = Vue.component "settings-component", SettingsView
 
 router = new VueRouter()
 router.redirect { "/": "/signin" }
@@ -64,6 +87,8 @@ router.map {
         component: TeamsView
     '/joinTeam':
         component: JoinTeamView
+    '/settings':
+        component: SettingsView
 }
 
 router.start App, "#app"
