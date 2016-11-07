@@ -1,10 +1,6 @@
 <template src="../html/settings.html"></template>
 
 <script lang="coffee">
-    zouti = require "zouti"
-    Moment = require "moment"
-    Vue = require "vue"
-
     Settings =
         items: []
         data: ->
