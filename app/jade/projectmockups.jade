@@ -1,4 +1,4 @@
-div.container.view#view-projectmockups
+div.container.view#view-projectmockups(transition="slide")
     a.add-btn(@click.prevent="togglePopup") Mockups
     div.mockup-items(v-if="mockups.length >= 1")
         a.mockup-item.mockup-item__link(v-for="mockup in mockups | caseInsensitiveOrderBy 'title'" v-link="{path: '/mockups/' + mockup.uuid}")

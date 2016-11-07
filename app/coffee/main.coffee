@@ -1,6 +1,7 @@
 Vue = require "vue"
 VueRouter = require "vue-router"
 VueAsyncData = require "vue-async-data"
+moment = require "moment"
 
 NavbarView = require "../vues/Navbar.vue"
 SignInView = require "../vues/SignIn.vue"
@@ -23,32 +24,93 @@ Vue.use VueAsyncData
 App = Vue.extend({
     data: ->
         return {
-            theme: ''
+            theme:
+                name: ''
+                hasSchedule: false
+            timer: null
         }
 
     ready: ->
-        @theme = localStorage.selectedTheme
-        @switchLinkTag @theme
+        @theme.name = localStorage.selectedTheme
+        @switchTheme @theme.name
+        if localStorage.hasSchedule isnt null
+            @theme.hasSchedule = localStorage.hasSchedule
+        console.log @theme.hasSchedule
+        if @theme.hasSchedule then @setCountdownToThemeSwitch()
+
+        #-#-# debugging
+        window.change = (number) =>
+            if number is 0 then theme = 'dark'
+            if number is 1 then theme = 'light'
+            @switchTheme(theme)
+        #-#-#
 
     watch:
         theme: (val, oldVal) ->
-            @switchLinkTag val
+            @switchTheme val
 
     methods:
-        switchLinkTag: ( sTheme ) ->
+        switchTheme: ( sTheme ) ->
+            document.querySelector('html').className = sTheme
             localStorage.selectedTheme = sTheme
-            $link = document.querySelector '#theme'
-            $link.href = "../css/#{ sTheme }.css"
+
+        setCountdownToThemeSwitch: ->
+            now = moment()
+            lightSwitch = moment().hour( 8 ).minute( 0 ).second( 0 )
+            darkSwitch = moment().hour( 20 ).minute( 0 ).second( 0 )
+            # lightSwitch = moment().add( 10, 's' )
+            # darkSwitch = moment().add( 20, 's' )
+            if now.isBefore lightSwitch
+                countdown = lightSwitch.diff(now);
+                nextTheme = 'light'
+                notificationText = {
+                    title: 'Good morning!'
+                    body: 'Turning the lights on.'
+                }
+            if now.isSameOrAfter lightSwitch
+                 countdown = darkSwitch.diff(now)
+                 nextTheme = 'dark'
+                 notificationText = {
+                     title: 'It‘s getting late...'
+                     body: 'Turning the lights off.'
+                 }
+            if now.isSameOrAfter darkSwitch
+                countdown = lightSwitch.add( 1, 'd' ).diff(now)
+                nextTheme = 'light'
+                notificationText = {
+                    title: 'Good morning!'
+                    body: 'Turning the lights on...'
+                }
+
+            console.log 'countdown', countdown
+
+            @timer = setTimeout(() =>
+                console.log 'countdown over, switching'
+                new Notification notificationText.title, { body: notificationText.body, silent: true }
+                setTimeout(() =>
+                    @switchTheme nextTheme
+                    this.$broadcast "themeChanged", nextTheme
+                , 500 )
+                @setCountdownToThemeSwitch()
+            , countdown)
 
     events:
         changeProject: ( oTeam, oProject ) ->
             localStorage.selectedProject = oProject.uuid
             localStorage.selectedTeam = oTeam.uuid
             this.$broadcast "changeProject", oTeam, oProject
+
         leftTeam: ( sTeamId ) ->
             this.$broadcast "leftTeam", sTeamId
+
         changeTheme: ( sTheme ) ->
-            @switchLinkTag sTheme
+            @switchTheme sTheme
+
+        toggleSchedule: ( bHasSchedule ) ->
+            @theme.hasSchedule = bHasSchedule
+            localStorage.hasSchedule = bHasSchedule
+            if bHasSchedule then @setCountdownToThemeSwitch()
+            else clearTimeout @timer
 })
 
 

@@ -9,60 +9,28 @@
         items: []
         data: ->
             return {
-                theme: ''
+                theme:
+                    name: "",
+                    hasSchedule: false
                 squares: []
             }
 
         ready: ->
-            @theme = localStorage.selectedTheme
-            @getSvgSquares()
+            @theme.name = localStorage.selectedTheme
+
+            if localStorage.hasSchedule isnt null
+                @theme.hasSchedule = localStorage.hasSchedule
 
         methods:
-
             changeTheme: ->
-                @displayOverlay()
+                @$dispatch 'changeTheme', @theme.name
 
-                that = this
+            toggleSchedule: () ->
+                this.$dispatch 'toggleSchedule', @theme.hasSchedule
 
-                setTimeout( () ->
-                    that.$dispatch 'changeTheme', that.theme
-                    that.hideOverlay()
-                , 350)
-
-            getSvgSquares: ->
-                @squares = [].slice.call document.querySelectorAll '.overlay svg rect'
-
-            hideOverlay: ->
-                that = this
-                squareNumber = 0
-                for square in @squares
-                    $amount = @squares.length
-                    randomIndex = Math.floor Math.random() * $amount
-                    ++squareNumber
-                    @hideSquare square, squareNumber
-                setTimeout( () ->
-                    document.querySelector('.overlay').style.zIndex = -5
-                , 350 )
-
-            displayOverlay: ->
-                document.querySelector('.overlay').style.zIndex = 5000
-                squareNumber = 0
-                for square in @squares
-                    $amount = @squares.length
-                    randomIndex = Math.floor Math.random() * $amount
-                    ++squareNumber
-                    @displaySquare square, squareNumber
-
-
-            displaySquare: (square, squareNumber) ->
-                setTimeout( () ->
-                    square.classList.add 'show'
-                , 10 * squareNumber )
-
-            hideSquare: (square, squareNumber) ->
-                setTimeout( () ->
-                    square.classList.remove 'show'
-                , 10 * squareNumber )
+        events:
+            themeChanged: ( sTheme ) ->
+                @theme.name = sTheme
 
     module.exports = Settings
 

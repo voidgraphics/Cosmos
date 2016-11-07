@@ -43,7 +43,7 @@ var createWindow = function() {
     mainWindow.loadURL('file://' + __dirname + '/html/main.html');
 
     // Open the DevTools.
-    // mainWindow.openDevTools();
+    mainWindow.openDevTools();
 
     // Emitted when the window is closed.
     mainWindow.on('closed', function() {

@@ -62,6 +62,10 @@
                         user.avatar = "data:image/png;base64,#{oUser.avatar}"
             @scroll()
 
+            setTimeout(() =>
+                document.getElementById('chatfield').focus()
+            , 300 )
+
         methods:
             addChatroom: () ->
                 oChatroom = {

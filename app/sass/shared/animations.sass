@@ -1,0 +1,23 @@
+$transition: 400ms
+
+*
+    transition: color $transition $ease-out-quad, background-color $transition $ease-out-quad, border-color $transition $ease-out-quad
+
+
+@keyframes fadein
+    from
+        opacity: 0
+        transform: translateY(-10px)
+    to
+        opacity: 1
+        transform: translateY(0)
+
+.slide-transition
+    transition: opacity 150ms $ease-out-quad, transform 150ms $ease-out-quad
+    animation: fadein 150ms 150ms
+
+.slide-enter, .slide-leave
+    opacity: 0
+
+.slide-leave
+    transform: translateY(10px)
