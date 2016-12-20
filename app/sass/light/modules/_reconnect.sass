@@ -1,0 +1,55 @@
+@keyframes spin
+    from
+        transform: rotate(0deg)
+    to
+        transform: rotate(360deg)
+
+@keyframes backgroundflash
+    0%
+        background-color: $cOrange
+    60%
+        background-color: $cOrange
+    100%
+        background-color: $cDarkBlue
+
+.reconnect
+    position: fixed
+    bottom: s(20)
+    left: s(20)
+    background-color: $cDarkBlue
+    box-shadow: 0 0 15px rgba(0, 0, 0, .2)
+    border-radius: 4px
+    padding: s(15) s(25) s(15) s(40)
+    z-index: 50
+    animation: backgroundflash 2s
+
+    &:before,
+    &:after
+        content: ''
+        display: block
+        position: absolute
+        left: s(15)
+        top: 50%
+        margin-top: s(-9)
+        width: s(14)
+        height: s(14)
+        border-radius: 50%
+        border: 2px solid rgba($cWhite, 0.6)
+        border-left-color: transparent
+        border-right-color: transparent
+        animation: spin 1s infinite
+
+    &:after
+        width: s(6)
+        height: s(6)
+        margin-top: s(-5)
+        left: s(19)
+        border-color: rgba($cWhite, 0.6)
+        border-top-color: transparent
+        border-bottom-color: transparent
+        animation: spin 1s infinite reverse
+
+    &__text
+        text-transform: uppercase
+        font-size: s($s1)
+        color: $cWhite

@@ -1,10 +1,15 @@
-div.container.view#view-signin
-    .content
+div.container.view#view-signin(transition="scale")
+    div.content
         div.signin
-            h1.signin__title Welcome to Cosmos
-            h2.signin__subtitle Please sign in
+            div.intro
+                h2.intro__title Hello
+                p.intro__text 
+                    |We need you to log in to use the application.
+                    |If you don’t already have an account,
+                    |you should create one.
             form.form(@submit.prevent="submit")
                 div
+                    legend.signin__subtitle Please log in
                     div.form-group
                         label(for="username") Username
                         p.form__error(v-if="usernameError") Please enter your username
@@ -17,5 +22,5 @@ div.container.view#view-signin
 
                     input(type="submit" class="submit-btn" value="Log in")
 
-                    a#signup-link(href="#" v-link="{path: '/signup'}") Don't have an account?
-                    //- a(href="forgotpassword.html") Forgot your password?
+                    a.signup-link(href="#" v-link="{path: '/signup'}") Don't have an account?
+                    a.password-link(href="forgotpassword.html") Forgot your password?

@@ -63,7 +63,7 @@
 
             confirmLeave: ->
                 socket.emit "team.leave", @leaveTeam.uuid, localStorage.id
-                @.$dispatch "leftTeam", @leaveTeam.uuid 
+                @.$dispatch "leftTeam", @leaveTeam.uuid
 
             hidePopup: ( sPopup ) ->
                 if sPopup == 'leave'
@@ -96,7 +96,6 @@
                         oTeam.status = "Request sent!"
 
             acceptRequest: ( oTeam, oUser ) ->
-                console.log "accepting #{oTeam.name} #{oUser.username}"
                 socket.emit "team.accept", oTeam.uuid, oUser.uuid
                 oTeam.requests.forEach ( oRequest, index ) =>
                     if oRequest.uuid == oUser.uuid

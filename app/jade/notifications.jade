@@ -1,0 +1,10 @@
+div.notifications
+    a.notifications__count(href="#" @click.prevent="togglePanel" v-bind:class="{ 'notifications__count--unread': unread > 0 }") {{ unread }}
+    div.notifications__panel(v-show="isPanelShowing" transition="fadeFromTop2")
+        p.notifications__none(v-if="notifications.length == 0") You have no notifications
+        div.notification(v-for="notification in notifications | orderBy 'createdAt'" @click="navigate(notification.project)")
+            span.notification__project {{ notification.project.name }}
+            p.notification__text {{ notification.text }}
+            time.notification__time {{ notification.createdAt | formatted }}
+
+    div.popup-overlay(v-if="isPanelShowing" transition="fade" @click="isPanelShowing = false")

@@ -16,6 +16,23 @@
                 hasDeadline: false
                 state: ""
                 hasDeleteButton: false
+                tag: ""
+                hasError: false
+                tags: [
+                    "None",
+                    "Design",
+                    "Front-end",
+                    "Back-end",
+                    "Planning",
+                    "Testing",
+                    "Bugs"
+                ]
+                tagListIsShowing: false
+                states:
+                    "todo": "To do"
+                    "inprogress": "In progress"
+                    "finished": "Completed"
+                stateListIsShowing: false
             }
 
         props: [ "columnname", "task", "users" ]
@@ -59,12 +76,17 @@
                     this.deadline = picker.getMoment().format "YYYY-MM-DD"
 
             submitTask: ( event ) ->
+                if @taskName == ''
+                     @hasError = true
+                     document.getElementById("newtask__name").focus()
+                else @hasError = false
                 oTask =
                     title: @taskName
                     deadline: @deadline
                     users: @selectedUsers
                     state: @state
                     position: 0
+                    tag: @tag
                 if @task
                     oTask.uuid = @task.uuid
                     oTask.position = @task.position

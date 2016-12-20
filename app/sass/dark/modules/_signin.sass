@@ -5,4 +5,58 @@
         color: $cLightBlue2
 
     &__subtitle
-        font-family: $fOpenSemiBold
+        font-family: $fMBold
+        text-transform: uppercase
+        color: $cWhite
+        font-size: 12px
+        text-align: center
+        display: block
+        width: 100%
+        margin-bottom: 45px
+        letter-spacing: ps_ls(40)
+
+    .form
+        position: absolute
+        right: 30%
+        top: 50%
+        transform: translateY(-50%) translateX(50%)
+        background-color: $cMediumBlue1
+        padding: 50px
+        padding-bottom: 60px
+        border-radius: 4px
+        box-shadow: 0 10px 45px rgba(black, .3)
+
+        input[type="text"],
+        input[type="password"]
+            margin-bottom: 20px
+
+        .submit-btn
+            width: 150px
+            position: absolute
+            height: 50px
+            bottom: -25px
+            left: 50%
+            margin-left: -75px
+
+    .intro
+            &__title
+                text-align: left
+                text-transform: uppercase
+                letter-spacing: ps_ls(80)
+                font-size: s(14)
+                margin-bottom: 15px
+                font-family: $fMBold
+
+            &__text
+                font-family: $fOpenRegular
+                font-size: 14px
+                line-height: 25px
+                color: $cLightBlue2
+
+    .signup-link,
+    .password-link
+        font-family: $fOpenRegular
+
+    .submit-btn
+        font-family: $fMBold !important
+        text-transform: uppercase

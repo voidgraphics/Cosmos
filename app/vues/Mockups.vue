@@ -35,7 +35,6 @@
                     image: @newMockup.fileName
                     projectId: localStorage.selectedProject
                 }
-                console.log oMockup
                 socket.emit "mockup.create", oMockup
                 @popupIsShowing = false
                 @newMockup.name = ""
@@ -48,13 +47,11 @@
                     e.target.value = ""
                 reader = new FileReader()
                 reader.onload = ( e ) =>
-                    console.log e.target.result
                     @newMockup.file = e.target.result
                 reader.readAsDataURL e.target.files[0]
 
         events:
             changeProject: ( oTeam, oProject ) ->
-                console.log @mockups
                 @mockups = []
                 socket.emit "mockup.getAll", oProject.uuid
 

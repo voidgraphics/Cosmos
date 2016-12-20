@@ -2,8 +2,4 @@
 
 localStorage.removeItem( "debug" );
 
-var socket = io( "http://localhost:12345" );
-
-socket.on( "connect", function () {
-
-} );
+var socket = io( "http://137.74.171.161:12345" );

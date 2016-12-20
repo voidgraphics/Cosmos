@@ -9,11 +9,15 @@ div.container#view-projectmockup(transition="slide")
             img#mockup.mockup__image(v-bind:src="mockup.src" @click="getCoordinates")
             
             div#overlay.mockup__comments
-                form.add-comment(@submit.prevent="sendComment" v-if="showForm" style="position: absolute; top: {{ formPos.y }}%; left: {{ formPos.x }}%;")
+                form.add-comment(@submit.prevent="sendComment" v-if="showForm" v-bind:class="{ 'add-comment--inverted': formInverted }" style="position: absolute; top: {{ formPos.y }}%; left: {{ formPos.x }}%;")
                     div
                         button.add-comment__close(@click.prevent="showForm = false")
-                        textarea.add-comment__textfield(v-model="newMessage" v-focus="showForm")
+                        textarea#newComment.add-comment__textfield(rows="1" v-model="newMessage" v-focus="showForm" placeholder="Write your comment here...")
                         input.add-comment__submit(type="submit" value="Send")
                 a.mockup__comment(v-for="comment in comments" style="top: {{ comment.y }}%; left: {{ comment.x }}%;" @click.stop="toggle( comment, $event )")
                     div.comment__body(v-show="comment.isShowing" class="{{ comment.class }}")
-                        p {{ comment.text }}
+                        div.comment__image
+                            img.comment__avatar(src="../img/default.png")
+                        span.comment__user {{ comment.user.username }}
+                        span.comment__date {{ comment.createdAt | formatted }}
+                        p.comment__text {{ comment.text }}

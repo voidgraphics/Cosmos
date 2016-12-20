@@ -18,12 +18,12 @@
     position: fixed
     top: 50%
     left: 50%
+    transform: translate(-50%, -50%)
 
     background-color: $cMediumBlue1
     border-radius: 5px
     box-shadow: 0 0 10px rgba( 0, 0, 0, .3 )
 
-    overflow: hidden
     z-index: 99999
 
     &::after
@@ -37,9 +37,6 @@
 
 .popup
     width: 450px
-    height: 515px
-    margin-left: -225px
-    margin-top: -257.5px
     z-index: 99999
 
 .deletePopup
@@ -108,6 +105,7 @@
     top: 0px
     bottom: 0
     background-color: $cDarkBlue
+    border-radius: 5px 0 0 5px
 
 .assign-user__container
     position: relative
@@ -151,53 +149,34 @@
     &:checked + .assign-user::before
         opacity: 1
         transition: opacity .2s ease
+.popup .form
+    .form-body
+        margin-left: 80px
+        padding: 20px 40px
 
-.form-body
-    margin-left: 80px
-    padding: 20px 40px
+        &--nosidebar
+            margin-left: 0
 
-    &--nosidebar
-        margin-left: 0
+    .form-group
+        position: relative
+        margin-bottom: 18px
 
-.form-group
-    position: relative
-    margin-bottom: 20px
+    .form-body__label
+        color: $cWhite
+        -webkit-user-select: none
 
-.form-body__label
-    font-size: 11px
-    color: $cWhite
-    -webkit-user-select: none
-    text-transform: uppercase
-    letter-spacing: ps_ls(80)
+        &--error
+            font-family: $fOpenSemiBold
+            color: $cOrange !important
 
-.form-body__input
-    display: block
-    border-radius: 3px
-    border: none
-    background: $cDarkBlue
-    color: $cLightBlue2
-    letter-spacing: ps_ls(20)
-    font-size: 12px
-    padding: 12px 15px
-    font-family: $fOpenRegular
-    width: 100%
-    margin: 5px 0 10px
+    .form-body__input
+        margin-bottom: 0
+        border-right: 3px solid transparent
+        border-left: 3px solid transparent
 
-    // &[type="checkbox"]
-    //     display: inline
-    //     width: auto
-    //     vertical-align: top
-
-    // &[type="radio"]
-    //     display: inline
-    //     width: auto
-    //     vertical-align: top
-    //
-    //     & + .form-body__label
-    //         font-size: 13px
-    //         margin-left: 3px
-    //         margin-right: 20px
-
+        &--error
+            border-right-color: $cOrange
+            border-left-color: $cOrange
 
 .currentDate
     display: inline-block
@@ -230,9 +209,12 @@
     color: $cWhite
     font-size: 12px
     letter-spacing: ps_ls(20)
+    line-height: 25px
 
 .is-today .pika-button
     font-style: italic
+    background: $cMediumBlue1
+    border-radius: 3px
     color: $cLightBlue2
 
 .is-selected .pika-button
@@ -246,22 +228,41 @@
     font-family: $fOpenRegular
     text-align: center
     transition: all .05s ease-in-out
+    padding: 4px
 
     &:hover
         transition: all .05s ease-in-out
         background: $cMediumBlue1
         color: $cWhite
 
+.pika-prev, .pika-next
+    opacity: 1
+    background-image: none
+    font-size: 0
+
+    &:before
+        content: ''
+        display: block
+        width: 0
+        height: 0
+        border: 5px solid transparent
+
+.pika-prev:before
+    border-right-color: $cOrange
+
+.pika-next:before
+    border-left-color: $cOrange
+
 .submit-container
     position: absolute
-    bottom: 22px
+    bottom: 8px
     height: 50px
     right: 40px
     left: 40px
+    margin-bottom: 0 !important
 
     &--sidebar
         left: 0
-
 
 .task-submit
     right: 0
@@ -291,3 +292,83 @@
 ::-webkit-input-placeholder
     font-weight: 300
     font-size: 12px
+
+
+.pika-title .pika-label:first-child:after
+    content: '\00a0 '
+
+.bullet
+    display: inline-block
+    width: 12px
+    height: 12px
+    vertical-align: -2px
+    border-radius: 4px
+    margin-right: 5px
+
+    &--1
+        background: linear-gradient($cRedGradient)
+    &--2
+        background: linear-gradient($cOrangeGradient)
+    &--3
+        background: linear-gradient($cTurquoiseGradient)
+    &--4
+        background: linear-gradient($cGreenGradient)
+    &--5
+        background: linear-gradient($cGreyGradient)
+    &--6
+        background: linear-gradient($cBrownGradient)
+
+.form
+    .dropdown
+        cursor: pointer
+        position: relative
+        -webkit-user-select: none
+        z-index: 100000
+
+        &:after
+            content: ''
+            position: absolute
+            top: 50%
+            right: 15px
+            width: 0
+            height: 0
+            border: 5px solid transparent
+            border-top-color: $cOrange
+
+    .taglist
+        background-color: $cDarkBlue
+        position: absolute
+        top: 100%
+        z-index: 99999
+        width: 100%
+        border-radius: 0 0 3px 3px
+        box-shadow: 0 0 15px rgba(black, 0.3)
+
+        &:before
+            content: ''
+            position: absolute
+            top: 0
+            border-top: 1px dashed $cMediumBlue1
+            width: 100%
+
+        .form-body__label
+            cursor: pointer
+            width: 100%
+            height: 100%
+            padding: 12px 20px
+            width: 100%
+            margin-bottom: 0
+            transition: padding .3s $ease-out-quad
+
+            &:before
+                @include hidden()
+
+            &:hover
+                padding-left: 28px
+
+        .form-group
+            border-bottom: 1px dashed $cMediumBlue1
+            margin-bottom: 0
+
+            &:last-child
+                border: none

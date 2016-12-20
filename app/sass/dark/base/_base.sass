@@ -1,6 +1,3 @@
-html
-    background-color: $cMediumBlue1
-
 *
     box-sizing: border-box
     margin: 0
@@ -8,11 +5,18 @@ html
 
     &:focus
         outline: 0
+        
+&
+    min-height: 100%
 
 body
     font-family: $font
     font-size: 16px
     background-color: $cLightBlue2
+    background: linear-gradient(192deg, $cMediumBlue1, $cMediumBlue1 450px, #282f36 451px, #282f36)
+    background-position: 0px
+    background-repeat: no-repeat
+    background-color: #282f36
 
 .setup
     background-color: $cMediumBlue1
@@ -20,15 +24,10 @@ body
     height: 100vh
     width: 100%
 
-#app
-    background-color: $cMediumBlue1
-
 #app .view
     display: block
 
 .container
-    height: 100vh
-
     &.showing
         display: block !important
 

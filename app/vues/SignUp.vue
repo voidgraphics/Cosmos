@@ -38,7 +38,6 @@
                     @lastnameError = false
                     @passwordError = false
                     @avatarError = false
-                    console.log "Registering #{@username}..."
                     oUserInfo =
                         username: @username
                         email: @email
@@ -49,7 +48,6 @@
                         file: @file
 
                     socket.emit "user.register", oUserInfo, ( oResult ) =>
-                        console.log oResult
                         if oResult.code == 200
                             console.log "log you in here"
 
@@ -87,14 +85,12 @@
             detectFile: ( e ) ->
                 @fileName = e.target.files[0].name
                 ext = @fileName.match(/\.([^\.]+)$/)[1]
-                console.log ext
                 if ext != "gif" and ext != "jpeg" and ext != "jpg" and ext != "png"
                     e.target.value = ""
 
                 reader = new FileReader()
                 reader.onload = ( e ) =>
                     @file = e.target.result
-                console.log e.target.files
                 reader.readAsDataURL e.target.files[0]
 
     module.exports = SignUp

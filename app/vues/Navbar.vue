@@ -3,6 +3,8 @@
 <script lang="coffee">
     zouti = require "zouti"
     Vue = require "vue"
+    Notifications = require "./Notifications.vue"
+    Errors = require "./Errors.vue"
     Navbar =
         data: ->
             return {
@@ -23,12 +25,24 @@
                 shownavbar: true
                 isUserDropdownVisible: false
                 isTeamDropdownVisible: false
+                isOffline: false
+                isOfflineTooltipVisible: false
             }
 
         directives:
             focus: (require "vue-focus").focus
 
+        components:
+            "notifications": Notifications
+            "errors": Errors
+
         ready: ->
+
+            socket.on "disconnect", () =>
+                @isOffline = true
+
+            socket.on "reconnect", () =>
+                @isOffline = false
 
             socket.on "team.initialized", ( oTeam, oProject ) =>
                 oTeam.showInput = false
@@ -99,8 +113,12 @@
 
                 socket.emit "user.join", @selectedProject.uuid, @selectedTeam.uuid
 
+                localStorage.userId = oUserData.uuid
                 localStorage.selectedTeam = @selectedTeam.uuid
                 localStorage.selectedProject = @selectedProject.uuid
+                localStorage.settings = oUserData.settings
+                console.log "dispatching event"
+                this.$dispatch "loadNotificationSettings"
                 @isTeamDropdownVisible = false
 
             selectProject: ( oUserData ) ->
@@ -115,6 +133,8 @@
 
             changeProject: ( oTeam, oProject ) ->
                 @isTeamDropdownVisible = false
+                socket.emit "user.leave", @selectedTeam.uuid
+                socket.emit "user.leave", @selectedProject.uuid
                 this.$dispatch "changeProject", oTeam, oProject
                 this.selectedTeam = oTeam
                 this.selectedProject = oProject
@@ -134,7 +154,6 @@
                     teamId: oTeam.uuid
                 }
 
-
                 socket.emit "project.create", project, ( oResult ) =>
                     oTeam.projects.push oResult
                     oTeam.newProject = ""
@@ -145,10 +164,22 @@
                     @changeProject oTeam, oResult
 
         events:
+
+            navigateToProject: ( oProject ) ->
+                oTeam = {}
+                for team in @user.teams
+                    if team.uuid == oProject.teamUuid
+                        oTeam = team
+                        break
+                @changeProject oTeam, oProject
+
             leftTeam: ( sTeamId ) ->
                 @user.teams.forEach ( oTeam, index ) =>
                     if oTeam.uuid == sTeamId
                         @user.teams.splice index, 1
+
+            test: ->
+                console.log "in navbar vue"
 
         watch:
             $route: ( newValue, oldValue ) ->

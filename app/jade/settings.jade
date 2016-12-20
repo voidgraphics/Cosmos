@@ -1,12 +1,30 @@
 div.container.view#view-settings(transition="slide")
     div.content
-        form.form
-            fieldset.form-body
-                label Theme
-                br
-                input#theme-light.form-body__input(type="radio" value="light" @change="changeTheme" v-model="theme.name")
-                label.form-body__label(for="theme-light") Light
-                input#theme-dark.form-body__input(type="radio" value="dark" @change="changeTheme" v-model="theme.name")
-                label.form-body__label(for="theme-dark") Dark
-                input.form-body__input(type="checkbox" id="hasSchedule" name="hasSchedule" v-model="theme.hasSchedule" @change="toggleSchedule")
-                label.form-body__label(for="hasSchedule") Switch automatically (Light starts at 8am and dark starts at 8pm)
+        div.sidebar
+            a.sidebar__item(href="#" @click.prevent="switchCategory('usability')" v-bind:class="{ 'sidebar__item--selected': categories.usability }") Usability
+            a.sidebar__item(href="#" @click.prevent="switchCategory('notifications')" v-bind:class="{ 'sidebar__item--selected': categories.notifications }") Notifications
+        
+        div.panel(v-show="categories.usability")
+            form.form
+                fieldset.form-body
+                    label.panel__title Application colors
+                    input#theme-light.form-body__input(type="radio" value="light" @change="changeTheme" v-model="theme.name")
+                    label.form-body__label(for="theme-light") Light
+                    input#theme-dark.form-body__input(type="radio" value="dark" @change="changeTheme" v-model="theme.name")
+                    label.form-body__label(for="theme-dark") Dark
+                fieldset.form-body
+                    label.panel__title Color options
+                    div
+                        input.form-body__input(type="checkbox" id="hasSchedule" name="hasSchedule" v-model="theme.hasSchedule" @change="toggleSchedule")
+                        label.form-body__label(for="hasSchedule") Switch automatically (Light starts at 8am and dark starts at 8pm)
+                    div
+                        input.form-body__input(type="checkbox" id="isColorblind" name="isColorblind" v-model="theme.isColorblind" @change="toggleColorblind")
+                        label.form-body__label(for="isColorblind") Colorblind mode (adds visual patterns where color information is important)
+        div.panel(v-show="categories.notifications")
+            form.form
+                fieldset.form-body
+                    label.panel__title Notifications
+                    input.form-body__input(type="checkbox" id="notifs-tasks-assigned" v-model="notifs.tasksAssigned" @change="changeNotificationPreference('tasksAssigned', notifs.tasksAssigned)")
+                    label.form-body__label(for="notifs-tasks-assigned") When I'm assigned to a task
+                    input.form-body__input(type="checkbox" id="notifs-tasks-moved" v-model="notifs.tasksMoved" @change="changeNotificationPreference('tasksMoved', notifs.tasksMoved)")
+                    label.form-body__label(for="notifs-tasks-moved") When a task I'm assigned to is moved

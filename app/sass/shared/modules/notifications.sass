@@ -1,0 +1,73 @@
+.notifications
+    position: relative
+    display: inline-block
+
+    & &__count
+        color: $cWhite !important
+
+        &--unread:after
+            background: url(../img/notification-new.svg) !important
+
+        &:after
+            content: ''
+            display: inline-block
+            width: 21px
+            height: 20px
+            vertical-align: -4px
+            background: url(../img/notification.svg)
+            margin-left: 5px
+
+    & &__panel
+        position: absolute
+        z-index: 99999
+        background-color: $cDarkBlue
+        padding: 10px 25px
+        width: 235px
+        border-radius: 4px
+        top: 50px
+        right: 0
+        max-height: 300px
+        overflow-y: scroll
+
+    & &__none
+        text-transform: none
+        font-family: $fOpenRegular
+        letter-spacing: ps_ls(20)
+        text-align: center
+
+    .notification
+        padding: 15px 0
+        cursor: pointer
+        border-bottom: 1px dashed #3F4446
+
+        &:last-child
+            margin-bottom: 0
+            border-bottom: none
+
+        &__text
+            text-transform: none
+            font-family: $fOpenRegular
+            letter-spacing: ps_ls(20)
+            color: $cLightBlue2
+            margin-bottom: 5px
+
+        &__project
+            display: block
+            margin-bottom: 5px
+
+            &:after
+                content: ''
+                vertical-align: middle
+                display: inline-block
+                margin: 0 0.63636em
+                width: 0.36364em
+                height: 0.72727em
+                background-repeat: no-repeat
+                background-position: center center
+                background-image: url("../img/right-arrow.svg")
+                background-size: 100%
+
+        &__time
+            text-transform: none
+            font-family: $fOpenRegular
+            letter-spacing: ps_ls(20)

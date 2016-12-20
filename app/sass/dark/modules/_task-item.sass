@@ -17,6 +17,11 @@
     box-shadow: 0 10px 20px rgba( 0, 0, 0, .1 )
     font-family: $fOpenRegular
     font-size: s($s2)
+    overflow: hidden
+    cursor: pointer
+
+    &:first-child
+        margin-top: s(45)
 
     &:after
         position: absolute
@@ -47,6 +52,97 @@
         &__avatar
             width: 28px
             border-radius: 3px
+
+    &__tag
+        position: absolute
+        top: 0
+        right: 0
+        width: s(65, $s2)
+        height: s(25, $s2)
+        transform: rotate(30deg)
+        overflow: hidden
+        transform-origin: bottom right
+        transition: all .2s .2s
+
+        &:before
+            content: attr(alt)
+            display: block
+            opacity: 0
+            position: absolute
+            width: 100%
+            height: 100%
+            line-height: 95px
+            text-align: center
+            z-index: 15
+            color: white
+            text-shadow: 0 0 2px rgba(black, .8)
+            background: rgba(black, .6)
+            transition: all .2s .2s
+            font-size: 12px
+            text-indent: 20px
+
+        &:hover
+            width: 120px
+            height: 60px
+            top: 0
+
+            &:before
+                opacity: 1
+
+        &.colorblind:after
+            content: ''
+            display: block
+            position: absolute
+            top: -15px
+            bottom: -35px
+            right: -15px
+            left: -15px
+            transform: rotate(-30deg)
+            transition: all .3s $ease-out-quad
+
+        &--1
+            background: linear-gradient($cRedGradient)
+
+            &.colorblind:after
+                top: 2px
+                right: 1px
+                background: url(../img/1.svg) center center
+
+        &--2
+            background: linear-gradient($cOrangeGradient)
+
+            &:before
+                text-indent: 18px
+
+            &.colorblind:after
+                background: url(../img/2.svg) center center
+
+        &--3
+            background: linear-gradient($cTurquoiseGradient)
+
+            &.colorblind:after
+                background: url(../img/3.svg) center center
+
+        &--4
+            background: linear-gradient($cGreenGradient)
+
+            &.colorblind:after
+                top: 3px
+                right: 1px
+                background: url(../img/4.svg) center center
+
+        &--5
+            background: linear-gradient($cGreyGradient)
+
+            &.colorblind:after
+                background: url(../img/5.svg) center center
+
+        &--6
+            background: linear-gradient($cBrownGradient)
+
+            &.colorblind:after
+                background: url(../img/6.svg) center center
+
 
 .task-item__edit
     display: inline-block

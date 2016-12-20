@@ -1,0 +1,26 @@
+.tooltip
+    background-color: $cOrange
+    color: $cWhite
+    padding: s(15) s(25)
+    border-radius: 4px
+    position: absolute
+    width: s(350)
+    top: 0
+    left: s(45)
+
+    &:before
+        content: ''
+        display: block
+        width: 0
+        height: 0
+        border: s(10) solid transparent
+        border-right-color: $cOrange
+        position: absolute
+        top: s(8)
+        right: 100%
+
+    &__text
+        text-transform: none
+        font-family: $fOpenRegular
+        letter-spacing: 0
+        line-height: 1.6

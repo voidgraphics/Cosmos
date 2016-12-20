@@ -14,16 +14,54 @@
                 columnName: null
                 tasks: [ { title: "not loaded yet" } ]
                 users: []
+                showSortMenu: false
+                sort:
+                    "mine": false
+                    "0": true
+                    "1": true
+                    "2": true
+                    "3": true
+                    "4": true
+                    "5": true
+                    "6": true
+                categories: [
+                    false,
+                    "Design",
+                    "Front-end",
+                    "Back-end",
+                    "Planning",
+                    "Testing",
+                    "Bugs"
+                ]
+                sortButtonText: "Hide all"
+
+                isColorblind: false
              }
 
         asyncData: ( resolve, reject ) ->
             sProjectId = localStorage.selectedProject
             socket.emit "task.getAll", sProjectId, ( oReturnedTasks ) ->
-                this.items = Object.keys( oReturnedTasks ).map( ( key ) -> return oReturnedTasks[ key ] )
-                resolve { tasks: this.items }
+                items = Object.keys( oReturnedTasks ).map( ( key ) -> return oReturnedTasks[ key ] )
+                resolve { tasks: items }
 
         ready: ->
             drake = Dragula( [ document.querySelector( '#todo-column__items' ), document.querySelector( '#progress-column__items' ), document.querySelector( '#finished-column__items' ) ] )
+
+            if localStorage.settings
+                settings = JSON.parse localStorage.settings
+                @isColorblind = settings.usability.isColorblind
+
+            socket.on "task.updated", ( oTask ) =>
+                @replaceTask oTask
+
+            socket.on "task.created", ( oTask ) =>
+                this.tasks.push oTask
+
+            socket.on "task.removed", ( sTaskId ) =>
+                for task in @tasks
+                    if task.uuid == sTaskId
+                        this.tasks.$remove( task )
+                        return
 
             drake.on "drag", ( element ) =>
                 # Decrease position of all tasks after the one we're dragging
@@ -47,6 +85,7 @@
                     if task.uuid == index
                         task.state = sNewState
                         task.position = iNewPosition
+                        socket.emit "task.notifyMove", task
                         break
 
                 column = element.parentNode.parentNode.id
@@ -86,7 +125,7 @@
                 this.tasks.$remove( this.taskToDelete )
 
                 # Deleting server-side
-                socket.emit "task.delete", this.taskToDelete.uuid
+                socket.emit "task.delete", this.taskToDelete.uuid, localStorage.selectedProject
 
                 this.deletePopupIsShowing = false
 
@@ -94,6 +133,43 @@
                 for user in @users
                     id = if typeof oUser is "string" then oUser else oUser.id
                     if id == user.uuid then return user.src
+
+            sorted: ( oTask ) ->
+                if @sort['mine']
+                    for user in oTask.users
+                        condOne = user.id == localStorage.userId
+                condTwo = @sort[oTask.tag]
+                if(@sort['mine']) then return condOne && condTwo
+                else return condTwo
+
+            hasSortRules: ->
+                return @sort['0'] || @sort['1'] || @sort['2'] || @sort['3'] || @sort['4'] || @sort['5'] || @sort['6']
+
+            toggleSortRules: ->
+                if @hasSortRules()
+                    return @uncheckSortCheckboxes()
+                @checkSortCheckboxes()
+
+            checkSortCheckboxes: ->
+                @sort['0'] = @sort['1'] = @sort['2'] = @sort['3'] = @sort['4'] = @sort['5'] = @sort['6'] = true
+                @updateSortButton()
+
+            uncheckSortCheckboxes: ->
+                @sort['0'] = @sort['1'] = @sort['2'] = @sort['3'] = @sort['4'] = @sort['5'] = @sort['6'] = false
+                @updateSortButton()
+
+            updateSortButton: ->
+                if @hasSortRules()
+                    @sortButtonText = "Hide all"
+                else
+                    @sortButtonText = "Show all"
+
+            replaceTask: ( oTask ) ->
+                for task, key in @tasks
+                    if task.uuid == oTask.uuid
+                        @tasks.$remove @tasks[key]
+                        break
+                @tasks.push oTask
 
         filters:
             formatted: ( value ) ->
@@ -132,7 +208,6 @@
                 this.popupIsShowing = false
 
             submitTask: ( oTask ) ->
-                console.log oTask
                 if oTask.title == "" then return
                 oTask.uuid = zouti.uuid()
                 oTask.projectId = localStorage.selectedProject
@@ -147,9 +222,13 @@
 
             changeProject: ( oTeam, oProject ) ->
                 @users = []
+                console.log oTeam
                 socket.emit "team.getUsers", oTeam.uuid
                 socket.emit "task.getAll", oProject.uuid, ( aTasks ) =>
                     @tasks = aTasks
+
+            toggleColorblind: ( bIsColorblind ) ->
+                @isColorblind = bIsColorblind
 
     module.exports = Tasks
 

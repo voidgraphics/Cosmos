@@ -1,5 +1,5 @@
-html
-    background: linear-gradient(135deg, $cLightBlueGradient)
+&
+    min-height: 100%
 
 *
     box-sizing: border-box
@@ -13,6 +13,11 @@ body
     font-family: $font
     font-size: 16px
     background-color: $cLightBlue2
+    background: linear-gradient(192deg, $cLightBlue2, $cLightBlue2 450px, #d7dee2 451px, #d7dee2)
+    background-position: 0px
+    background-repeat: no-repeat
+    background-color: #d7dee2
+
 
 .setup
     background-color: $cMediumBlue1
@@ -20,12 +25,11 @@ body
     height: 100vh
     width: 100%
 
+
 #app .view
     display: block
 
 .container
-    height: 100vh
-
     &.showing
         display: block !important
 

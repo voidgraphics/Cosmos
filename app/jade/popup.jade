@@ -11,13 +11,52 @@ div.popup
                     span.assign-user__tooltip {{ user.username }} ({{ user.firstname }} {{ user.lastname }})
             
         fieldset.form-body
-            h2.popup-title {{ task ? 'Edit task' : 'New task' }}
-            
             div.form-group
-                input#taskID(type="hidden" value="")
-                label.form-body__label(for="new-task__name") Task
-                input.form-body__input(type="text" v-model="taskName" id="newtask__name" placeholder="Task description..." value="{{ taskName }}")
+                input#taskID(type="hidden")
+                label.form-body__label(for="new-task__name" v-bind:class="{ 'form-body__label--error': hasError }") 
+                    |Task 
+                    span.form__error(v-show="hasError" transition="fade") A task name is required
+                input.form-body__input(type="text" v-model="taskName" id="newtask__name" v-bind:class="{ 'form-body__input--error': hasError }" placeholder="Enter a task..." value="{{ taskName }}")
                 
+            div.form-group
+                label.form-body__label Category
+                div.form-body__input.dropdown(@click="tagListIsShowing = !tagListIsShowing")
+                    span(class="bullet bullet--{{tag}}" v-if="tag !== '0'")
+                    {{ tags[tag] }}
+                fieldset.taglist(v-show="tagListIsShowing" transition="slide-down")
+                    div.form-group
+                        input.form-body__input(type="radio" value="0" id="0" v-model="tag" checked)
+                        label.form-body__label(for="0" @click="tagListIsShowing = false") None
+                    div.form-group
+                        input.form-body__input(type="radio" value="1" id="1" v-model="tag")
+                        label.form-body__label(for="1" @click="tagListIsShowing = false")
+                            span.bullet.bullet--1
+                            |Design
+                    div.form-group
+                        input.form-body__input(type="radio" value="2" id="2" v-model="tag")
+                        label.form-body__label(for="2" @click="tagListIsShowing = false")
+                            span.bullet.bullet--2
+                            |Front-end
+                    div.form-group
+                        input.form-body__input(type="radio" value="3" id="3" v-model="tag")
+                        label.form-body__label(for="3" @click="tagListIsShowing = false")
+                            span.bullet.bullet--3
+                            |Back-end
+                    div.form-group
+                        input.form-body__input(type="radio" value="4" id="4" v-model="tag")
+                        label.form-body__label(for="4" @click="tagListIsShowing = false")
+                            span.bullet.bullet--4
+                            |Planning
+                    div.form-group
+                        input.form-body__input(type="radio" value="5" id="5" v-model="tag")
+                        label.form-body__label(for="5" @click="tagListIsShowing = false")
+                            span.bullet.bullet--5
+                            |Testing
+                    div.form-group
+                        input.form-body__input(type="radio" value="6" id="6" v-model="tag")
+                        label.form-body__label(for="6" @click="tagListIsShowing = false")
+                            span.bullet.bullet--6
+                            |Bugs
             div.form-group
                 input.form-body__input(type="checkbox" id="new-task__hasDeadline" v-model="hasDeadline" v-on:click="clearDeadline")
                 label.form-body__label(for="new-task__hasDeadline") Deadline
@@ -26,12 +65,19 @@ div.popup
                 input.form-body__input(type="text" id="datepicker" v-el:datepicker placeholder="Select a date below..." value="{{ deadline }}")
                 
             div.form-group
-                input.form-body__input(type="radio" name="new-task__state" id="state-todo" value="todo" v-model="state")
-                label.form-body__label(for="state-todo") To do
-                input.form-body__input(type="radio" name="new-task__state" id="state-inprogress" value="inprogress" v-model="state")
-                label.form-body__label(for="state-inprogress") In progress
-                input.form-body__input(type="radio" name="new-task__state" id="state-finished" value="finished" v-model="state")
-                label.form-body__label(for="state-finished") Finished
+                label.form-body__label State
+                div.form-body__input.dropdown(@click="stateListIsShowing = !stateListIsShowing")
+                    {{ states[state] }}
+                fieldset.taglist(v-show="stateListIsShowing" transition="slide-down")
+                    div.form-group
+                        input.form-body__input(type="radio" name="new-task__state" id="state-todo" value="todo" v-model="state")
+                        label.form-body__label(for="state-todo" @click="stateListIsShowing = false") To do
+                    div.form-group
+                        input.form-body__input(type="radio" name="new-task__state" id="state-inprogress" value="inprogress" v-model="state")
+                        label.form-body__label(for="state-inprogress" @click="stateListIsShowing = false") In progress
+                    div.form-group
+                        input.form-body__input(type="radio" name="new-task__state" id="state-finished" value="finished" v-model="state")
+                        label.form-body__label(for="state-finished" @click="stateListIsShowing = false") Completed
             
             div.form-group.submit-container.submit-container--sidebar
                 input(type="submit" id="new-task__submit" class="task-submit submit-btn {{ task ? 'submit-btn--half' : '' }}" value="{{ task ? 'Edit this task' : 'Add this task' }}")

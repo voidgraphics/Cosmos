@@ -1,6 +1,6 @@
 .form
 
-    legend
+    &__legend
         margin-top: 10px
         margin-bottom: 20px
         font-size: 18px
@@ -10,9 +10,10 @@
         margin-bottom: 7px
         font-size: 14px
         color: $cDarkBlue
-        text-transform: uppercase
-        font-size: s($s1)
-        letter-spacing: ps_ls(80)
+        font-family: $fOpenRegular
+        font-size: 12px
+        letter-spacing: ps_ls(40)
+        -webkit-user-select: none
 
     fieldset
         border: none
@@ -23,6 +24,7 @@
     input[type="password"],
     input[type="submit"],
     input[type="file"],
+    .form-body__input,
     .submit-btn,
     .delete-btn
         border-radius: 3px
@@ -35,11 +37,13 @@
         letter-spacing: ps_ls(20)
         margin-bottom: 30px
         background-color: $cWhite
-        border: 1px solid rgba(0, 0, 0, .25)
+        // border: 1px solid rgba(0, 0, 0, .25)
         color: $cDarkBlue
 
     input[type="submit"]
         background-color: $cOrange
+        border: none
+        color: $cWhite
         cursor: pointer
         max-width: 400px
         margin: 0 auto
@@ -50,7 +54,7 @@
 
     input[type="checkbox"] + label,
     input[type="radio"] + label,
-        font-family: $fOpenSemiBold
+        font-family: $fOpenRegular
         text-transform: none
         letter-spacing: ps_ls(20)
         font-size: s($s1)

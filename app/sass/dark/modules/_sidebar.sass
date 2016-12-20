@@ -1,25 +1,28 @@
 .sidebar
     position: fixed
     left: 0
-    top: 60px
+    top: 80px
     bottom: 0
-    width: 80px
+    width: 200px
     padding-top: 25px
-    background-color: $cDarkBlue
 
 .sidebar__item
+    display: block
     width: 100%
-    text-align: center
-    height: 80px
+    padding: 10px 25px
+    color: $cWhite
+    position: relative
 
-    .sidebar__icon
+    &:before
+        content: ''
         display: block
-        margin: 0 auto 10px
-        width: 30px
-        height: 30px
-
-    .dashboard-icon,
-    .tasks-icon,
-    .mockups-icon,
-    .chat-icon
+        height: 100%
         background-color: $cOrange
+        position: absolute
+        width: 0
+        top: 0
+        left: 0
+        transition: width 200ms $ease-out-quad
+
+    &--selected:before
+        width: 4px

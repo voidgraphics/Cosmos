@@ -1,3 +1,4 @@
+ipc =  window.require("electron").ipcRenderer
 Vue = require "vue"
 VueRouter = require "vue-router"
 VueAsyncData = require "vue-async-data"
@@ -34,8 +35,7 @@ App = Vue.extend({
         @theme.name = localStorage.selectedTheme
         @switchTheme @theme.name
         if localStorage.hasSchedule isnt null
-            @theme.hasSchedule = localStorage.hasSchedule
-        console.log @theme.hasSchedule
+            @theme.hasSchedule = (localStorage.hasSchedule == "true")
         if @theme.hasSchedule then @setCountdownToThemeSwitch()
 
         #-#-# debugging
@@ -45,6 +45,28 @@ App = Vue.extend({
             @switchTheme(theme)
         #-#-#
 
+        ipc.on 'switchTheme', ( event, sTheme ) =>
+            @switchTheme sTheme
+            this.$broadcast "themeChanged", sTheme
+
+        ipc.on 'toggleTheme', ( event ) =>
+            if @theme.name == 'light' then theme = 'dark'
+            else theme = 'light'
+            @theme.name = theme
+            @switchTheme theme
+            this.$broadcast 'themeChanged', theme
+
+        ipc.on 'toggleSchedule', ( event, bHasSchedule ) =>
+            @toggleSchedule bHasSchedule
+
+        ipc.on 'navigateToSettings', ( event, sCategory ) =>
+            if localStorage.getItem 'userId' then this.$router.go '/settings'
+
+        ipc.on 'toggleColorblind', ( event, bIsColorblind ) =>
+            @toggleColorblind bIsColorblind
+
+        ipc.send 'updateSchedule', @theme.hasSchedule
+
     watch:
         theme: (val, oldVal) ->
             @switchTheme val
@@ -53,13 +75,16 @@ App = Vue.extend({
         switchTheme: ( sTheme ) ->
             document.querySelector('html').className = sTheme
             localStorage.selectedTheme = sTheme
+            ipc.send 'updateTheme', sTheme
+
+        handleLocation: ( position ) ->
+            console.log position
 
         setCountdownToThemeSwitch: ->
             now = moment()
             lightSwitch = moment().hour( 8 ).minute( 0 ).second( 0 )
             darkSwitch = moment().hour( 20 ).minute( 0 ).second( 0 )
-            # lightSwitch = moment().add( 10, 's' )
-            # darkSwitch = moment().add( 20, 's' )
+
             if now.isBefore lightSwitch
                 countdown = lightSwitch.diff(now);
                 nextTheme = 'light'
@@ -85,7 +110,6 @@ App = Vue.extend({
             console.log 'countdown', countdown
 
             @timer = setTimeout(() =>
-                console.log 'countdown over, switching'
                 new Notification notificationText.title, { body: notificationText.body, silent: true }
                 setTimeout(() =>
                     @switchTheme nextTheme
@@ -94,10 +118,26 @@ App = Vue.extend({
                 @setCountdownToThemeSwitch()
             , countdown)
 
+        toggleSchedule: ( bHasSchedule ) ->
+            @theme.hasSchedule = bHasSchedule
+            localStorage.hasSchedule = bHasSchedule
+            if bHasSchedule then @setCountdownToThemeSwitch()
+            else clearTimeout @timer
+            this.$broadcast "scheduleChanged", bHasSchedule
+            ipc.send "updateSchedule", bHasSchedule
+
+        toggleColorblind: ( bIsColorblind ) ->
+            if localStorage.settings
+                settings = JSON.parse localStorage.settings
+                settings.usability.isColorblind = bIsColorblind
+                localStorage.settings = JSON.stringify settings
+                this.$broadcast "toggleColorblind", bIsColorblind
+
     events:
         changeProject: ( oTeam, oProject ) ->
             localStorage.selectedProject = oProject.uuid
             localStorage.selectedTeam = oTeam.uuid
+            socket.emit "user.join", oProject.uuid, oTeam.uuid
             this.$broadcast "changeProject", oTeam, oProject
 
         leftTeam: ( sTeamId ) ->
@@ -107,10 +147,21 @@ App = Vue.extend({
             @switchTheme sTheme
 
         toggleSchedule: ( bHasSchedule ) ->
-            @theme.hasSchedule = bHasSchedule
-            localStorage.hasSchedule = bHasSchedule
-            if bHasSchedule then @setCountdownToThemeSwitch()
-            else clearTimeout @timer
+            @toggleSchedule bHasSchedule
+
+        toggleColorblind: ( bIsColorblind ) ->
+            @toggleColorblind bIsColorblind
+
+        notificationPreferenceChanged: ( sPreferenceName, bIsChecked ) ->
+            this.$broadcast "notificationPreferenceChanged", sPreferenceName, bIsChecked
+
+        loadNotificationSettings: ->
+            console.log "in main coffee"
+            this.$broadcast "test"
+
+        error: ( sErrorMessage ) ->
+            this.$broadcast 'newError', sErrorMessage
+
 })
 
 
@@ -154,3 +205,18 @@ router.map {
 }
 
 router.start App, "#app"
+
+socket.on "connect", () =>
+    console.log 'connected'
+
+socket.on "disconnect", () =>
+    new Notification "Whoops! Connection lost.", {
+        body: "Please wait a moment..."
+        silent: true
+    }
+
+socket.on "reconnect", () =>
+    new Notification "We're good!", {
+        body: "Connection to server established."
+        silent: true
+    }

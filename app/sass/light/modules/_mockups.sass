@@ -77,7 +77,7 @@
 
             &:hover
                 transition: transform .2s $bounce
-                transform: scale(1.2) translate(-50%, -50%)
+                transform: scale(1.1) translate(-50%, -50%)
                 z-index: 50
 
             &--showing
@@ -85,19 +85,50 @@
                 background-image: url("../img/x.svg")
 
 
-    .comment__body
-        background-color: $cWhite
-        min-width: 200px
-        border-radius: 4px
-        padding: 10px 15px
-        color: $cDarkBlue
-        font-family: $fOpenRegular
-        border: 3px solid $cDarkBlue
-        box-shadow: 0 0 10px rgba(0, 0, 0, .1)
-        position: relative
-        left: 25px
-        top: 25px
-        z-index: 50
+    .comment
+        &__body
+            background-color: $cWhite
+            min-width: 250px
+            border-radius: 4px
+            padding: 10px 15px
+            color: $cDarkBlue
+            font-family: $fOpenRegular
+            border: 3px solid $cDarkBlue
+            box-shadow: 0 0 10px rgba(0, 0, 0, .1)
+            position: relative
+            left: 25px
+            top: 25px
+            z-index: 50
 
-        &.flipped
-            transform: translateX(calc(-100% - 30px))
+            &.flipped
+                transform: translateX(calc(-100% - 30px))
+
+        &__image
+            width: 30px
+            height: 30px
+            margin-right: 10px
+            border-radius: 3px
+            overflow: hidden
+            float: left
+
+        &__avatar
+            width: 100%
+
+        &__user
+            font-family: $fOpenSemiBold
+            display: block
+            margin-bottom: -4px
+
+        &__date
+            font-family: $fOpenRegular
+            color: $cLightBlue4
+            font-size: 11px
+
+            &::after
+                content: ''
+                display: block
+                clear: both
+
+        &__text
+            margin-top: 5px
+            margin-bottom: 5px

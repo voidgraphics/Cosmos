@@ -1,17 +1,20 @@
 @import "white-sass/whitecube"
+@import "shared/colors"
 @import "shared/fonts"
 @import "shared/vars"
 @import "shared/animations"
+@import "shared/modules/notifications"
+@import "shared/modules/errors"
 
 html.light
-    @import "light/includes/colors"
-    @import "light/includes/transitions"
     @import "light/base/base"
     @import "light/modules/navbar"
     @import "light/modules/add-btn"
     @import "light/modules/inline-form"
+    @import "light/modules/reconnect"
+    @import "light/modules/tooltip"
+    @import "light/modules/task-sort"
 
-    @import "light/projectdashboard.sass"
     @import "light/projecttasks.sass"
     @import "light/projectmockups.sass"
     @import "light/projectmockup.sass"
@@ -24,14 +27,14 @@ html.light
 
 
 html.dark
-    @import "dark/includes/colors"
-    @import "dark/includes/transitions"
     @import "dark/base/base"
     @import "dark/modules/navbar"
     @import "dark/modules/add-btn"
     @import "dark/modules/inline-form"
+    @import "dark/modules/reconnect"
+    @import "dark/modules/tooltip"
+    @import "dark/modules/task-sort"
 
-    @import "dark/projectdashboard.sass"
     @import "dark/projecttasks.sass"
     @import "dark/projectmockups.sass"
     @import "dark/projectmockup.sass"

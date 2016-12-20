@@ -4,6 +4,9 @@ div.navbar(v-if="shownavbar")
             span.team__name {{ selectedTeam.name }}
             span.team__separator
             span.team__project {{ selectedProject.name }}
+            div.alertsymbol(v-if="isOffline" transition="fade" @mouseenter="isOfflineTooltipVisible = true" @mouseleave="isOfflineTooltipVisible = false")
+                div.tooltip(v-show="isOfflineTooltipVisible" transition="fade")
+                    p.tooltip__text Unable to connect to the server. You may continue to use the application and we will sync changes whenever we can.
         div.team__dropdown(v-show="isTeamDropdownVisible" transition="fadeFromTop2")
             div.team__dropdown__group(v-for="team in user.teams | caseInsensitiveOrderBy 'name'")
                 a.group__add.add-btn(@click.prevent="showInput(team)") {{ team.name }}
@@ -24,14 +27,13 @@ div.navbar(v-if="shownavbar")
         div.popup-overlay( @click="toggleTeamDropdown" v-show="isTeamDropdownVisible" transition="fade")
                 
     div.navbar__links
-        //- a.navbar__link.navbar__link--dashboard(href="#" v-link="{path: '/dashboard'}") Dashboard
         a.navbar__link.navbar__link--tasks(href="#" v-link="{path: '/tasks'}") Tasks
         a.navbar__link.navbar__link--ui(href="#" v-link="{path: '/mockups'}") UI
         a.navbar__link.navbar__link--chat(href="#" v-link="{path: '/chat'}") Chat
             span.navbar__link--chat-count(v-show="messages.count") {{ messages.count }}
         
-        
-        
+        notifications
+            
         a.navbar__username(@click="toggleUserDropdown") {{ user.username }}
         div.navbar__avatar-container
             img.navbar__avatar(v-bind:src="user.src")
@@ -40,3 +42,8 @@ div.navbar(v-if="shownavbar")
             a.account-pane__link(v-link="{path: '/teams'}" @click="toggleUserDropdown") Manage teams
             a.account-pane__link(@click="signout") Sign out
         div.popup-overlay( @click="toggleUserDropdown" v-show="isUserDropdownVisible" transition="fade")
+
+errors
+
+div.reconnect(v-if="isOffline" transition="fade")
+    p.reconnect__text Reconnecting...

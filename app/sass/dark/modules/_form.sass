@@ -1,6 +1,6 @@
 .form
 
-    legend
+    &__legend
         margin-top: 10px
         margin-bottom: 20px
         font-size: 18px
@@ -10,9 +10,10 @@
         margin-bottom: 7px
         font-size: 14px
         color: $cLightBlue2
-        text-transform: uppercase
-        font-size: s($s1)
-        letter-spacing: ps_ls(80)
+        font-family: $fOpenRegular
+        font-size: 12px
+        letter-spacing: ps_ls(40)
+        -webkit-user-select: none
 
     fieldset
         border: none
@@ -23,6 +24,7 @@
     input[type="password"],
     input[type="submit"],
     input[type="file"],
+    .form-body__input,
     .submit-btn,
     .delete-btn
         border-radius: 3px
@@ -36,6 +38,10 @@
         margin-bottom: 30px
         background-color: $cDarkBlue
         color: $cLightBlue2
+
+        &--error
+            border-left: 4px solid $cOrange
+            border-right: 4px solid $cOrange
 
     input[type="submit"]
         background-color: $cOrange
@@ -93,7 +99,7 @@
         margin: 0 auto 20px
 
     .form__error
-        color: #dd3625
+        color: $cOrange
         font-family: $fOpenRegular
         letter-spacing: ps_ls(20)
         font-size: 12px

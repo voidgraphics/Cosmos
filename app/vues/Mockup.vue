@@ -1,7 +1,9 @@
 <template src="../html/projectmockup.html"></template>
 
 <script lang="coffee">
-    zouti = require "zouti"
+    Vue = require "vue"
+    Moment = require "moment"
+    autosize = require 'autosize'
     Mockup =
         items: []
         data: ->
@@ -12,6 +14,7 @@
                 formPos: { x: 0, y: 0 }
                 newMessage: ""
                 comments: []
+                formInverted: false
              }
         directives:
             focus: (require "vue-focus").focus
@@ -45,12 +48,14 @@
 
         methods:
             positionOverlay: ->
-                pos = @getMockupPosition()
+                setTimeout(() =>
+                    pos = @getMockupPosition()
 
-                @$overlay.style.top = pos.top + "px"
-                @$overlay.style.left = pos.left + "px"
-                @$overlay.style.width = pos.width + "px"
-                @$overlay.style.height = pos.height + "px"
+                    @$overlay.style.top = pos.top + "px"
+                    @$overlay.style.left = pos.left + "px"
+                    @$overlay.style.width = pos.width + "px"
+                    @$overlay.style.height = pos.height + "px"
+                , 300 )
 
             getMockupPosition: ->
                 rect = @$mockup.getBoundingClientRect()
@@ -83,16 +88,20 @@
                 @formPos.x = xPos
                 @formPos.y = yPos
                 @showForm = true
+                @formInverted = xPos > 50
+                Vue.nextTick( () =>
+                    autosize document.getElementById "newComment"
+                )
 
             sendComment: ->
+                if @newMessage == "" then return
                 comment = {
                     x: @formPos.x
                     y: @formPos.y
                     mockup:
                         id: @$route.params.id
                     author:
-                        id: "eae67478-b360-4ca5-8f41-f0553795938d"
-                        username: "Void"
+                        id: localStorage.userId
                     text: @newMessage
                     isShowing: false
                 }
@@ -116,7 +125,12 @@
 
         events:
             changeProject: ( oTeam, oProject ) ->
-                @$route.router.go "/mockups"
+                @$router.go "/mockups"
+
+        filters:
+            formatted: ( value ) ->
+                console.log value
+                return Moment(value).format "MMMM Do YYYY"
 
     module.exports = Mockup
 
