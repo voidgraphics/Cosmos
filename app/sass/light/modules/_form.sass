@@ -6,7 +6,7 @@
         font-size: 18px
 
     label
-        display: inline-block
+        display: block
         margin-bottom: 7px
         font-size: 14px
         color: $cDarkBlue
@@ -17,6 +17,17 @@
 
     fieldset
         border: none
+
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    textarea
+        border-left: 3px solid $cDarkBlue
+        transition: border-width .1s $ease-out-quad
+        &:focus
+            border-left: 3px solid $cLightBlue3
+
 
     input[type="text"],
     input[type="email"],
@@ -37,23 +48,32 @@
         letter-spacing: ps_ls(20)
         margin-bottom: 30px
         background-color: $cWhite
-        // border: 1px solid rgba(0, 0, 0, .25)
         color: $cDarkBlue
 
     input[type="submit"]
         background-color: $cOrange
-        border: none
-        color: $cWhite
         cursor: pointer
+        display: block
         max-width: 400px
+        color: $cWhite
         margin: 0 auto
+        transition: all .1s $ease-out-quad
+
+        &:hover,
+        &:focus
+            transform: scale(1.05)
+            background-color: #e34545
 
     input[type="checkbox"],
     input[type="radio"],
         display: none
 
+    input[type="file"].form__input--file
+        display: none
+
     input[type="checkbox"] + label,
     input[type="radio"] + label,
+        display: inline-block
         font-family: $fOpenRegular
         text-transform: none
         letter-spacing: ps_ls(20)
@@ -113,6 +133,22 @@
         float: left
         &:first-child
             margin-right: 6%
+
+    .form__label
+        &--file
+            display: block
+            &:after
+                margin-top: 7px
+                content: attr(data-text)
+                display: block
+                background-color: $cWhite
+                min-height: 38px
+                max-height: 38px
+                width: 100%
+                border-radius: 3px
+                padding: 11px
+                cursor: pointer
+                box-sizing: border-box
 
     .submit-btn
         text-decoration: none

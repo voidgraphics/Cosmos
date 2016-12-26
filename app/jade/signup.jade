@@ -35,9 +35,9 @@ div.container.view#view-signup
                         input(type="password" name="password" id="password" v-model="password")
                     
                     div.form-group
-                        label(for="avatar") Avatar
+                        label.form__label--file(for="avatar" data-text="{{ fileInputText }}") Avatar
                         p.form__error(v-if="avatarError") You must choose an avatar
-                        input(type="file" name="avatar" id="avatar" accept="image/gif, image/jpeg, image/png" @change="detectFile")
+                        input.form__input--file(type="file" name="avatar" id="avatar" accept="image/gif, image/jpeg, image/png" @change="detectFile")
                     
                 div
                     input(type="submit" href="jointeam.html" class="submit-btn" value="Create account")

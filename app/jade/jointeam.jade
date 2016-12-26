@@ -21,7 +21,10 @@ div.container.setup#view-jointeam
 
             div.projectPopup(v-if="projectPopupIsShowing")
                 form.form(@submit.prevent="createTeam")
-                    h2 Just one more thing! You'll need a project within your team.
+                    h2 
+                        | Just one more thing!
+                        br
+                        | You'll need a project within your team.
                     fieldset.form-body
                         div.form-group
                             label.form-body__label(for="name") Project name

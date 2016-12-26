@@ -19,15 +19,20 @@
                 passwordError: false
                 avatarError: false
                 usernameTaken: false
+                canProceed: false
+                fileInputText: 'Click to select an image'
             }
 
         ready: ->
             socket.on "user.logged", ( oUserData ) =>
-                localStorage.id = oUserData.uuid
-                localStorage.username = oUserData.username
-                localStorage.firstname = oUserData.firstname
-                localStorage.lastname = oUserData.lastname
-                @$route.router.go "/joinTeam"
+                if @canProceed
+                    localStorage.id = oUserData.uuid
+                    localStorage.username = oUserData.username
+                    localStorage.firstname = oUserData.firstname
+                    localStorage.lastname = oUserData.lastname
+                    @$route.router.go "/joinTeam"
+                else
+                    this.$dispatch 'error.new', 'There was a problem while creating your account. Please try again.'
 
         methods:
             register: ->
@@ -49,7 +54,7 @@
 
                     socket.emit "user.register", oUserInfo, ( oResult ) =>
                         if oResult.code == 200
-                            console.log "log you in here"
+                            @canProceed = true
 
                         if oResult.code == 500
                             if oResult.error == "SequelizeUniqueConstraintError"
@@ -84,14 +89,21 @@
 
             detectFile: ( e ) ->
                 @fileName = e.target.files[0].name
+
                 ext = @fileName.match(/\.([^\.]+)$/)[1]
                 if ext != "gif" and ext != "jpeg" and ext != "jpg" and ext != "png"
                     e.target.value = ""
-
-                reader = new FileReader()
-                reader.onload = ( e ) =>
-                    @file = e.target.result
-                reader.readAsDataURL e.target.files[0]
+                else
+                    if @fileName != ''
+                        if @fileName.length > 30
+                            @fileInputText = @fileName.substring(0, 30) + '...'
+                        else
+                            @fileInputText = @fileName
+                    else @fileInputText = 'Click to select an image'
+                    reader = new FileReader()
+                    reader.onload = ( e ) =>
+                        @file = e.target.result
+                    reader.readAsDataURL e.target.files[0]
 
     module.exports = SignUp
 </script>
