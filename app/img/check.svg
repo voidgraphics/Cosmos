@@ -11,9 +11,9 @@
                     <g id="Assign" transform="translate(3.000000, 2.000000)">
                         <g id="User-checked" transform="translate(17.000000, 46.000000)">
                             <g id="check" transform="translate(27.000000, 26.000000)">
-                                <circle id="Oval-9" fill="#7ED321" cx="11" cy="11" r="11"></circle>
-                                <path d="M8,11 L10.5,13.5" id="Line-Copy-3" stroke="#FFFFFF" stroke-width="2" stroke-linecap="square"></path>
-                                <path d="M10.5,13.5 L15,9" id="Line-Copy-2" stroke="#FFFFFF" stroke-width="2" stroke-linecap="square"></path>
+                                <circle id="Oval-9" fill="#e35f45" cx="11" cy="11" r="9"></circle>
+                                <path d="M8,11 L10.5,13.5" transform="translate(-0.5, 0)" id="Line-Copy-3" stroke="#FFFFFF" stroke-width="2" stroke-linecap="square"></path>
+                                <path d="M10.5,13.5 L15,9" transform="translate(-0.5, 0)" id="Line-Copy-2" stroke="#FFFFFF" stroke-width="2" stroke-linecap="square"></path>
                             </g>
                         </g>
                     </g>

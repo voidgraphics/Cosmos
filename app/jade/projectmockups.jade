@@ -1,26 +1,32 @@
-div.container.view#view-projectmockups(transition="slide")
-    a.add-btn(@click.prevent="togglePopup") Mockups
-    div.mockup-items(v-if="mockups.length >= 1")
+ddiv.container.view#view-projectmockups
+    a.add-btn(@click.prevent="togglePopup") Designs
+    div.mockup-items
         a.mockup-item.mockup-item__link(v-for="mockup in mockups | caseInsensitiveOrderBy 'title'" v-link="{path: '/mockups/' + mockup.uuid}")
             div.thumbnail-container
                 img.mockup-item__thumbnail(v-bind:src="mockup.src")
             span.mockup-item__title {{ mockup.title }}
             p.mockup-item__comment-count {{ mockup.commentCount }} comment{{ mockup.commentCount != 1 ? "s" : "" }}
-    div.mockup__cta(v-else)
-        p.mockup__cta__text Looks like there are no mockups yet!
+        a.mockup-item.placeholder.placeholder--mockup(@click.prevent="togglePopup") Add a design
+    div.mockup__cta(v-if="mockups.length == 0")
+        p.mockup__cta__text Looks like there are no designs to show!
         p.mockup__cta__text Click this button to add one.
             
-    div.popup-overlay(v-show="popupIsShowing" @click="togglePopup")
-    div.popup(v-show="popupIsShowing")
-        form(@submit.prevent="addMockup")
+    div.popup-overlay(v-show="popupIsShowing" @click="togglePopup" transition="fade")
+    div.popup#popup(v-show="popupIsShowing" transition="fade")
+        form.form(@submit.prevent="addMockup")
             fieldset.form-body.form-body--nosidebar
-                h2.popup-title Add mockup
+                h2.popup-title Upload a new design
                 button.close-popup(@click.prevent="togglePopup")
-                div.form-ground
-                    label.form-body__label(for="name") Name
-                    input.form-body__input(type="text" id="name" name="name" v-model="newMockup.name")
                 div.form-group
-                    label.form-body__label(for="image") Image
-                    input.form-body__input(type="file" id="image" name="image" @change="detectFile")
-                div.form-group.submit-container
-                    input.task-submit.submit-btn(type="submit" value="Add mockup")
+                    label(for="name") Name
+                    p.form__error(v-show="newMockupNameError" transition="fade") Please name your design
+                    input(type="text" id="name" name="name" v-bind:class="{ 'form-body__input--error': newMockupNameError }" v-model="newMockup.name" placeholder="Name your design...")
+                div.form-group
+                    label.form__label--file(for="image" v-bind:class="{ 'form__label--file-error': newMockupFileError || fileTooBigError, 'form__label--file-offset': newMockup.file }" data-text="{{ fileInputText }}") 
+                        span.form__label--file-preview(v-if="newMockup.file")
+                            img(v-bind:src="newMockup.file" alt="Image")
+                        | Image
+                    p.form__error(v-show="fileTooBigError" transition="fade") File too big! (max 8mb)
+                    p.form__error(v-show="newMockupFileError" transition="fade") Don't forget to select an image
+                    input.form__input--file(type="file" id="image" name="image" accept="image/gif, image/jpeg, image/png" @change="detectFile")
+                input.task-submit.submit-btn(type="submit" value="Upload design")

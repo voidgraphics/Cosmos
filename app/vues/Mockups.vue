@@ -14,21 +14,54 @@
                     name: ""
                     file: null
                 }
+                newMockupNameError: false
+                newMockupFileError: false
+                fileTooBigError: false
+
+                fileInputText: 'Click to select an image...'
              }
 
         ready: ->
             socket.emit "mockup.getAll", localStorage.selectedProject
-            socket.on "mockup.sent", ( oMockup, iCommentCount ) =>
-                oMockup.src = "data:image/png;base64,#{oMockup.image}"
-                oMockup.href = "/mockups/#{oMockup.id}"
-                oMockup.commentCount = iCommentCount
-                @mockups.push oMockup
+            socket.removeAllListeners "mockup.removed"
+            socket.removeAllListeners "mockup.sent"
+            socket.removeAllListeners "comment.sent"
+            socket.on "mockup.removed", @removeMockup
+            socket.on "mockup.sent", @pushMockup
+            socket.on "comment.sent", @incrementComment
 
         methods:
             togglePopup: ->
                 @popupIsShowing = !@popupIsShowing
 
+            removeMockup: ( sMockupId ) ->
+                for index, mockup of @mockups
+                    if mockup.uuid == sMockupId
+                        @mockups.$remove mockup
+
+
+            pushMockup: ( oMockup, iCommentCount ) ->
+                oMockup.src = "data:image/png;base64,#{oMockup.image}"
+                oMockup.href = "/mockups/#{oMockup.id}"
+                oMockup.commentCount = iCommentCount
+                @mockups.push oMockup
+
+            incrementComment: ( oComment ) ->
+                for mockup in @mockups
+                    if mockup.uuid == oComment.mockup.uuid then return mockup.commentCount++
+
             addMockup: ->
+                @newMockupNameError = @newMockup.name == ''
+                @newMockupFileError = !@newMockup.file
+                if @newMockupFileError then @fileTooBigError = false
+                if @newMockupNameError || @newMockupFileError || @fileTooBigError
+                    popup = document.getElementById('popup')
+                    popup.classList.add('popup--shake')
+                    setTimeout( () ->
+                        popup.classList.remove('popup--shake')
+                    , 400 )
+                    return
+
                 oMockup = {
                     name: @newMockup.name
                     file: @newMockup.file
@@ -38,17 +71,31 @@
                 socket.emit "mockup.create", oMockup
                 @popupIsShowing = false
                 @newMockup.name = ""
-                # @newMockup.file = null
+                @newMockup.file = null
+                @fileInputText = 'Click to select an image...'
 
             detectFile: ( e ) ->
+                if !e.target.files[0] then return
+                if e.target.files[0].size > 2000000
+                    @newMockupFileError = false
+                    return @fileTooBigError = true
+                else @fileTooBigError = false
                 @newMockup.fileName = e.target.files[0].name
+
                 ext = @newMockup.fileName.match(/\.([^\.]+)$/)[1]
                 if ext != "gif" and ext != "jpeg" and ext != "jpg" and ext != "png"
                     e.target.value = ""
-                reader = new FileReader()
-                reader.onload = ( e ) =>
-                    @newMockup.file = e.target.result
-                reader.readAsDataURL e.target.files[0]
+                else
+                    if @newMockup.fileName != ''
+                        if @newMockup.fileName.length > 50
+                            @fileInputText = @newMockup.fileName.substring(0, 50) + '...'
+                        else
+                            @fileInputText = @newMockup.fileName
+                    else @fileInputText = 'Click to select an image...'
+                    reader = new FileReader()
+                    reader.onload = ( e ) =>
+                        @newMockup.file = e.target.result
+                    reader.readAsDataURL e.target.files[0]
 
         events:
             changeProject: ( oTeam, oProject ) ->

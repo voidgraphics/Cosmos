@@ -6,13 +6,9 @@
             I will rewrite it shortly.
 */
 
-const {ipcMain} = require('electron');
-
 "use strict";
 
-var app = require('app');  // Module to control application life.
-var BrowserWindow = require('browser-window');  // Module to create native browser window.
-var Menu = require("menu");
+const {ipcMain, app, BrowserWindow, Menu} = require('electron')
 
 // Keep a global reference of the window object, if you don't, the window will
 // be closed automatically when the JavaScript object is garbage collected.
@@ -40,7 +36,12 @@ app.on('activate', function() {
 
 var createWindow = function() {
 
-    mainWindow = new BrowserWindow({width: 1050, height: 670, titleBarStyle: 'hidden'});
+    mainWindow = new BrowserWindow({
+        width: 1050,
+        height: 670,
+        titleBarStyle: 'hidden',
+        minWidth: 800
+    });
 
     mainWindow.loadURL('file://' + __dirname + '/html/main.html');
 
@@ -88,22 +89,7 @@ var createWindow = function() {
                     mainWindow.webContents.send('toggleSchedule', menuItem.checked);
                 } },
                 { label: "Colorblind mode", type: "checkbox", accelerator: "Shift+CmdOrCtrl+C", click: function(menuItem) {
-                    console.log(menuItem.checked);
                     mainWindow.webContents.send('toggleColorblind', menuItem.checked);
-                } }
-            ]
-        }, {
-            label: "Settings",
-            submenu: [
-                // { label: "Select a color scheme", enabled: false },
-                { label: "Account", id: "account", accelerator: "CmdOrCtrl+Alt+A", click: function() {
-                    mainWindow.webContents.send('navigateToSettings', 'account');
-                } },
-                { label: "Theme", id: "theme", accelerator: "CmdOrCtrl+Alt+T", click: function() {
-                    mainWindow.webContents.send('navigateToSettings', 'theme');
-                } },
-                { label: "Notifications", id: "notifications", accelerator: "CmdOrCtrl+Alt+N", click: function() {
-                    mainWindow.webContents.send('navigateToSettings', 'notifications');
                 } }
             ]
         }
@@ -112,18 +98,26 @@ var createWindow = function() {
     Menu.setApplicationMenu(Menu.buildFromTemplate(template));
 
     ipcMain.on( 'updateTheme', function ( event, sTheme ) {
-        index = 1;
+        let index = 1;
         if(sTheme === 'dark') index = 2;
         Menu.getApplicationMenu().items[2].submenu.items[index].checked = true;
     } );
 
     ipcMain.on( 'updateSchedule', function( event, bHasSchedule ) {
         if(typeof bHasSchedule != 'boolean') bHasSchedule = (bHasSchedule == 'true');
-        Menu.getApplicationMenu().items[2].submenu.items[5].checked = bHasSchedule;
+        Menu.getApplicationMenu().items[2].submenu.items[6].checked = bHasSchedule;
     } );
 
     ipcMain.on( 'updateColorblind', function( event, bIsColorblind ) {
         if(typeof bIsColorblind != 'boolean') bIsColorblind = (bIsColorblind == 'true');
-        Menu.getApplicationMenu().items[2].submenu.items[6].checked = bIsColorblind;
+        Menu.getApplicationMenu().items[2].submenu.items[7].checked = bIsColorblind;
+    } );
+
+    ipcMain.on( 'bounceIcon', function( event ) {
+        app.dock.bounce();
+    } );
+
+    ipcMain.on( 'setBadge', function( event, iCount ) {
+        app.setBadgeCount( iCount );
     } );
 };

@@ -1,0 +1,12 @@
+div.requests
+    a.requests__count(v-show="requests.length" transition="fade" @click="isPanelShowing = true") {{ requests.length }}
+    div.requests__panel(v-show="isPanelShowing" transition="fadeFromTop2")
+        div.request(v-for="request in requests")
+            div.request__avatar-container
+                img.request__avatar(v-if="request.user" v-bind:src="request.user.avatar")
+                img.request__avatar(v-else src="../img/default.png")
+            p.request__text {{ request.user.username }} wants to join {{ request.team.name }}
+            div.request__actions
+                a.request__btn.request__btn--yes(@click.prevent="acceptRequest( request )") Accept
+                a.request__btn.request__btn--no(@click.prevent="removeRequest( request )") Cancel
+    div.popup-overlay(v-show="isPanelShowing" transition="fade" @click="isPanelShowing = false")

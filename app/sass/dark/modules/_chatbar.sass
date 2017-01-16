@@ -13,6 +13,29 @@
     margin-bottom: 10px
     display: inline
 
+.chatbar__scrolltip
+    position: absolute
+    bottom: 21px
+    background-color: $cDarkBlue
+    color: $cLightBlue2
+    font-family: $fOpenRegular
+    font-size: 12px
+    padding: 15px 20px
+    border-radius: 3px
+    cursor: pointer
+    box-shadow: 0 0 15px rgba(black, 0.05)
+
+    &:before
+        content: ''
+        display: inline-block
+        width: 19px
+        height: 19px
+        background: url(../img/chat-active.svg) no-repeat center center
+        background-size: 100%
+        vertical-align: -6px
+        margin-right: 5px
+
+
 .chatrooms
     margin-top: 15px
 
@@ -31,17 +54,23 @@
 
     &__unreadCount
             display: inline-block
-            background-color: $cLightBlue
-            width: 16px
             height: 16px
-            font-size: 9px
+            font-size: 10px
             border-radius: 50%
             text-align: center
             color: $cWhite
             margin-left: 4px
             line-height: 16px
-            position: relative
-            top: -1px
+
+            &:before
+                content: ''
+                display: inline-block
+                width: 16px
+                height: 16px
+                margin-right: 5px
+                vertical-align: -5px
+                background: url(../img/chat-active.svg) no-repeat center
+                background-size: 100%
 
     &:hover
         transform: scale(1.07)

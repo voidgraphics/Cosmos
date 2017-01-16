@@ -35,9 +35,11 @@
                 stateListIsShowing: false
             }
 
-        props: [ "columnname", "task", "users" ]
+        props: [ "columnname", "task", "users", "isColorblind" ]
 
         ready: ->
+            for user in @users
+                user.isTooltipVisible = false
             that = this
 
             field = this.$els.datepicker
@@ -51,6 +53,7 @@
             if( @task )
                 this.taskName = @task.title
                 this.deadline = @task.deadline
+                this.tag = @task.tag
                 picker.setDate @deadline
                 for user in @task.users
                     @selectedUsers.push user.id
@@ -78,12 +81,18 @@
             submitTask: ( event ) ->
                 if @taskName == ''
                      @hasError = true
+                     popup = document.getElementById('popup')
+                     popup.classList.add('popup--shake')
+                     setTimeout( () ->
+                         popup.classList.remove('popup--shake')
+                     , 400 )
                      document.getElementById("newtask__name").focus()
                 else @hasError = false
                 oTask =
                     title: @taskName
                     deadline: @deadline
                     users: @selectedUsers
+                    tag: @tag
                     state: @state
                     position: 0
                     tag: @tag

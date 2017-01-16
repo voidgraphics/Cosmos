@@ -1,7 +1,18 @@
 div
-    p {{ deleteid }}
     div.deletePopup
+        button.close-popup( @click.prevent="hidePopup" )
         h2 Are you sure you want to delete this task?
+        
+        p.state {{ showState( task.state ) }}
+
+        div.task-item
+            p.task-item__name {{ task.title }}
+            time.task-item__deadline(v-if="task.deadline != '0000-00-00'") Due {{ task.deadline | formatted }}
+            div.task-item__users
+                div.task-item__user(v-for="user in task.users")
+                    img.task-item__user__avatar(v-bind:src="findUserSrc(user)")
+            span(class="task-item__tag {{ isColorblind ? 'colorblind' : '' }} task-item__tag--{{ task.tag }}" alt="{{ categories[task.tag] }}")
+
         a#confirmDelete(v-on:click="confirmDelete") Yes, delete it.
         a#cancelDelete(v-on:click="hidePopup") No, cancel.
     div.popup-overlay(v-on:click="hidePopup")

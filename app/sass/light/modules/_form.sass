@@ -21,16 +21,6 @@
 
     input[type="text"],
     input[type="email"],
-    input[type="password"],
-    textarea
-        border-left: 3px solid $cDarkBlue
-        transition: border-width .1s $ease-out-quad
-        &:focus
-            border-left: 3px solid $cLightBlue3
-
-
-    input[type="text"],
-    input[type="email"],
     input[type="submit"],
     input[type="password"],
     input[type="submit"],
@@ -49,6 +39,20 @@
         margin-bottom: 30px
         background-color: $cWhite
         color: $cDarkBlue
+
+        &--error
+            border-left: 4px solid $cOrange !important
+            border-right: 4px solid $cOrange !important
+
+    input[type="text"],
+    input[type="email"],
+    input[type="password"],
+    textarea
+        border-left: 3px solid transparent
+        border-right: 3px solid transparent
+        transition: border-color .1s $ease-out-quad
+        &:focus
+            border-left: 3px solid $cLightBlue3
 
     input[type="submit"]
         background-color: $cOrange
@@ -128,6 +132,18 @@
         right: 0
         top: 2px
 
+    .form__category
+        font-family: $fMRegular
+        text-transform: uppercase
+        font-size: 11px
+        letter-spacing: ps_ls(80)
+        margin-bottom: 5px
+        margin-top: 20px
+
+    .form-body__input--error
+        border-left-color: $cOrange !important
+        border-right-color: $cOrange !important
+
     .form__column
         width: 47%
         float: left
@@ -138,6 +154,9 @@
         &--file
             display: block
             &:after
+                border-right: 3px solid transparent
+                border-left: 3px solid transparent
+                transition: border-color .1s $ease-out-quad
                 margin-top: 7px
                 content: attr(data-text)
                 display: block
@@ -150,6 +169,30 @@
                 cursor: pointer
                 box-sizing: border-box
 
+            &-error:after
+                border-right-color: $cOrange
+                border-left-color: $cOrange
+
+            &-offset:after
+                padding-left: 45px
+
+            &-preview
+                display: block
+                position: absolute
+                bottom: 0
+                left: 0
+                width: 38px
+                height: 38px
+                overflow: hidden
+                border-radius: 3px 0 0 3px
+
+                img
+                    cursor: pointer
+                    width: 100%
+                    height: 100%
+                    object-fit: cover
+
+
     .submit-btn
         text-decoration: none
         margin-top: 35px
@@ -159,6 +202,11 @@
         padding: 12px 0 14px
         font-size: 14px
         margin-bottom: 0 !important
+        transition: transform .1s $ease-out-quad
+
+        &:hover,
+        &:focus
+            transform: scale(1.05)
 
         &--half
             float: right
@@ -171,6 +219,11 @@
         text-align: center
         margin-bottom: 0
         color: $cWhite
+        transition: transform .1s $ease-out-quad
+
+        &:hover,
+        &:focus
+            transform: scale(1.05)
 
     a
         text-align: center

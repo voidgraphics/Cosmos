@@ -1,16 +1,8 @@
 div.container.animated.view#view-teams
     div.content
-        
-        div.forms
-            div.create
-                form.form(@submit.prevent="createTeam")
-                    fieldset.form-body
-                        div.form-group
-                            label.form-body__label(for="createname") Create a new team
-                            input.form-body__input(type="text" id="createname" v-model="teamToCreate.name")
-                        div.form-group
-                            input.submit-btn(type="submit" value="Create this team")
-                        
+        div.popup-overlay(v-if="joinPopupIsShowing" transition="fade" @click.prevent="joinPopupIsShowing = false")
+        div.forms.popup(v-if="joinPopupIsShowing" transition="fade")
+            button.close-popup( @click="joinPopupIsShowing = false" )
             div.find
                 form.form(@submit.prevent="findTeam")
                     fieldset.form-body
@@ -19,31 +11,42 @@ div.container.animated.view#view-teams
                             input.form-body__input(type="text" id="findname" v-model="teamToFind.name")
                         div.form-group
                             input.submit-btn(type="submit" value="Search for this team")
+            div.create
+                form.form(@submit.prevent="createTeam")
+                    fieldset.form-body
+                        div.form-group
+                            label.form-body__label(for="createname") Create a new team
+                            input.form-body__input(type="text" id="createname" v-model="teamToCreate.name")
+                        div.form-group
+                            input.submit-btn(type="submit" value="Create this team")
                     
         div.teams__list
-            h2.teams__list__title My teams
+            a.add-btn.teams__list__title(href="#" @click.prevent="showJoinPopup") My teams
             div.teams__items
                 div.teams__item(v-for="team in teams | orderBy 'name' ")
                     p.teams__item__name {{ team.name }}
-                    a.teams__item__requests(v-if="team.requests.length >= 1" @click="team.showRequests = !team.showRequests") {{ team.requests.length }} {{ team.requests.length == 1 ? 'request' : 'requests' }}
+                    a.teams__item__button.teams__item__button--leave(@click.prevent="showLeavePopup(team)") Leave this team
+                    a.teams__item__requests(v-if="team.requests.length >= 1" @click="team.showRequests = !team.showRequests") {{ team.requests.length }} {{ team.requests.length == 1 ? 'request' : 'requests' }} pending
                     div.requests-popup(v-if="team.showRequests")
                         p.requests-popup__item(v-for="request in team.requests") {{ request.username }} ({{ request.firstname }} {{request.lastname}})
                             a.requests-popup__accept(@click="acceptRequest(team, request)") Accept
                     div.popup-overlay(v-if="team.showRequests" @click="team.showRequests = !team.showRequests")
-                    a.teams__item__button(@click.prevent="showLeavePopup(team)") Leave this team
+                a.teams__join(@click.prevent="showJoinPopup" href="#") Join a new team
                 
-        div.leavePopup(v-show="leavePopupIsShowing")
+        div.leavePopup(v-if="leavePopupIsShowing" transition="fade")
+            button.close-popup( @click="hidePopup('leave')" )
             h2.leavePopup__title Are you sure you want to leave this team?
             h3.leavePopup__subtitle {{ leaveTeam.name }}
             a#confirmDelete(@click.prevent="confirmLeave") Yes, I want to leave.
             a#cancelDelete(@click.prevent="hidePopup('leave')") No, cancel.
-        div.popup-overlay(v-show="leavePopupIsShowing" v-on:click="hidePopup('leave')")
+        div.popup-overlay(v-show="leavePopupIsShowing" transition="fade" v-on:click="hidePopup('leave')")
 
-        div.searchPopup(v-show="searchPopupIsShowing")
+        div.searchPopup(v-if="searchPopupIsShowing" transition="fade")
+            button.close-popup( @click="hidePopup('search')" )
             h2.searchPopup__title Your search for "{{ teamToFind.name }}" gave these results
             div.teams__items
                 div.teams__item(v-for="result in searchResults")
                     p.teams__item__name {{ result.name }}
                     a.teams__item__button.teams__item__requested(v-if="result.status") {{ result.status }}
-                    a.teams__item__button(@click.prevent="joinTeam(result)" v-else) Join this team
-        div.popup-overlay(v-show="searchPopupIsShowing" v-on:click="hidePopup('search')")
+                    a.teams__item__button.add-btn(@click.prevent="joinTeam(result)" v-else) Join this team
+        div.popup-overlay(v-show="searchPopupIsShowing" transition="fade" v-on:click="hidePopup('search')")

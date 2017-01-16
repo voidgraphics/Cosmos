@@ -4,6 +4,7 @@
     zouti = require "zouti"
     Vue = require "vue"
     Notifications = require "./Notifications.vue"
+    Requests = require "./Requests.vue"
     Errors = require "./Errors.vue"
     Navbar =
         data: ->
@@ -22,7 +23,7 @@
                 selectedProject: {
                     name: ""
                 }
-                shownavbar: true
+                shownavbar: false
                 isUserDropdownVisible: false
                 isTeamDropdownVisible: false
                 isOffline: false
@@ -35,6 +36,7 @@
         components:
             "notifications": Notifications
             "errors": Errors
+            "requests": Requests
 
         ready: ->
 
@@ -52,7 +54,7 @@
                 localStorage.selectedTeam = oTeam.uuid
                 localStorage.selectedProject = oProject.uuid
                 @selectedProject = oProject
-                socket.emit "user.join", @selectedProject.uuid, @selectedTeam.uuid
+                socket.emit "user.join", [ @selectedProject.uuid, @selectedTeam.uuid ]
 
             socket.on "user.logged", ( oUserData ) =>
                 setTimeout( () =>
@@ -61,17 +63,32 @@
                         @user.src = "data:image/png;base64,#{oUserData.avatar}"
                         @$route.router.go "/joinTeam"
                     else
+                        window.starfield.selfDestruct()
                         @$route.router.go "/tasks"
                         @updateUserData oUserData
                 , 100 )
-
-            @displayNavbar @$route.fullPath
+            @displayNavbar @$route.path
 
             socket.on "chat.new", ( message, user ) =>
-                if @$route.fullPath isnt "/chat" then @messages.count++
+                if @$route.path isnt "/chat" then @messages.count++
+
+            socket.on "project.new", ( oProject ) =>
+                for team in @user.teams
+                    if team.uuid == oProject.teamUuid
+                        team.projects.push oProject
 
             socket.on "team.push", ( oTeam ) =>
                 @user.teams.push oTeam
+
+            socket.on 'user.updatedAvatar', ( sUserId, file ) =>
+                localStorage.avatar = file
+                @user.src = "data:image/png;base64,#{file}"
+
+            socket.on 'user.updated', ( oUser ) =>
+                @user.username = oUser.username
+                localStorage.username = oUser.username
+                localStorage.firstname = oUser.firstname
+                localStorage.lastname = oUser.lastname
 
         methods:
 
@@ -83,9 +100,19 @@
 
             toggleUserDropdown: ->
                 @isUserDropdownVisible = !@isUserDropdownVisible
+                navbar = document.getElementById 'navbar'
+                if @isUserDropdownVisible
+                    navbar.style.zIndex = '99'
+                else
+                    navbar.style.zIndex = '97'
 
             toggleTeamDropdown: ->
                 @isTeamDropdownVisible = !@isTeamDropdownVisible
+                navbar = document.getElementById 'navbar'
+                if @isTeamDropdownVisible
+                    navbar.style.zIndex = '99'
+                else
+                    navbar.style.zIndex = '97'
 
             signout: ->
                 previousProject = localStorage.selectedProject
@@ -99,6 +126,8 @@
                 @selectedProject = {name: ""}
                 @$route.router.go "/signin"
                 @isUserDropdownVisible = false
+                @$dispatch 'logout'
+                socket.emit 'user.logout'
 
             updateUserData: ( oUserData ) ->
                 @user.username = oUserData.username
@@ -111,15 +140,16 @@
                 @user.teams = teams
                 @selectProject( oUserData )
 
-                socket.emit "user.join", @selectedProject.uuid, @selectedTeam.uuid
+                socket.emit "user.join", [ @selectedProject.uuid, @selectedTeam.uuid, oUserData.uuid ]
 
                 localStorage.userId = oUserData.uuid
                 localStorage.selectedTeam = @selectedTeam.uuid
                 localStorage.selectedProject = @selectedProject.uuid
                 localStorage.settings = oUserData.settings
-                console.log "dispatching event"
-                this.$dispatch "loadNotificationSettings"
+                localStorage.email = oUserData.email
+                localStorage.avatar = oUserData.avatar
                 @isTeamDropdownVisible = false
+                this.$dispatch 'userConnected'
 
             selectProject: ( oUserData ) ->
                 @selectedTeam = oUserData.teams[0]
@@ -159,11 +189,14 @@
                     oTeam.newProject = ""
                     oTeam.showInput = false
 
-                    socket.emit "user.join", oResult.uuid, oResult.teamUuid
+                    socket.emit "user.join", [ oResult.uuid ]
 
                     @changeProject oTeam, oResult
 
         events:
+
+            clearUnreadMessageCount: ->
+                @messages.count = 0
 
             navigateToProject: ( oProject ) ->
                 oTeam = {}
@@ -178,12 +211,9 @@
                     if oTeam.uuid == sTeamId
                         @user.teams.splice index, 1
 
-            test: ->
-                console.log "in navbar vue"
-
         watch:
             $route: ( newValue, oldValue ) ->
-                @displayNavbar newValue.fullPath
+                @displayNavbar newValue.path
                 if @$route.fullPath is "/chat"
                     @messages.count = 0
 

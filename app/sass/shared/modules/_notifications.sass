@@ -4,25 +4,26 @@
 
     & &__count
         color: $cWhite !important
+        padding-right: 15px
 
-        &--unread:after
+        &--unread:before
             background: url(../img/notification-new.svg) !important
 
-        &:after
+        &:before
             content: ''
             display: inline-block
             width: 21px
             height: 20px
             vertical-align: -4px
             background: url(../img/notification.svg)
-            margin-left: 5px
+            margin-right: 5px
 
     & &__panel
         position: absolute
         z-index: 99999
         background-color: $cDarkBlue
-        padding: 10px 25px
-        width: 235px
+        padding: 20px 25px
+        width: 270px
         border-radius: 4px
         top: 50px
         right: 0
@@ -37,11 +38,15 @@
 
     .notification
         padding: 15px 0
-        cursor: pointer
         border-bottom: 1px dashed #3F4446
+
+        &:first-child
+            margin-top: 0
+            padding-top: 0
 
         &:last-child
             margin-bottom: 0
+            padding-bottom: 0
             border-bottom: none
 
         &__text
@@ -49,11 +54,12 @@
             font-family: $fOpenRegular
             letter-spacing: ps_ls(20)
             color: $cLightBlue2
-            margin-bottom: 5px
+            line-height: 1.6
+            margin-bottom: 7px
 
         &__project
             display: block
-            margin-bottom: 5px
+            margin-bottom: 7px
 
             &:after
                 content: ''

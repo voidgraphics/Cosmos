@@ -1,4 +1,4 @@
-div.navbar(v-if="shownavbar")
+div.navbar#navbar(v-if="shownavbar")
     div.team
         div.team__dropdown-toggle(@click="toggleTeamDropdown")
             span.team__name {{ selectedTeam.name }}
@@ -6,7 +6,7 @@ div.navbar(v-if="shownavbar")
             span.team__project {{ selectedProject.name }}
             div.alertsymbol(v-if="isOffline" transition="fade" @mouseenter="isOfflineTooltipVisible = true" @mouseleave="isOfflineTooltipVisible = false")
                 div.tooltip(v-show="isOfflineTooltipVisible" transition="fade")
-                    p.tooltip__text Unable to connect to the server. You may continue to use the application and we will sync changes whenever we can.
+                    p.tooltip__text Unable to connect to the server. We will notify you when everything works again. Changes might not be saved.
         div.team__dropdown(v-show="isTeamDropdownVisible" transition="fadeFromTop2")
             div.team__dropdown__group(v-for="team in user.teams | caseInsensitiveOrderBy 'name'")
                 a.group__add.add-btn(@click.prevent="showInput(team)") {{ team.name }}
@@ -31,6 +31,8 @@ div.navbar(v-if="shownavbar")
         a.navbar__link.navbar__link--ui(href="#" v-link="{path: '/mockups'}") UI
         a.navbar__link.navbar__link--chat(href="#" v-link="{path: '/chat'}") Chat
             span.navbar__link--chat-count(v-show="messages.count") {{ messages.count }}
+            
+        requests
         
         notifications
             
@@ -38,9 +40,9 @@ div.navbar(v-if="shownavbar")
         div.navbar__avatar-container
             img.navbar__avatar(v-bind:src="user.src")
         div.account-pane(v-show="isUserDropdownVisible" transition="fadeFromTop2")
-            a.account-pane__link(v-link="{path: '/settings'}" @click="toggleUserDropdown") Settings
-            a.account-pane__link(v-link="{path: '/teams'}" @click="toggleUserDropdown") Manage teams
-            a.account-pane__link(@click="signout") Sign out
+            a.account-pane__link.account-pane__link--settings(v-link="{path: '/settings'}" @click="toggleUserDropdown") Settings
+            a.account-pane__link.account-pane__link--teams(v-link="{path: '/teams'}" @click="toggleUserDropdown") Manage teams
+            a.account-pane__link.account-pane__link--signout(@click="signout") Sign out
         div.popup-overlay( @click="toggleUserDropdown" v-show="isUserDropdownVisible" transition="fade")
 
 errors

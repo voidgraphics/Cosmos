@@ -4,6 +4,8 @@
     zouti = require "zouti"
     Dragula = require "dragula"
     Moment = require "moment"
+    orderBy = require 'lodash.orderby'
+
     Tasks =
         items: []
         data: ->
@@ -97,18 +99,24 @@
                     task.position++
 
                 # Send modified tasks to server
-                oTasks = this.tasks
-                socket.emit "task.saveAll", oTasks
+                socket.emit "task.saveAll", @tasks
+
+            drake.on 'over', ( el, container, source ) =>
+                container.classList.add( 'task-items__cards--over' )
+
+            drake.on 'out', ( el, container, source ) =>
+                container.classList.remove( 'task-items__cards--over' )
 
             socket.emit "team.getUsers", localStorage.selectedTeam
 
             socket.on "team.receiveUser", ( oUser ) =>
                 oUser.src = "data:image/png;base64,#{oUser.avatar}"
+                oUser.isTooltipVisible = false
                 @users.push oUser
 
         methods:
-            showPopup: ( event )  ->
-                this.columnName = event.target.parentNode.id
+            showPopup: ( sColumn )  ->
+                this.columnName = sColumn
                 this.popupIsShowing = true
 
             showEditPopup: ( oTask, sColumn ) ->
@@ -131,8 +139,9 @@
 
             findUserSrc: ( oUser ) ->
                 for user in @users
-                    id = if typeof oUser is "string" then oUser else oUser.id
-                    if id == user.uuid then return user.src
+                    id = if typeof oUser is "string" then oUser else oUser.uuid || oUser.id
+                    if id == user.uuid
+                        return user.src
 
             sorted: ( oTask ) ->
                 if @sort['mine']
@@ -171,6 +180,22 @@
                         break
                 @tasks.push oTask
 
+        computed:
+            todoTasks: () ->
+                tasks = @tasks.filter ( task ) =>
+                    if task.state then return task.state.indexOf('todo') != -1
+                return orderBy tasks, 'position'
+
+            inProgressTasks: () ->
+                tasks = @tasks.filter ( task ) =>
+                    if task.state then return task.state.indexOf('inprogress') != -1
+                return orderBy tasks, 'position'
+
+            completedTasks: () ->
+                tasks = @tasks.filter ( task ) =>
+                    if task.state then return task.state.indexOf('finished') != -1
+                return orderBy tasks, 'position'
+
         filters:
             formatted: ( value ) ->
                 return Moment(value).fromNow();
@@ -190,10 +215,12 @@
                 this.delete()
 
             editTask: ( oTask ) ->
+                if oTask.title == "" then return
                 for task in @tasks
                     if task.uuid == oTask.uuid
                         task.title = oTask.title
                         task.deadline = oTask.deadline
+                        task.tag = oTask.tag
                         task.users = []
                         for user in oTask.users
                             u = {
@@ -205,6 +232,7 @@
                         break
 
                 socket.emit "task.update", oTask
+                this.taskToEdit = null
                 this.popupIsShowing = false
 
             submitTask: ( oTask ) ->
@@ -213,16 +241,17 @@
                 oTask.projectId = localStorage.selectedProject
                 socket.emit "task.save", oTask
                 if oTask.deadline == '' then oTask.deadline = '0000-00-00'
-                this.tasks.push( oTask )
+                # this.tasks.push( oTask )
                 for task in this.tasks
-                    if task.state == oTask.state && task.uuid != oTask.id
+                    if task.state == oTask.state && task.uuid != oTask.uuid
                         task.position++
+
+                socket.emit "task.saveAll", @tasks
 
                 this.popupIsShowing = false
 
             changeProject: ( oTeam, oProject ) ->
                 @users = []
-                console.log oTeam
                 socket.emit "team.getUsers", oTeam.uuid
                 socket.emit "task.getAll", oProject.uuid, ( aTasks ) =>
                     @tasks = aTasks

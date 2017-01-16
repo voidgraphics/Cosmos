@@ -1,7 +1,7 @@
 #view-teams
     .teams
         &__list
-            width: 70%
+            width: 100%
             height: 80vh
             float: right
 
@@ -11,37 +11,62 @@
                 letter-spacing: ps_ls(80)
                 font-size: s($s1)
                 color: $cLightBlue2
+                text-align: left
 
         &__item
             background-color: $cDarkBlue
+            box-shadow: 0 3px 5px rgba(black, 0.1)
 
             &__name
                 color: $cWhite
-                text-align: center
+                font-size: 13px
                 font-family: $fOpenRegular
                 letter-spacing: ps_ls(20)
 
             &__button
-                background-color: $cOrange
                 color: $cWhite
+                font-family: $fOpenRegular
+                letter-spacing: 0
+                font-size: 12px
+                margin: 5px 0
+                text-transform: none
                 text-align: center
                 cursor: pointer
+
+                &--leave:before
+                    content: ''
+                    display: inline-block
+                    width: 24px
+                    height: 24px
+                    vertical-align: -8px
+                    margin-right: 5px
+                    background: url(../img/cancel-circle.svg) no-repeat center center
 
             &__requests
-                background-color: $cMediumBlue1
+                font-family: $fOpenRegular
                 color: $cWhite
                 text-align: center
                 cursor: pointer
 
+                &:before
+                    content: ''
+                    display: inline-block
+                    width: 24px
+                    height: 24px
+                    vertical-align: -8px
+                    margin-right: 5px
+                    background: url(../img/requests.svg) no-repeat center center
+
             &__requested
-                background-color: $cMediumBlue1
                 cursor: default
+                color: $cLightBlue4
 
     .leavePopup
         &__title
             font-family: $fOpenRegular
 
         &__subtitle
+            font-family: $fOpenRegular
             color: $cWhite
             text-align: center
 

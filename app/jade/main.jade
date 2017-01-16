@@ -1,21 +1,22 @@
 <!DOCTYPE html>
-html(lang="en")
+html(lang="en" class="light")
     head
         meta(charset="UTF-8")
         title Cosmos
         link(rel="stylesheet", href="../css/pikaday.css")
         link(rel="stylesheet", href="../css/dragula.css")
         link#theme(rel="stylesheet", href="../css/main.css")
-        script(src="http://localhost:12345/socket.io/socket.io.js")
+        script(src="http://www.getcosmos.space:12345/socket.io/socket.io.js")
         script(src="../js/socket.js")
         
     body
+        div.navbar-drag
         div#app
             navbar
             router-view
 
         script(src="../js/bundle.js")
 
-        script require('electron-connect').client.create()
+        //- script require('electron-connect').client.create()
         
         

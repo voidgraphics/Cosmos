@@ -19,24 +19,30 @@
                 passwordError: false
                 avatarError: false
                 usernameTaken: false
+                fileTooBigError: false
                 canProceed: false
-                fileInputText: 'Click to select an image'
+                fileInputText: 'Click to select an image...'
             }
 
         ready: ->
+            document.getElementById('usernamea').focus()
             socket.on "user.logged", ( oUserData ) =>
                 if @canProceed
                     localStorage.id = oUserData.uuid
+                    localStorage.userId = oUserData.uuid
                     localStorage.username = oUserData.username
                     localStorage.firstname = oUserData.firstname
                     localStorage.lastname = oUserData.lastname
+                    localStorage.email = oUserData.email
+                    localStorage.avatar = oUserData.avatar
+                    localStorage.settings = oUserData.settings
                     @$route.router.go "/joinTeam"
                 else
                     this.$dispatch 'error.new', 'There was a problem while creating your account. Please try again.'
 
         methods:
             register: ->
-                if @username && @firstname && @lastname && @email && @password && @file
+                if @username && @firstname && @lastname && @email && @password && @file && !@fileTooBigError
                     @usernameError = false
                     @emailError = false
                     @firstnameError = false
@@ -82,12 +88,18 @@
                         @passwordError = true
                     else
                         @passwordError = false
-                    if !@avatar
+                    if !@file
                         @avatarError = true
+                        @fileTooBigError = false
                     else
                         @avatarError = false
 
             detectFile: ( e ) ->
+                if !e.target.files[0] then return
+                if e.target.files[0].size > 2000000
+                    @avatarError = false
+                    return @fileTooBigError = true
+                else @fileTooBigError = false
                 @fileName = e.target.files[0].name
 
                 ext = @fileName.match(/\.([^\.]+)$/)[1]
@@ -95,11 +107,11 @@
                     e.target.value = ""
                 else
                     if @fileName != ''
-                        if @fileName.length > 30
-                            @fileInputText = @fileName.substring(0, 30) + '...'
+                        if @fileName.length > 25
+                            @fileInputText = @fileName.substring(0, 25) + '...'
                         else
                             @fileInputText = @fileName
-                    else @fileInputText = 'Click to select an image'
+                    else @fileInputText = 'Click to select an image...'
                     reader = new FileReader()
                     reader.onload = ( e ) =>
                         @file = e.target.result

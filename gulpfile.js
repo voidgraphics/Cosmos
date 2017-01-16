@@ -21,8 +21,8 @@ gulp.task('serve', function() {
     gulp.watch("./app/coffee/**/*.coffee", ['webpack']);
     gulp.watch("./app/vues/**/*.vue", ['webpack']);
     gulp.watch("./app/jade/**/*.jade", ['jade', 'webpack']);
-    gulp.watch("./app/js/bundle.js").on('change', electron.reload);
-    gulp.watch("./app/css/*.css").on('change', electron.reload);
+    gulp.watch("./app/js/bundle.js", electron.reload);
+    gulp.watch("./app/css/*.css", electron.reload);
     // gulp.watch("./app/html/*.html").on('change', electron.reload);
 
 });

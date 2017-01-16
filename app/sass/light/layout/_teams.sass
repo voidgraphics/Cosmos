@@ -1,55 +1,79 @@
 #view-teams
     &.container
-        padding: 25px
+        padding: 45px
         padding-top: 120px
         position: relative
         width: 100%
+        height: 100vh
 
     .teams
         &__list
-            padding-left: 40px
-
             &__title
-                margin-bottom: 18px
+                margin-bottom: 40px
 
         &__item
             border-radius: 3px
-            width: 29.333333333%
-            margin-bottom: 30px
-            height: 180px
-            padding-top: 25px
+            width: 100%
+            padding: 10px 20px
+            margin-bottom: 15px
             position: relative
-            display: inline-block
-            vertical-align: top
-            margin: 0 2% 3%
 
+            &:after
+                content: ''
+                display: block
+                clear: both
+
+            &__name
+                float: left
+                line-height: 30px
 
             &__requests
-                display: block
-                width: 75%
-                margin: 0 auto
-                padding: 12px 0
+                padding: 0 10px
                 border-radius: 3px
-                position: absolute
-                bottom: 75px
-                right: 0
-                left: 0
+                float: right
 
             &__button
-                display: block
-                width: 75%
-                margin: 0 auto
-                padding: 12px 0
+                padding: 0 15px
                 border-radius: 3px
-                position: absolute
-                bottom: 25px
-                right: 0
-                left: 0
+                float: right
+
+        &__join
+            display: block
+            border: 1px dashed $cLightBlue
+            background-color: $cLightBlue2
+            text-transform: uppercase
+            letter-spacing: ps_ls(80)
+            color: $cDarkBlue
+            font-size: 11px
+            border-radius: 3px
+            padding: 15px
+            text-align: center
+            transition: all .3s $ease-out-quad
+
+
+            &:before
+                content: '+'
+                display: inline-block
+                width: s(20, 12)
+                height: s(20, 12)
+                color: $cWhite
+                background-color: $cOrange
+                display: inline-block
+                border-radius: s(3, 12)
+                margin-right: s(10, 12)
+                text-align: center
+                line-height: s(20, 12)
+                transition: all .3s ease-in-out
+
+            &:hover
+                border-color: $cLightBlue3
+                &:before
+                    transform: rotate(90deg)
+
 
     .forms
-        width: 30%
-        float: left
-        padding-right: 40px
+        width: 700px
+        padding: 35px
 
     .form-body
         margin-left: 0
@@ -64,18 +88,16 @@
     .submit-btn
         margin-top: 0
 
-    .create
-        margin-bottom: 55px
+    .find
+        margin-right: 30px
+
+    .find, .create
+        display: inline-block
+        width: 300px
 
     .leavePopup
         width: 400px
-        height: 240px
-        position: absolute
-        top: 0
-        bottom: 0
-        left: 0
-        right: 0
-        margin: auto
+        height: 200px
         padding: 35px
 
         &__subtitle
@@ -87,17 +109,18 @@
 
     .searchPopup
         padding: 40px 30px
-        width: 80vw
-        height: 80vh
+        width: 600px
+        max-height: 400px
         position: absolute
-        top: 0
+        top: 50%
         bottom: 0
         right: 0
-        left: 0
+        left: 50%
         margin: auto
         overflow-y: scroll
 
         &__title
+            font-family: $fOpenRegular
             margin-bottom: 40px
 
     .requests-popup

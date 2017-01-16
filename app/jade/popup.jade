@@ -1,14 +1,15 @@
 
-div.popup
+div.popup#popup
     button.close-popup( @click="hidePopup" )
     form#task-form.form( @submit.prevent="submitTask" )
         fieldset.popup-sidebar
             p.popup-sidebar__title Assign
             div.assign-user__container(v-for="user in users | orderBy username")
                 input.assign-user__check(type="checkbox" id="{{ user.uuid }}" value="{{ user.uuid }}" v-model="selectedUsers")
-                label.assign-user(for="{{ user.uuid }}") 
+                label.assign-user(for="{{ user.uuid }}" @mouseenter="user.isTooltipVisible = true" @mouseleave="user.isTooltipVisible = false") 
                     img.assign-user__image(v-bind:src="user.src", alt="{{ user.username }}")
-                    span.assign-user__tooltip {{ user.username }} ({{ user.firstname }} {{ user.lastname }})
+                    div.tooltip(v-show="user.isTooltipVisible" transition="fade")
+                        p.tooltip__text {{ user.username }} ({{ user.firstname }}&nbsp;{{ user.lastname }})
             
         fieldset.form-body
             div.form-group
@@ -30,32 +31,32 @@ div.popup
                     div.form-group
                         input.form-body__input(type="radio" value="1" id="1" v-model="tag")
                         label.form-body__label(for="1" @click="tagListIsShowing = false")
-                            span.bullet.bullet--1
+                            span(class="bullet bullet--1 {{ isColorblind ? 'colorblind' : '' }}")
                             |Design
                     div.form-group
                         input.form-body__input(type="radio" value="2" id="2" v-model="tag")
                         label.form-body__label(for="2" @click="tagListIsShowing = false")
-                            span.bullet.bullet--2
+                            span(class="bullet bullet--2 {{ isColorblind ? 'colorblind' : '' }}")
                             |Front-end
                     div.form-group
                         input.form-body__input(type="radio" value="3" id="3" v-model="tag")
                         label.form-body__label(for="3" @click="tagListIsShowing = false")
-                            span.bullet.bullet--3
+                            span(class="bullet bullet--3 {{ isColorblind ? 'colorblind' : '' }}")
                             |Back-end
                     div.form-group
                         input.form-body__input(type="radio" value="4" id="4" v-model="tag")
                         label.form-body__label(for="4" @click="tagListIsShowing = false")
-                            span.bullet.bullet--4
+                            span(class="bullet bullet--4 {{ isColorblind ? 'colorblind' : '' }}")
                             |Planning
                     div.form-group
                         input.form-body__input(type="radio" value="5" id="5" v-model="tag")
                         label.form-body__label(for="5" @click="tagListIsShowing = false")
-                            span.bullet.bullet--5
+                            span(class="bullet bullet--5 {{ isColorblind ? 'colorblind' : '' }}")
                             |Testing
                     div.form-group
                         input.form-body__input(type="radio" value="6" id="6" v-model="tag")
                         label.form-body__label(for="6" @click="tagListIsShowing = false")
-                            span.bullet.bullet--6
+                            span(class="bullet bullet--6 {{ isColorblind ? 'colorblind' : '' }}")
                             |Bugs
             div.form-group
                 input.form-body__input(type="checkbox" id="new-task__hasDeadline" v-model="hasDeadline" v-on:click="clearDeadline")

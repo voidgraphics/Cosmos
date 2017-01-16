@@ -27,14 +27,16 @@ div.container.setup#view-jointeam
                         | You'll need a project within your team.
                     fieldset.form-body
                         div.form-group
-                            label.form-body__label(for="name") Project name
-                            input.form-body__input(type="text" id="name" v-model="projectToCreate.name")
+                            label.form-body__label(for="project_name") Project name
+                            input.form-body__input(type="text" id="project_name" v-model="projectToCreate.name")
                             input(type="submit" value="Create team and project")
             div.popup-overlay(v-if="projectPopupIsShowing" @click="projectPopupIsShowing = false")
             
             div.searchPopup(v-show="searchPopupIsShowing")
-                h2.searchPopup__title Your search for "{{ teamToFind.name }}" gave these results
-                div.teams__items
+                button.close-popup( @click="hidePopup('search')" )
+                h2.searchPopup__title(v-if="searchResults.length != 0") Your search for "{{ teamToFind.name }}" gave these results
+                h2.searchPopup__title(v-else) Your query returned no results!
+                div.teams__items(v-if="searchResults.length != 0")
                     div.teams__item(v-for="result in searchResults")
                         p.teams__item__name {{ result.name }}
                         a.teams__item__button.teams__item__requested(v-if="result.status") {{ result.status }}

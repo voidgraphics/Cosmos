@@ -1,30 +1,100 @@
-div.container.view#view-settings(transition="slide")
+div.container.view#view-settings
     div.content
         div.sidebar
-            a.sidebar__item(href="#" @click.prevent="switchCategory('usability')" v-bind:class="{ 'sidebar__item--selected': categories.usability }") Usability
+            a.sidebar__item(href="#" @click.prevent="switchCategory('user')" v-bind:class="{ 'sidebar__item--selected': categories.user }") Account
+            a.sidebar__item(href="#" @click.prevent="switchCategory('usability')" v-bind:class="{ 'sidebar__item--selected': categories.usability }") Appearance
             a.sidebar__item(href="#" @click.prevent="switchCategory('notifications')" v-bind:class="{ 'sidebar__item--selected': categories.notifications }") Notifications
+        
+        div.panel(v-show="categories.user")
+            form.form.user-settings#userSettings(@submit.prevent="saveUserSettings")
+                fieldset.form-body
+                    label.panel__title User account settings
+                    div.form-group
+                        label.form-body__label(for="username") Username
+                        p.form__error(v-show="errors.username") You must enter an username!
+                        input.form-body__input(type="text" id="username" placeholder="Enter a username..." v-model="user.username" v-bind:class="{ 'form-body__input--error': errors.username }")
+                    div.form-group
+                        label.form-body__label(for="firstname") First name
+                        p.form__error(v-show="errors.firstname") You must enter your first name!
+                        input.form-body__input(type="text" id="firstname" placeholder="Enter your first name..." v-model="user.firstname" v-bind:class="{ 'form-body__input--error': errors.firstname }")
+                    div.form-group
+                        label.form-body__label(for="lastname") Last name
+                        p.form__error(v-show="errors.lastname") You must enter your last name!
+                        input.form-body__input(type="text" id="lastname" placeholder="Enter your last name..." v-model="user.lastname" v-bind:class="{ 'form-body__input--error': errors.lastname }")
+                    div.form-group
+                        label.form__label--file(for="avatar" data-text="{{ fileInputText }}"  v-bind:class="{ 'form__label--file-error': errors.avatar || errors.fileTooBig, 'form__label--file-offset': user.file }")
+                            span.form__label--file-preview(v-if="user.file")
+                                img(v-bind:src="user.file" alt="Image")
+                            |Avatar
+                        p.form__error(v-if="errors.avatar") You must choose an avatar
+                        p.form__error(v-if="errors.fileTooBig") File too big! (max 2mb)
+                        input.form__input--file(type="file" name="avatar" id="avatar" accept="image/gif, image/jpeg, image/png" @change="detectFile")
+                    
+                    a.user-settings__link(@click.prevent="passwordPopupIsShowing = true") Change my password...
+                    
+                    div.form-group
+                        input(type="submit" value="Save changes")
+            
+            div.popup.resetPopup(v-if="passwordPopupIsShowing" transition="fade")
+                button.close-popup( @click="passwordPopupIsShowing = false" )
+                h2 Be careful ! You are about to change your password.
+                form.form(@submit.prevent="changePassword")
+                    div.form-group
+                        label.form-body__label(for="newpass") New password
+                        p.form__error(v-if="errors.password") Please enter a password!
+                        input.form-body__input(type="password" id="newpass" v-model="newpass" v-bind:class="{ 'form-body__input--error': errors.password }")
+                    div.form-group
+                        input(type="submit" value="Change my password")
+            div.popup-overlay(v-if="passwordPopupIsShowing" transition="fade" @click="passwordPopupIsShowing = false")
         
         div.panel(v-show="categories.usability")
             form.form
                 fieldset.form-body
                     label.panel__title Application colors
-                    input#theme-light.form-body__input(type="radio" value="light" @change="changeTheme" v-model="theme.name")
+                    input#theme-light.form-body__input(type="radio" value="light" @change="changeTheme" v-model="settings.usability.theme")
                     label.form-body__label(for="theme-light") Light
-                    input#theme-dark.form-body__input(type="radio" value="dark" @change="changeTheme" v-model="theme.name")
+                    input#theme-dark.form-body__input(type="radio" value="dark" @change="changeTheme" v-model="settings.usability.theme")
                     label.form-body__label(for="theme-dark") Dark
                 fieldset.form-body
                     label.panel__title Color options
                     div
-                        input.form-body__input(type="checkbox" id="hasSchedule" name="hasSchedule" v-model="theme.hasSchedule" @change="toggleSchedule")
+                        input.form-body__input(type="checkbox" id="hasSchedule" name="hasSchedule" v-model="settings.usability.hasSchedule" @change="toggleSchedule")
                         label.form-body__label(for="hasSchedule") Switch automatically (Light starts at 8am and dark starts at 8pm)
                     div
-                        input.form-body__input(type="checkbox" id="isColorblind" name="isColorblind" v-model="theme.isColorblind" @change="toggleColorblind")
+                        input.form-body__input(type="checkbox" id="isColorblind" name="isColorblind" v-model="settings.usability.isColorblind" @change="toggleColorblind")
                         label.form-body__label(for="isColorblind") Colorblind mode (adds visual patterns where color information is important)
         div.panel(v-show="categories.notifications")
             form.form
                 fieldset.form-body
-                    label.panel__title Notifications
-                    input.form-body__input(type="checkbox" id="notifs-tasks-assigned" v-model="notifs.tasksAssigned" @change="changeNotificationPreference('tasksAssigned', notifs.tasksAssigned)")
-                    label.form-body__label(for="notifs-tasks-assigned") When I'm assigned to a task
-                    input.form-body__input(type="checkbox" id="notifs-tasks-moved" v-model="notifs.tasksMoved" @change="changeNotificationPreference('tasksMoved', notifs.tasksMoved)")
-                    label.form-body__label(for="notifs-tasks-moved") When a task I'm assigned to is moved
+                    label.panel__title Send me notifications...
+                    p.form__category Tasks 
+                    div
+                        input.form-body__input(type="checkbox" id="notifs-tasks-assigned" v-model="settings.notifications.tasksAssigned" @change="changeNotificationPreference('tasksAssigned', settings.notifications.tasksAssigned)")
+                        label.form-body__label(for="notifs-tasks-assigned") When I'm assigned to a task
+                    div
+                        input.form-body__input(type="checkbox" id="notifs-tasks-moved" v-model="settings.notifications.tasksMoved" @change="changeNotificationPreference('tasksMoved', settings.notifications.tasksMoved)")
+                        label.form-body__label(for="notifs-tasks-moved") When a task I'm assigned to is moved
+                    div
+                        input.form-body__input(type="checkbox" id="notifs-tasks-edited" v-model="settings.notifications.tasksEdited" @change="changeNotificationPreference('tasksEdited', settings.notifications.tasksEdited)")
+                        label.form-body__label(for="notifs-tasks-edited") When a task I'm assigned to is edited
+                    p.form__category Designs
+                    div
+                        input.form-body__input(type="checkbox" id="notifs-mockup-created" v-model="settings.notifications.newMockup" @change="changeNotificationPreference('newMockup', settings.notifications.newMockup)")
+                        label.form-body__label(for="notifs-mockup-created") When someone uploads a new design
+                    div
+                        input.form-body__input(type="checkbox" id="notifs-comments-created" v-model="settings.notifications.newComment" @change="changeNotificationPreference('commentsCreated', settings.notifications.commentsCreated)")
+                        label.form-body__label(for="notifs-comments-created") When someone comments on a design
+                    p.form__category Chat
+                    //- div
+                    //-     input.form-body__input(type="checkbox" id="notifs-chat-new" v-model="settings.notifications.newMessage" @change="changeNotificationPreference('newMessage', settings.notifications.newMessage)")
+                    //-     label.form-body__label(for="notifs-chat-new") When someone sends a chat message
+                    div
+                        input.form-body__input(type="checkbox" id="notifs-chat-newTargeted" v-model="settings.notifications.newTargetedMessage" @change="changeNotificationPreference('newTargetedMessage', settings.notifications.newTargetedMessage)")
+                        label.form-body__label(for="notifs-chat-newTargeted") When someone sends a chat message containing my username
+                    div
+                        input.form-body__input(type="checkbox" id="notifs-chat-newRoom" v-model="settings.notifications.newChatroom" @change="changeNotificationPreference('newChatroom', settings.notifications.newChatroom)")
+                        label.form-body__label(for="notifs-chat-newRoom") When someone creates a new chatroom
+                    p.form__category Teams
+                    div
+                        input.form-body__input(type="checkbox" id="notifs-request-new" v-model="settings.notifications.newRequest" @change="changeNotificationPreference('newRequest', settings.notifications.newRequest)")
+                        label.form-body__label(for="notifs-request-new") When someone requests to join my team

@@ -1,8 +1,8 @@
-div.container.view#view-projectchat(transition="slide")
+div.container.view#view-projectchat
     include ./includes/chatbar.jade
 
     div.chat
-        div.chat__messages
+        div.chat__messages(@scroll="checkScroll")
             div.chat__message(v-if="messages.length < 1")
                 p.chat__message__user Cosmos
                 div.chat__message__body
@@ -15,8 +15,8 @@ div.container.view#view-projectchat(transition="slide")
                 p.chat__message__user(v-else) User not found
                 div.chat__message__body
                     div.chat__message__avatar-container
-                        img.chat__message__avatar(v-bind:src="message.user.avatar ? findUserSrc(message.user) : '../img/default.png'")
-                    time.chat__message__time {{ message.createdAt | hour }}
+                        img.chat__message__avatar(v-bind:src="message.user && message.user.avatar ? findUserSrc(message.user) : '../img/default.png'")
+                    time.chat__message__time(title="{{ message.createdAt | date }}") {{ message.createdAt | hour }}
                     p.chat__message__text {{{ message.text | format }}}
     
     form.input-area( @submit.prevent="sendMessage" )

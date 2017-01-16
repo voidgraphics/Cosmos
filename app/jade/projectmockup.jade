@@ -1,6 +1,7 @@
-div.container#view-projectmockup(transition="slide")
+div.container#view-projectmockup
     div.content
         a.mockup__back-link(v-link="{path: '/mockups'}") Back to list
+        a.mockup__delete(@click.prevent="isDeletePopupShowing = true") Delete
         p.mockup__info
             span.mockup__name {{ mockup.title }}
             span.mockup__comment-count {{ comments.length }} comment{{ comments.length != 1 ? "s" : "" }}
@@ -9,15 +10,27 @@ div.container#view-projectmockup(transition="slide")
             img#mockup.mockup__image(v-bind:src="mockup.src" @click="getCoordinates")
             
             div#overlay.mockup__comments
-                form.add-comment(@submit.prevent="sendComment" v-if="showForm" v-bind:class="{ 'add-comment--inverted': formInverted }" style="position: absolute; top: {{ formPos.y }}%; left: {{ formPos.x }}%;")
+                form.add-comment(@submit.prevent="sendComment" v-if="showForm" v-bind:class="{ 'add-comment--inverted': formInverted }" v-bind:style="{ 'top': formPos.y + '%', 'left': formPos.x  + '%'}" style="position: absolute;")
                     div
                         button.add-comment__close(@click.prevent="showForm = false")
                         textarea#newComment.add-comment__textfield(rows="1" v-model="newMessage" v-focus="showForm" placeholder="Write your comment here...")
                         input.add-comment__submit(type="submit" value="Send")
-                a.mockup__comment(v-for="comment in comments" style="top: {{ comment.y }}%; left: {{ comment.x }}%;" @click.stop="toggle( comment, $event )")
+                a.mockup__comment(v-for="comment in comments" v-bind:style="{ 'top': comment.y + '%', 'left': comment.x  + '%'}" @click.stop="toggle( comment, $event )")
                     div.comment__body(v-show="comment.isShowing" class="{{ comment.class }}")
                         div.comment__image
-                            img.comment__avatar(src="../img/default.png")
-                        span.comment__user {{ comment.user.username }}
+                            img.comment__avatar(v-if="comment.user" v-bind:src="comment.user.avatar")
+                            img.comment__avatar(v-else src="../img/default.png")
+                        span.comment__user {{ !!comment.user ? comment.user.username : 'User not found'}}
                         span.comment__date {{ comment.createdAt | formatted }}
-                        p.comment__text {{ comment.text }}
+                        p.comment__text {{{ comment.text }}}
+
+    div.deletePopup(v-show="isDeletePopupShowing" transition="fade")
+        button.close-popup( @click="isDeletePopupShowing = false" )
+        h2 Are you sure you want to delete this design?
+        a#confirmDelete(@click.prevent="confirmDelete") Yes, delete it
+        a#cancelDelete(@click="isDeletePopupShowing = false") No, cancel
+    div.popup-overlay(v-show="isDeletePopupShowing" transition="fade" @click="isDeletePopupShowing = false")
+
+    div.popup.removedPopup(v-show="removedPopupIsShowing" transition="fade")
+        h2 This design has been removed. Redirecting you in 5 seconds...
+    div.popup-overlay(v-show="removedPopupIsShowing" transition="fade")

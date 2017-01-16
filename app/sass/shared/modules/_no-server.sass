@@ -1,0 +1,29 @@
+.no-server
+    // background: $cDarkBlue
+    width: 100vw
+    height: 100vh
+    position: relative
+
+    &__message
+        color: $cLightBlue2
+        display: block
+        width: 300px
+        height: 90px
+        position: absolute
+        top: 0
+        right: 0
+        bottom: 0
+        left: 0
+        margin: auto
+        text-align: center
+        font-family: $fOpenRegular
+        line-height: 1.6
+
+        &:before
+            content: ''
+            display: block
+            width: 36px
+            height: 36px
+            margin: 0 auto
+            background: url(../img/alert.svg) no-repeat center center
+            margin-bottom: 5px

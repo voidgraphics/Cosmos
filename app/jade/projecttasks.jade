@@ -1,4 +1,4 @@
-div.container.view#view-projecttasks(transition="slide")
+div.container.view#view-projecttasks
     div.content
         div.sort(v-bind:class="{ 'sort--expanded': showSortMenu  }")
             button.sort__tab(@click="showSortMenu = !showSortMenu")
@@ -14,79 +14,80 @@ div.container.view#view-projecttasks(transition="slide")
                     div.form-group
                         input(type="checkbox" id="design" v-model="sort['1']" @change="updateSortButton")
                         label(for="design")
-                            span.bullet.bullet--1
+                            span(class="bullet bullet--1 {{ isColorblind ? 'colorblind' : '' }}")
                             | Design
                     div.form-group
                         input(type="checkbox" id="frontend" v-model="sort['2']" @change="updateSortButton")
                         label(for="frontend")
-                            span.bullet.bullet--2
+                            span(class="bullet bullet--2 {{ isColorblind ? 'colorblind' : '' }}")
                             | Front-end
                     div.form-group
                         input(type="checkbox" id="backend" v-model="sort['3']" @change="updateSortButton")
                         label(for="backend")
-                            span.bullet.bullet--3
+                            span(class="bullet bullet--3 {{ isColorblind ? 'colorblind' : '' }}")
                             | Back-end
                     div.form-group
                         input(type="checkbox" id="planning" v-model="sort['4']" @change="updateSortButton")
                         label(for="planning")
-                            span.bullet.bullet--4
+                            span(class="bullet bullet--4 {{ isColorblind ? 'colorblind' : '' }}")
                             | Planning
                     div.form-group
                         input(type="checkbox" id="testing" v-model="sort['5']" @change="updateSortButton")
                         label(for="testing")
-                            span.bullet.bullet--5
+                            span(class="bullet bullet--5 {{ isColorblind ? 'colorblind' : '' }}")
                             | Testing
                     div.form-group
                         input(type="checkbox" id="bugs" v-model="sort['6']" @change="updateSortButton")
                         label(for="bugs")
-                            span.bullet.bullet--6
+                            span(class="bullet bullet--6 {{ isColorblind ? 'colorblind' : '' }}")
                             | Bugs
                     
                     button.sort__button(@click.prevent="toggleSortRules") {{ sortButtonText }}
         div.popup-overlay(v-show="showSortMenu" transition="fade" @click="showSortMenu = false")
         div.task-items
             div.task-items__section#todo(data-section="To do")
-                a.add-btn.task-items__section__title(id="add-todo", v-on:click="showPopup") To do
-                em.task-items__cta__arrow(v-if="tasks.length < 1")
+                a.add-btn.task-items__section__title(id="add-todo", v-on:click="showPopup('todo')") To do
+                //- em.task-items__cta__arrow(v-if="tasks.length < 1")
                 div.task-items__cards#todo-column__items
-                    div.task-item(v-for="task in tasks | orderBy 'position'" v-if="task.state == 'todo'" v-show="sorted(task)" data-id="{{ task.uuid }}" id="{{ task.uuid }}" v-on:click.stop="showEditPopup( task, 'todo' )")
+                    div.task-item(v-for="task in todoTasks" v-show="sorted(task)" data-id="{{ task.uuid }}" id="{{ task.uuid }}" v-on:click.stop="showEditPopup( task, 'todo' )")
                         p.task-item__name {{ task.title }}
                         time.task-item__deadline(v-if="task.deadline != '0000-00-00'") Due {{ task.deadline | formatted }}
                         div.task-item__users
-                            div.task-item__user(v-for="user in task.users")
+                            div.task-item__user(v-for="user in task.users" title="{{ user.username }} ({{ user.firstname }} {{ user.lastname }})")
                                 img.task-item__user__avatar(v-bind:src="findUserSrc(user)")
                         span(class="task-item__tag {{ isColorblind ? 'colorblind' : '' }} task-item__tag--{{ task.tag }}" alt="{{ categories[task.tag] }}")
+                    a.placeholder.placeholder--task(@click="showPopup('todo')") Add a task
 
             div.task-items__section#inprogress(data-section="In progress")
-                a.add-btn.task-items__section__title(id="add-inprogress" v-on:click="showPopup") In progress
-                em.task-items__cta__arrow(v-if="tasks.length < 1")
+                a.add-btn.task-items__section__title(id="add-inprogress" v-on:click="showPopup('inprogress')") In progress
+                //- em.task-items__cta__arrow(v-if="tasks.length < 1")
                 div.task-items__cards#progress-column__items
-                    div.task-item(v-for="task in tasks | orderBy 'position'" v-if="task.state == 'inprogress'" v-show="sorted(task)" data-id="{{ task.uuid }}" id="{{ task.uuid }}" v-on:click.stop="showEditPopup( task, 'inprogress' )")
+                    div.task-item(v-for="task in inProgressTasks" v-show="sorted(task)" data-id="{{ task.uuid }}" id="{{ task.uuid }}" v-on:click.stop="showEditPopup( task, 'inprogress' )")
                         p.task-item__name {{ task.title }}
                         time.task-item__deadline(v-if="task.deadline != '0000-00-00'") Due {{ task.deadline | formatted }}
                         div.task-item__users
-                            div.task-item__user(v-for="user in task.users")
+                            div.task-item__user(v-for="user in task.users" title="{{ user.username }} ({{ user.firstname }} {{ user.lastname }})")
                                 img.task-item__user__avatar(v-bind:src="findUserSrc(user)")
                         span(class="task-item__tag {{ isColorblind ? 'colorblind' : '' }} task-item__tag--{{ task.tag }}" alt="{{ categories[task.tag] }}")
-                div.task-items__cta(v-if="tasks.length < 1")
-                    p.task-items__cta__text There are no tasks yet!
-                    p.task-items__cta__text You can add some using these buttons.
+                    a.placeholder.placeholder--task(@click="showPopup('inprogress')") Add a task
 
             div.task-items__section#finished(data-section="Finished")
-                a.add-btn.task-items__section__title(id="add-finished" v-on:click="showPopup") Completed
-                em.task-items__cta__arrow(v-if="tasks.length < 1")
+                a.add-btn.task-items__section__title(id="add-finished" v-on:click="showPopup('finished')") Completed
+                //- em.task-items__cta__arrow(v-if="tasks.length < 1")
                 div.task-items__cards#finished-column__items
-                    div.task-item(v-for="task in tasks | orderBy 'position'" v-if="task.state == 'finished'" v-show="sorted(task)" data-id="{{ task.uuid }}" id="{{ task.uuid }}" v-on:click.stop="showEditPopup( task, 'finished' )")
+                    div.task-item(v-for="task in completedTasks" v-show="sorted(task)" data-id="{{ task.uuid }}" id="{{ task.uuid }}" v-on:click.stop="showEditPopup( task, 'finished' )")
                         p.task-item__name {{ task.title }}
                         time.task-item__deadline(v-if="task.deadline != '0000-00-00'") Due {{ task.deadline | formatted }}
                         div.task-item__users
-                            div.task-item__user(v-for="user in task.users")
+                            div.task-item__user(v-for="user in task.users" title="{{ user.username }} ({{ user.firstname }} {{ user.lastname }})")
                                 img.task-item__user__avatar(v-bind:src="findUserSrc(user)")
                         span(class="task-item__tag {{ isColorblind ? 'colorblind' : '' }} task-item__tag--{{ task.tag }}" alt="{{ categories[task.tag] }}")
-
+                    a.placeholder.placeholder--task(@click="showPopup('finished')") Add a task
+            div.task-items__cta(v-if="tasks.length < 1")
+                p.task-items__cta__text It's empty in here.
+                p.task-items__cta__text You can add tasks by clicking on these buttons, up there!
         
-            
-        delete-popup( v-if="deletePopupIsShowing" )
-        popup( v-if="popupIsShowing" v-bind:columnname="columnName" v-bind:task="taskToEdit" v-bind:users="users")
+        delete-popup( v-if="deletePopupIsShowing" v-bind:task="taskToDelete" v-bind:is-colorblind="isColorblind" v-bind:users="users" v-bind:categories="categories" )
+        popup( v-if="popupIsShowing" v-bind:columnname="columnName" v-bind:task="taskToEdit" v-bind:users="users" v-bind:is-colorblind="isColorblind")
 
         

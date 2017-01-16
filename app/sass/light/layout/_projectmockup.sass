@@ -30,7 +30,6 @@
             font-size: 11px
             color: $cWhite
             border-radius: 0 3px 3px 0
-            position: relative
             display: inline-block
             position: absolute
 
@@ -43,6 +42,26 @@
                 position: absolute
                 top: 0
                 right: 100%
+
+        &__delete
+            padding: 6px 0
+            font-family: $fOpenRegular
+            font-size: 12px
+            color: $cDarkBlue
+            border-radius: 3px
+            float: right
+            cursor: pointer
+
+            &:before
+                content: ''
+                display: inline-block
+                width: 22px
+                height: 22px
+                vertical-align: -7px
+                margin-right: 5px
+                background: url(../img/cancel-circle.svg) no-repeat center center
+                background-size: 100%
+
 
         &__info
             width: 50%
@@ -66,6 +85,7 @@
 
     .mockup__image
         max-width: 100%
+        box-shadow: 0 5px 25px rgba(0, 0, 0, 0.1)
 
     .add-comment
         position: absolute
@@ -140,3 +160,7 @@
                     left: auto
                     right: calc(100% - 3px)
                     border-radius: 3px 0 0 3px
+
+    .deletePopup
+        h2
+            margin-bottom: 60px

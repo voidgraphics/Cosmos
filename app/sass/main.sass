@@ -3,8 +3,12 @@
 @import "shared/fonts"
 @import "shared/vars"
 @import "shared/animations"
+@import "shared/base"
+@import "shared/modules/navbar"
 @import "shared/modules/notifications"
+@import "shared/modules/requests"
 @import "shared/modules/errors"
+@import "shared/modules/no-server"
 
 html.light
     @import "light/base/base"
@@ -14,6 +18,7 @@ html.light
     @import "light/modules/reconnect"
     @import "light/modules/tooltip"
     @import "light/modules/task-sort"
+    @import "light/modules/placeholder"
 
     @import "light/projecttasks.sass"
     @import "light/projectmockups.sass"
@@ -34,6 +39,7 @@ html.dark
     @import "dark/modules/reconnect"
     @import "dark/modules/tooltip"
     @import "dark/modules/task-sort"
+    @import "dark/modules/placeholder"
 
     @import "dark/projecttasks.sass"
     @import "dark/projectmockups.sass"

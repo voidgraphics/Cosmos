@@ -26,29 +26,19 @@
             }
 
         ready: ->
+
+            if !window.starfield.isRunning
+                window.starfield.canvas.style = 'block'
+                window.starfield.animate()
+
+            document.getElementById('search_team_name').focus()
             socket.on "team.push", ( oTeam ) =>
                 @teams.push oTeam
 
-            socket.on "team.left", ( sRemovedId ) =>
-                @teams.forEach ( oTeam, index ) =>
-                    if oTeam.uuid == sRemovedId
-                        @teams.splice index, 1
-                        @leavePopupIsShowing = false
-
-            socket.on "team.receiveRequests", ( sTeamId, oUser ) =>
-                for team in @teams
-                    if team.uuid == sTeamId
-                        team.requests.push oUser
-
-            socket.on "team.removeRequest", ( sTeamId, sUserId ) ->
-                for oTeam in @teams
-                    if oTeam.uuid == sTeamId
-                        oTeam.requests.forEach( oRequest, index ) =>
-                            if oRequest.uuid == sUserId
-                                oTeam.requests.splice index, 1
 
             socket.on "team.initialized", ( oTeam, oProject ) =>
                 # @.$dispatch "changeProject", oTeam, oProject
+                window.starfield.selfDestruct()
                 @$route.router.go "/tasks"
 
         methods:
@@ -108,7 +98,7 @@
 
         events:
             changeProject: ( oTeam, oProject ) ->
-                socket.emit "user.join", oProject.uuid, oTeam.uuid
+                socket.emit "user.join", [ oProject.uuid, oTeam.uuid ]
 
 
 

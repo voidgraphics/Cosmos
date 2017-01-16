@@ -6,20 +6,20 @@ div.container.view#view-signup
             form.form(@submit.prevent="register")
                 div.form__column
                     div.form-group
-                        label(for="username") Username
+                        label(for="usernamea") Username
                         p.form__error(v-if="usernameError") You must enter a username
                         p.form__error(v-if="usernameTaken") This username is already taken!
-                        input(type="text" name="username" id="username" v-model="username")
+                        input(type="text" autofocus name="username" id="usernamea" v-model="username" v-bind:class="{'form-body__input--error': usernameError || usernameTaken}")
                     
                     div.form-group
                         label(for="firstname") First name
                         p.form__error(v-if="firstnameError") You must enter your first name
-                        input(type="text" name="firstname" id="firstname" v-model="firstname")
+                        input(type="text" name="firstname" id="firstname" v-model="firstname" v-bind:class="{'form-body__input--error': firstnameError}")
                     
                     div.form-group
                         label(for="lastname") Last name
                         p.form__error(v-if="lastnameError") You must enter your last name
-                        input(type="text" name="lastname" id="lastname" v-model="lastname")
+                        input(type="text" name="lastname" id="lastname" v-model="lastname" v-bind:class="{'form-body__input--error': lastnameError}")
                     
                     
                 
@@ -27,20 +27,23 @@ div.container.view#view-signup
                     div.form-group
                         label(for="email") E-mail
                         p.form__error(v-if="emailError") You must enter a valid e-mail
-                        input(type="email" name="email" id="email" v-model="email")
+                        input(type="email" name="email" id="email" v-model="email" v-bind:class="{'form-body__input--error': emailError}")
 
                     div.form-group
                         label(for="password") Password
                         p.form__error(v-if="passwordError") You must enter a password
-                        input(type="password" name="password" id="password" v-model="password")
+                        input(type="password" name="password" id="password" v-model="password" v-bind:class="{'form-body__input--error': passwordError}")
                     
                     div.form-group
-                        label.form__label--file(for="avatar" data-text="{{ fileInputText }}") Avatar
+                        label.form__label--file(for="avatar" data-text="{{ fileInputText }}"  v-bind:class="{ 'form__label--file-error': avatarError || fileTooBigError, 'form__label--file-offset': file }")
+                            span.form__label--file-preview(v-if="file")
+                                img(v-bind:src="file" alt="Image")
+                            |Avatar
                         p.form__error(v-if="avatarError") You must choose an avatar
+                        p.form__error(v-if="fileTooBigError") File too big! (max 2mb)
                         input.form__input--file(type="file" name="avatar" id="avatar" accept="image/gif, image/jpeg, image/png" @change="detectFile")
                     
                 div
                     input(type="submit" href="jointeam.html" class="submit-btn" value="Create account")
 
                     a#signin-link(href="#" v-link="{path: '/signin'}") Already have an account?
-                    //- a(href="forgotpassword.html") Forgot your password?

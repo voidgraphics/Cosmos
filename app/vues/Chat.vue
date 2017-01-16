@@ -19,6 +19,9 @@
                 scrollTip: false
                 showForm: false
                 newChatroom: ""
+                el: null
+                lastSent: Moment()
+                isSpamming: false
             }
 
         asyncData: ( resolve, reject ) ->
@@ -38,7 +41,6 @@
                 }
 
         detached: ->
-            socket.off "chat.new"
             socket.off "user.receiveAvatar"
 
         ready: ->
@@ -50,7 +52,8 @@
                     for chatroom in @chatrooms
                         if oMessage.chatroomUuid == chatroom.uuid
                             chatroom.unreadCount++
-                # that.handleNotification( oMessage.text, oUser.username )
+
+            @$dispatch 'clearUnreadMessageCount'
 
             socket.on "chat.newChatroom", ( oChatroom ) =>
                 oChatroom.unreadCount = 0
@@ -60,6 +63,8 @@
                 for user in @users
                     if user.uuid == oUser.uuid
                         user.avatar = "data:image/png;base64,#{oUser.avatar}"
+
+            @el = document.querySelector '#view-projectchat > div.chat > div'
             @scroll()
 
             setTimeout(() =>
@@ -68,6 +73,7 @@
 
         methods:
             addChatroom: () ->
+                if @newChatroom == '' then return
                 oChatroom = {
                     uuid: zouti.uuid()
                     projectUuid: localStorage.selectedProject
@@ -87,6 +93,10 @@
                 return selected
 
             sendMessage: ->
+                if @newMessage == '' then return
+                if @checkSpam() then return @.$dispatch 'error', 'Slow down!'
+                @lastSent = Moment()
+
                 message =
                     userId: localStorage.id
                     text: @newMessage
@@ -97,13 +107,9 @@
                 @newMessage = ""
 
             scroll: ->
-                container = document.getElementsByClassName( "chat__messages" )[0]
-                if( container )
-                    container.scrollTop = container.scrollHeight
-
-            handleNotification: ( message, username ) ->
-                title = "#general - #{username}:"
-                notification = new Notification title, { body: message }
+                if( @el )
+                    @el.scrollTop = @el.scrollHeight
+                @scrollTip = false
 
             changeChatroom: ( oChatroom ) ->
                 @selectedChatroom = oChatroom
@@ -119,9 +125,19 @@
                     id = if typeof oUser is "string" then oUser else oUser.uuid
                     if id == user.uuid then return user.avatar
 
+            checkScroll: () ->
+                if @el && @el.scrollTop == ( @el.scrollHeight - @el.offsetHeight )
+                    @scrollTip = false
+
+            checkSpam: ->
+                now = Moment()
+                @allowed = @lastSent.add 500, 'ms'
+                @isSpamming = now.isBefore @allowed
+                return @isSpamming
+
         events:
             changeProject: ( oTeam, oProject ) ->
-                socket.emit "user.join", oProject.uuid
+                # socket.emit "user.join", [ oProject.uuid ]
                 socket.emit "chat.getAll", oProject.uuid, oTeam.uuid, ( aChatrooms, aGeneralMessages, aUsers ) =>
                     @users = aUsers
                     @chatrooms = aChatrooms
@@ -130,7 +146,10 @@
 
         filters:
             hour: ( value ) ->
-                return Moment(value).format('H:mm');
+                return Moment(value).format('h:mm a');
+
+            date: ( value ) ->
+                return Moment(value).format('ll h:mm a');
 
             format: ( text ) ->
                 # Check for underscores
@@ -167,14 +186,13 @@
             focus: (require "vue-focus").focus
             focusAuto: (require "vue-focus").focusAuto
             scrolldown: ->
-                container = document.getElementsByClassName( "chat__messages" )[0]
-                if container && container.scrollTop == ( container.scrollHeight - container.offsetHeight )
-                    Vue.nextTick( ->
-                        container.scrollTop = container.scrollHeight
+                if @vm.el && @vm.el.scrollTop == ( @vm.el.scrollHeight - @vm.el.offsetHeight )
+                    Vue.nextTick( =>
+                        @vm.el.scrollTop = @vm.el.scrollHeight
                     )
 
                 else
-                    # TODO: Show scroll tip
+                    @vm.scrollTip = true
 
     module.exports = Chat
 

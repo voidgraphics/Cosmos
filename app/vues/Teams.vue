@@ -11,9 +11,9 @@
             return {
                 teams: []
                 searchResults: []
-                requests: []
                 leavePopupIsShowing: false
                 searchPopupIsShowing: false
+
                 leaveTeam: {
                     name: ""
                 }
@@ -23,6 +23,8 @@
                 teamToFind: {
                     name: ""
                 }
+
+                joinPopupIsShowing: false
             }
 
         ready: ->
@@ -35,15 +37,21 @@
                         @teams.splice index, 1
                         @leavePopupIsShowing = false
 
+                console.log @teams.length
+                if @teams.length == 0
+                    console.log 'redirecting'
+                    localStorage.selectedTeam = ''
+                    @$router.go '/joinTeam'
+
             socket.on "team.receiveRequests", ( sTeamId, oUser ) =>
                 for team in @teams
                     if team.uuid == sTeamId
                         team.requests.push oUser
 
-            socket.on "team.removeRequest", ( sTeamId, sUserId ) ->
+            socket.on "team.removeRequest", ( sTeamId, sUserId ) =>
                 for oTeam in @teams
-                    if oTeam.uuid == sTeamId
-                        oTeam.requests.forEach( oRequest, index ) =>
+                    if oTeam.uuid == sTeamId && oTeam.requests
+                        for oRequest, index in oTeam.requests
                             if oRequest.uuid == sUserId
                                 oTeam.requests.splice index, 1
 
@@ -61,6 +69,12 @@
                 @leaveTeam = oTeam
                 @leavePopupIsShowing = true
 
+            showJoinPopup: ->
+                @joinPopupIsShowing = true
+                setTimeout( () =>
+                    document.getElementById( 'findname' ).focus()
+                , 300)
+
             confirmLeave: ->
                 socket.emit "team.leave", @leaveTeam.uuid, localStorage.id
                 @.$dispatch "leftTeam", @leaveTeam.uuid
@@ -73,12 +87,13 @@
 
             createTeam: ->
                 socket.emit "team.create", @teamToCreate.name, localStorage.id
+                @joinPopupIsShowing = false
                 @teamToCreate.name = ""
 
             findTeam: ->
                 if @teamToFind.name == "" then return
                 socket.emit "team.find", @teamToFind.name, localStorage.id, ( aResults, aRequests ) =>
-                    @requests = aRequests
+                    @joinPopupIsShowing = false
                     @searchPopupIsShowing = true
                     for result in aResults
                         result.status = ""
@@ -106,7 +121,7 @@
 
         events:
             changeProject: ( oTeam, oProject ) ->
-                socket.emit "user.join", oProject.uuid
+                # socket.emit "user.join", [ oProject.uuid ]
 
 
 

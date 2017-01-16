@@ -3,7 +3,7 @@
     top: 90px
     right: 30px
     border-radius: 3px
-    padding: 15px 20px
+    padding: 5px 20px
     width: 200px
     background-color: $cDarkBlue
     z-index: 99999
@@ -11,11 +11,39 @@
     &__link
         cursor: pointer
         color: $cLightBlue2
-        font-size: 11px
+        font-size: 12px
         display: block
-        letter-spacing: ps_ls(80)
-        transition: color .3s ease-in-out
+        text-transform: none
+        font-family: $fOpenRegular
+        letter-spacing: 0
+        transition: all .3s $bounce
+        padding: 12px 0
+        border-bottom: 1px dashed #3F4446
+        margin: 0
+
+        &:before
+            content: ''
+            display: inline-block
+            width: 19px
+            height: 19px
+            vertical-align: -5px
+            margin-right: 8px
+
+        &--settings:before
+            background: url( ../img/cog.svg ) no-repeat center center
+            background-size: 100%
+
+        &--teams:before
+            background: url( ../img/teams.svg ) no-repeat center center
+            background-size: 100%
+
+        &--signout:before
+            background: url( ../img/signout.svg ) no-repeat center center
+            background-size: 100%
+
+        &:last-child
+            border-bottom: none
 
         &:hover
-            transition: color .2s ease-in-out
-            color: $cOrange
+            padding-left: 5px
+            color: $cLightBlue4

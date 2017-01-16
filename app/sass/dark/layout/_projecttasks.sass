@@ -8,7 +8,13 @@
     .task-items__section
         position: relative
         width: 28%
-        height: 100%
+        display: flex
+        padding-top: 20px
+
+        &__title
+            position: absolute
+            top: 0
+            z-index: 50
 
     .task-items
         display: flex
@@ -16,10 +22,38 @@
         align-items: stretch
         height: auto
 
+        &__cards
+            &:before
+                content: ''
+                display: block
+                position: absolute
+                top: -25px
+                bottom: -25px
+                right: -25px
+                left: -25px
+                z-index: -1
+                border-radius: 4px
+                transition: background .3s $ease-out-quad
+
+            &--over:before
+                background: rgba(white, .1)
+
+
         &__cta
             text-align: center
             position: fixed
             top: 50%
+            left: 50%
+            transform: translate(-50%)
+
+            &:before
+                content: ''
+                display: block
+                width: 36px
+                height: 36px
+                margin: 0 auto 5px
+                background: url(../img/info.svg) no-repeat center
+                background-size: 100%
 
             &__arrow
                 display: block
@@ -32,17 +66,15 @@
                 background-position: center center
 
             &__text
-                color: $cWhite
-                font-size: s($s1)
+                color: $cLightBlue2
+                font-size: s($s2)
                 line-height: 1.7
-                font-style: italic
-                font-family: $fOpenRegular
+                letter-spacing: ps_ls(0)
+                // font-style: italic
+                font-family: $fOpenSemiBold
 
     #todo-column__items,
     #progress-column__items,
     #finished-column__items
-        // position: absolute
-        top: 40px
-        bottom: 0
-        left: 0
-        right: 0
+        width: 100%
+        min-height: 70vh

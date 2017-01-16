@@ -10,17 +10,29 @@ div.container.view#view-signin(transition="scale")
             form.form(@submit.prevent="submit")
                 div
                     legend.signin__subtitle Please log in
+                    p.wronginfo(v-show="wronginfo" transition="fade") Unable to log in. Please check your username and password.
                     div.form-group
                         label(for="username") Username
                         p.form__error(v-if="usernameError") Please enter your username
-                        input(type="text" name="username" id="username" v-model="username")
+                        input(type="text" name="username" id="username" v-model="username" v-bind:class="{'form-body__input--error': usernameError}")
 
                     div.form-group
                         label(for="password") Password
                         p.form__error(v-if="passwordError") Please enter your password
-                        input(type="password" name="password" id="password" v-model="password")
+                        input(type="password" name="password" id="password" v-model="password" v-bind:class="{'form-body__input--error': passwordError}")
 
                     input(type="submit" class="submit-btn" value="Log in")
 
                     a.signup-link(href="#" v-link="{path: '/signup'}") Don't have an account?
-                    a.password-link(href="forgotpassword.html") Forgot your password?
+                    a.password-link(@click.prevent="showPwReset") Forgot your password?
+
+        div.popup.resetPopup(v-if="resetPopupIsShowing" transition="fade")
+            button.close-popup( @click="resetPopupIsShowing = false" )
+            h2 We will send you an e-mail with instructions to reset your password.
+            form.form(@submit.prevent="resetPassword")
+                div.form-group
+                    label.form-body__label(for="email") E-mail
+                    input.form-body__input(type="email" id="email" v-model="resetEmail")
+                div.form-group
+                    input(type="submit" value="Send e-mail")                    
+        div.popup-overlay(v-if="resetPopupIsShowing" @click="resetPopupIsShowing = false" transition="fade")

@@ -23,5 +23,5 @@ div.chatbar
                 a.user__name {{ user.username }}
             
 
-    div.chatbar__section
-        p.chatbar__scrolltip(v-if="scrollTip") Scroll to see new messages
+    p.chatbar__scrolltip(v-show="scrollTip" transition="fade" @click="scroll") 
+        | New messages !
