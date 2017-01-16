@@ -40,10 +40,11 @@ var createWindow = function() {
         width: 1050,
         height: 670,
         titleBarStyle: 'hidden',
-        minWidth: 800
+        minWidth: 800,
+        icon: __dirname + '/icon.ico'
     });
 
-    mainWindow.loadURL('file://' + __dirname + '/html/main.html');
+    mainWindow.loadURL('file://' + __dirname + '/html/main.html?platform=' + process.platform);
 
     // Open the DevTools.
     mainWindow.openDevTools();
@@ -120,4 +121,8 @@ var createWindow = function() {
     ipcMain.on( 'setBadge', function( event, iCount ) {
         app.setBadgeCount( iCount );
     } );
+
+    mainWindow.webContents.send('platform', process.platform);
+
+
 };

@@ -93,6 +93,7 @@
         methods:
 
             displayNavbar: ( route ) ->
+                route = route.split("?")[0]
                 if route is "/signin" or route is "/signup" or route is "/joinTeam"
                     @shownavbar = false
                 else
