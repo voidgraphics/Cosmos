@@ -61,8 +61,6 @@ var createWindow = function() {
     var template = [{
         label: "Cosmos",
         submenu: [
-            { label: "About Cosmos", selector: "orderFrontStandardAboutPanel:" },
-            { type: "separator" },
             { label: "Quit", accelerator: "Command+Q", click: function() { app.quit(); }}
         ]}, {
         label: "Edit",
