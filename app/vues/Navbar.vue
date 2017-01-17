@@ -70,7 +70,8 @@
             @displayNavbar @$route.path
 
             socket.on "chat.new", ( message, user ) =>
-                if @$route.path isnt "/chat" then @messages.count++
+                route = @$route.path.split('?')[0]
+                if route isnt "/chat" then @messages.count++
 
             socket.on "project.new", ( oProject ) =>
                 for team in @user.teams

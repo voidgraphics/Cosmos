@@ -46,6 +46,7 @@
         ready: ->
             socket.on "chat.new", ( oMessage, oUser ) =>
                 oMessage.user = oUser
+                console.log oMessage.chatroomUuid, @selectedChatroom.uuid
                 if oMessage.chatroomUuid == @selectedChatroom.uuid
                     @messages.push( oMessage )
                 else

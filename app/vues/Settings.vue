@@ -83,6 +83,7 @@
                 @user.lastname = localStorage.lastname
                 @user.email = localStorage.email
                 @user.file = "data:image/png;base64,#{localStorage.avatar}"
+                console.log localStorage.settings
                 @settings = JSON.parse localStorage.settings
 
             detectFile: ( e ) ->
@@ -93,7 +94,7 @@
                 else @errors.fileTooBig = false
                 @user.fileName = e.target.files[0].name
 
-                ext = @user.fileName.match(/\.([^\.]+)$/)[1]
+                ext = (@user.fileName.match(/\.([^\.]+)$/)[1]).toLowerCase()
                 if ext != "gif" and ext != "jpeg" and ext != "jpg" and ext != "png"
                     e.target.value = ""
                 else

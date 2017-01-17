@@ -55,7 +55,7 @@ div.container.view#view-projecttasks
                         div.task-item__users
                             div.task-item__user(v-for="user in task.users" title="{{ user.username }} ({{ user.firstname }} {{ user.lastname }})")
                                 img.task-item__user__avatar(v-bind:src="findUserSrc(user)")
-                        span(class="task-item__tag {{ isColorblind ? 'colorblind' : '' }} task-item__tag--{{ task.tag }}" alt="{{ categories[task.tag] }}")
+                        span(v-if="task.tag" class="task-item__tag {{ isColorblind ? 'colorblind' : '' }} task-item__tag--{{ task.tag }}" alt="{{ categories[task.tag] }}")
                     a.placeholder.placeholder--task(@click="showPopup('todo')") Add a task
 
             div.task-items__section#inprogress(data-section="In progress")
@@ -68,7 +68,7 @@ div.container.view#view-projecttasks
                         div.task-item__users
                             div.task-item__user(v-for="user in task.users" title="{{ user.username }} ({{ user.firstname }} {{ user.lastname }})")
                                 img.task-item__user__avatar(v-bind:src="findUserSrc(user)")
-                        span(class="task-item__tag {{ isColorblind ? 'colorblind' : '' }} task-item__tag--{{ task.tag }}" alt="{{ categories[task.tag] }}")
+                        span(v-if="task.tag" class="task-item__tag {{ isColorblind ? 'colorblind' : '' }} task-item__tag--{{ task.tag }}" alt="{{ categories[task.tag] }}")
                     a.placeholder.placeholder--task(@click="showPopup('inprogress')") Add a task
 
             div.task-items__section#finished(data-section="Finished")
@@ -81,7 +81,7 @@ div.container.view#view-projecttasks
                         div.task-item__users
                             div.task-item__user(v-for="user in task.users" title="{{ user.username }} ({{ user.firstname }} {{ user.lastname }})")
                                 img.task-item__user__avatar(v-bind:src="findUserSrc(user)")
-                        span(class="task-item__tag {{ isColorblind ? 'colorblind' : '' }} task-item__tag--{{ task.tag }}" alt="{{ categories[task.tag] }}")
+                        span(v-if="task.tag" class="task-item__tag {{ isColorblind ? 'colorblind' : '' }} task-item__tag--{{ task.tag }}" alt="{{ categories[task.tag] }}")
                     a.placeholder.placeholder--task(@click="showPopup('finished')") Add a task
             div.task-items__cta(v-if="tasks.length < 1")
                 p.task-items__cta__text It's empty in here.

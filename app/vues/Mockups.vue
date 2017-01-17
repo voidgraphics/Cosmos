@@ -82,7 +82,7 @@
                 else @fileTooBigError = false
                 @newMockup.fileName = e.target.files[0].name
 
-                ext = @newMockup.fileName.match(/\.([^\.]+)$/)[1]
+                ext = (@newMockup.fileName.match(/\.([^\.]+)$/)[1]).toLowerCase()
                 if ext != "gif" and ext != "jpeg" and ext != "jpg" and ext != "png"
                     e.target.value = ""
                 else

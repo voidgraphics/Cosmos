@@ -102,7 +102,7 @@
                 else @fileTooBigError = false
                 @fileName = e.target.files[0].name
 
-                ext = @fileName.match(/\.([^\.]+)$/)[1]
+                ext = (@fileName.match(/\.([^\.]+)$/)[1]).toLowerCase()
                 if ext != "gif" and ext != "jpeg" and ext != "jpg" and ext != "png"
                     e.target.value = ""
                 else

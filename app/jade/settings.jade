@@ -82,7 +82,7 @@ div.container.view#view-settings
                         input.form-body__input(type="checkbox" id="notifs-mockup-created" v-model="settings.notifications.newMockup" @change="changeNotificationPreference('newMockup', settings.notifications.newMockup)")
                         label.form-body__label(for="notifs-mockup-created") When someone uploads a new design
                     div
-                        input.form-body__input(type="checkbox" id="notifs-comments-created" v-model="settings.notifications.newComment" @change="changeNotificationPreference('commentsCreated', settings.notifications.commentsCreated)")
+                        input.form-body__input(type="checkbox" id="notifs-comments-created" v-model="settings.notifications.newComment" @change="changeNotificationPreference('newComment', settings.notifications.newComment)")
                         label.form-body__label(for="notifs-comments-created") When someone comments on a design
                     p.form__category Chat
                     //- div

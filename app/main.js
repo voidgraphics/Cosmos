@@ -36,11 +36,14 @@ app.on('activate', function() {
 
 var createWindow = function() {
 
+    var frame = process.platform != 'win32'
+
     mainWindow = new BrowserWindow({
         width: 1050,
         height: 670,
         titleBarStyle: 'hidden',
         minWidth: 800,
+        frame: frame,
         icon: __dirname + '/icon.ico'
     });
 
@@ -115,7 +118,9 @@ var createWindow = function() {
     } );
 
     ipcMain.on( 'bounceIcon', function( event ) {
-        app.dock.bounce();
+        if( process.platform == 'darwin' ) {
+            app.dock.bounce();
+        }
     } );
 
     ipcMain.on( 'setBadge', function( event, iCount ) {

@@ -56,7 +56,7 @@
                 this.tag = @task.tag
                 picker.setDate @deadline
                 for user in @task.users
-                    @selectedUsers.push user.id
+                    @selectedUsers.push user.uuid || user.id
                 this.hasDeadline = @task.deadline != ""
                 this.hasDeleteButton = true
             else

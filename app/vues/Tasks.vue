@@ -44,6 +44,7 @@
             sProjectId = localStorage.selectedProject
             socket.emit "task.getAll", sProjectId, ( oReturnedTasks ) ->
                 items = Object.keys( oReturnedTasks ).map( ( key ) -> return oReturnedTasks[ key ] )
+                console.log items
                 resolve { tasks: items }
 
         ready: ->
@@ -54,6 +55,7 @@
                 @isColorblind = settings.usability.isColorblind
 
             socket.on "task.updated", ( oTask ) =>
+                console.log oTask
                 @replaceTask oTask
 
             socket.on "task.created", ( oTask ) =>
@@ -143,10 +145,16 @@
                     if id == user.uuid
                         return user.src
 
+            findUser: ( sUserId ) ->
+                for user in @users
+                    if user.uuid == sUserId
+                        return user
+
             sorted: ( oTask ) ->
                 if @sort['mine']
                     for user in oTask.users
-                        condOne = user.id == localStorage.userId
+                        condOne = ( user.id || user.uuid ) == localStorage.userId
+                        if condOne then break
                 condTwo = @sort[oTask.tag]
                 if(@sort['mine']) then return condOne && condTwo
                 else return condTwo
@@ -223,10 +231,8 @@
                         task.tag = oTask.tag
                         task.users = []
                         for user in oTask.users
-                            u = {
-                                id: user
-                            }
-                            task.users.push u
+                            user = @findUser user
+                            task.users.push user
                         task.state = oTask.state
                         task.position = oTask.position
                         break

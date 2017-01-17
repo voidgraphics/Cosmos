@@ -62,6 +62,7 @@
             resetPassword: ->
                 if !@resetEmail then return
                 socket.emit 'user.resetPassword', @resetEmail
+                new Notification 'We sent you an e-mail', { body: 'Check your inbox!', silent: true }
                 @resetPopupIsShowing = false
                 @resetEmail = ''
 
