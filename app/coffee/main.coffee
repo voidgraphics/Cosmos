@@ -33,10 +33,12 @@ window.init = () ->
                         hasSchedule: false
                         isColorblind: false
                 timer: null
+                platform: ''
             }
 
         ready: ->
-            # @switchTheme @settings.usability.name
+            @platform = global.location.search.replace '?platform=', ''
+            document.body.className = @platform
             document.querySelector('html').className = 'light'
 
             #-#-# debugging
@@ -138,6 +140,18 @@ window.init = () ->
                     localStorage.settings = JSON.stringify settings
                     this.$broadcast "toggleColorblind", bIsColorblind
                     ipc.send "updateColorblind", bIsColorblind
+
+            minimize: ->
+                console.log "minimizing"
+                ipc.send 'minimize'
+            maximize: ->
+                console.log "maximizing"
+                ipc.send 'maximize'
+            close: ->
+                console.log "closing"
+                ipc.send 'close'
+            showMenu: ->
+                ipc.send 'showMenu'
 
         events:
             clearUnreadMessageCount: ->

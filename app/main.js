@@ -98,8 +98,8 @@ var createWindow = function() {
             ]
         }
     ];
-
-    Menu.setApplicationMenu(Menu.buildFromTemplate(template));
+    let menu = Menu.buildFromTemplate(template);
+    Menu.setApplicationMenu(menu);
 
     ipcMain.on( 'updateTheme', function ( event, sTheme ) {
         let index = 1;
@@ -126,6 +126,27 @@ var createWindow = function() {
     ipcMain.on( 'setBadge', function( event, iCount ) {
         app.setBadgeCount( iCount );
     } );
+
+    ipcMain.on( 'minimize', function( event ) {
+        mainWindow.minimize();
+    } );
+
+    ipcMain.on( 'maximize', function( event ) {
+        if (mainWindow.isMaximized()) {
+            mainWindow.unmaximize()
+        } else {
+            mainWindow.maximize();
+        }
+    } );
+
+    ipcMain.on( 'close', function( event ) {
+        mainWindow.close();
+    } );
+
+    ipcMain.on( 'showMenu', function( event ) {
+        menu.popup( mainWindow, 40, 34 );
+    } );
+
 
     mainWindow.webContents.send('platform', process.platform);
 

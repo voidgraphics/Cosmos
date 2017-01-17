@@ -1,0 +1,29 @@
+.win32
+    .window-controls
+        width: 120px
+        position: fixed
+        top: 0
+        right: 0
+        height: 34px
+        z-index: 99999999999999999999999
+
+    .window-control,
+    .hamburger
+        width: 40px
+        height: 34px
+        padding: 12px 15px 12px 15px
+        -webkit-app-region: no-drag
+        color: $cWhite
+        opacity: 0.5
+        shape-rendering: crispEdges
+        transition: all .05s $ease-out-quad
+
+        &:hover
+            background-color: rgba(black, .6)
+            color: $cLightBlue4
+
+    .hamburger
+        position: fixed
+        top: 0
+        left: 0
+        z-index: 9999999999999999999999

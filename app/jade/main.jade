@@ -10,8 +10,18 @@ html(lang="en" class="light")
         script(src="../js/socket.js")
         
     body
-        div.navbar-drag
         div#app
+            div.navbar-drag
+            div.menu(v-if="platform == 'win32'")
+                svg.hamburger(@click="showMenu")
+                    use(href="../img/windows.svg#hamburger-menu")
+            div.window-controls(v-if="platform == 'win32'")
+                svg.window-control(@click="minimize")
+                    use(href="../img/windows.svg#minimize-window")
+                svg.window-control(@click="maximize")
+                    use(href="../img/windows.svg#maximize-window")
+                svg.window-control(@click="close")
+                    use(href="../img/windows.svg#close-window")
             navbar
             router-view
 
