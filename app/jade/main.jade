@@ -12,10 +12,10 @@ html(lang="en" class="light")
     body
         div#app
             div.navbar-drag
-            div.menu(v-if="platform == 'win32'")
+            div.menu#menu(v-if="platform == 'win32'")
                 svg.hamburger(@click="showMenu")
                     use(href="../img/windows.svg#hamburger-menu")
-            div.window-controls(v-if="platform == 'win32'")
+            div.window-controls#captionbuttons(v-if="platform == 'win32'")
                 svg.window-control(@click="minimize")
                     use(href="../img/windows.svg#minimize-window")
                 svg.window-control(@click="maximize")

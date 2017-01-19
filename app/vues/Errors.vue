@@ -5,7 +5,7 @@
         data: ->
             return {
                 isShowing: false
-                message: 'This is an error message'
+                message: 'This is an example error message'
                 uptime: 6000
                 isHoveringErrorMessage: false
             }

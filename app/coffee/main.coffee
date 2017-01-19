@@ -266,6 +266,9 @@ if typeof io == 'undefined'
             window.starfield.render()
         window.starfield.isRunning = true
         window.starfield.animate()
+    if navigator.platform != 'Win32'
+        document.getElementById('menu').style.display = 'none'
+        document.getElementById('captionbutton').style.display = 'none'
 
     container = document.createElement 'div'
     container.classList.add 'no-server'
