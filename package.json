@@ -1,6 +1,6 @@
 {
   "name": "cosmos",
-  "version": "0.0.1",
+  "version": "1.0.0",
   "description": "Project manager app",
   "main": "app/main.js",
   "scripts": {

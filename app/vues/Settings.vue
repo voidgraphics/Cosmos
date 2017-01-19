@@ -83,7 +83,6 @@
                 @user.lastname = localStorage.lastname
                 @user.email = localStorage.email
                 @user.file = "data:image/png;base64,#{localStorage.avatar}"
-                console.log localStorage.settings
                 @settings = JSON.parse localStorage.settings
 
             detectFile: ( e ) ->

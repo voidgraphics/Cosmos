@@ -46,7 +46,6 @@
         ready: ->
             socket.on "chat.new", ( oMessage, oUser ) =>
                 oMessage.user = oUser
-                console.log oMessage.chatroomUuid, @selectedChatroom.uuid
                 if oMessage.chatroomUuid == @selectedChatroom.uuid
                     @messages.push( oMessage )
                 else
@@ -138,7 +137,6 @@
 
         events:
             changeProject: ( oTeam, oProject ) ->
-                # socket.emit "user.join", [ oProject.uuid ]
                 socket.emit "chat.getAll", oProject.uuid, oTeam.uuid, ( aChatrooms, aGeneralMessages, aUsers ) =>
                     @users = aUsers
                     @chatrooms = aChatrooms
@@ -153,12 +151,10 @@
                 return Moment(value).format('ll h:mm a');
 
             format: ( text ) ->
-                # Check for underscores
                 text = text.replace /(_).[^\*]*(_)/g, ( text, p1, p2 ) ->
                     if( p1 && p2 )
                         return "<em>#{text.split('_').join('')}</em>"
 
-                # Check for asterisks
                 text = text.replace /(\*).[^\_]*(\*)/g, ( text, p1, p2 ) ->
                     if( p1 && p2 )
                         return "<strong>#{text.split('*').join('')}</strong>"

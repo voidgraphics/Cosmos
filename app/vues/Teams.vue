@@ -37,9 +37,7 @@
                         @teams.splice index, 1
                         @leavePopupIsShowing = false
 
-                console.log @teams.length
                 if @teams.length == 0
-                    console.log 'redirecting'
                     localStorage.selectedTeam = ''
                     @$router.go '/joinTeam'
 

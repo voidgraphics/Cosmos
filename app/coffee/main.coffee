@@ -142,13 +142,10 @@ window.init = () ->
                     ipc.send "updateColorblind", bIsColorblind
 
             minimize: ->
-                console.log "minimizing"
                 ipc.send 'minimize'
             maximize: ->
-                console.log "maximizing"
                 ipc.send 'maximize'
             close: ->
-                console.log "closing"
                 ipc.send 'close'
             showMenu: ->
                 ipc.send 'showMenu'
@@ -255,7 +252,6 @@ window.init = () ->
             body: "Connection to server established."
             silent: true
         }
-
 
 
 if typeof io == 'undefined'

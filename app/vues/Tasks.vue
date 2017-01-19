@@ -44,7 +44,6 @@
             sProjectId = localStorage.selectedProject
             socket.emit "task.getAll", sProjectId, ( oReturnedTasks ) ->
                 items = Object.keys( oReturnedTasks ).map( ( key ) -> return oReturnedTasks[ key ] )
-                console.log items
                 resolve { tasks: items }
 
         ready: ->
@@ -55,7 +54,6 @@
                 @isColorblind = settings.usability.isColorblind
 
             socket.on "task.updated", ( oTask ) =>
-                console.log oTask
                 @replaceTask oTask
 
             socket.on "task.created", ( oTask ) =>
