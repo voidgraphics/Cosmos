@@ -269,6 +269,16 @@ if typeof io == 'undefined'
     if navigator.platform != 'Win32'
         document.getElementById('menu').style.display = 'none'
         document.getElementById('captionbutton').style.display = 'none'
+    else
+        document.body.classList.add( 'win32' )
+        menu = document.getElementById 'menu'
+        min = document.getElementById 'minimize'
+        max = document.getElementById 'maximize'
+        close = document.getElementById 'close'
+        menu.addEventListener 'click', () -> ipc.send 'showMenu'
+        min.addEventListener 'click', () -> ipc.send 'minimize'
+        max.addEventListener 'click', () -> ipc.send 'maximize'
+        close.addEventListener 'click', () -> ipc.send 'close'
 
     container = document.createElement 'div'
     container.classList.add 'no-server'
@@ -276,6 +286,7 @@ if typeof io == 'undefined'
     errorMessage.classList.add 'no-server__message'
     errorMessage.innerHTML = 'Could not reach server! <br>Retrying in 5 seconds...'
     container.appendChild errorMessage
+
     document.body.appendChild container
     setTimeout( () =>
         window.location.reload()

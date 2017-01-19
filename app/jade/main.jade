@@ -9,18 +9,18 @@ html(lang="en" class="light")
         script(src="http://www.getcosmos.space:12345/socket.io/socket.io.js")
         script(src="../js/socket.js")
         
-    body
+    body.light
         div#app
             div.navbar-drag
             div.menu#menu(v-if="platform == 'win32'")
                 svg.hamburger(@click="showMenu")
                     use(href="../img/windows.svg#hamburger-menu")
             div.window-controls#captionbuttons(v-if="platform == 'win32'")
-                svg.window-control(@click="minimize")
+                svg.window-control#minimize(@click="minimize")
                     use(href="../img/windows.svg#minimize-window")
-                svg.window-control(@click="maximize")
+                svg.window-control#maximize(@click="maximize")
                     use(href="../img/windows.svg#maximize-window")
-                svg.window-control(@click="close")
+                svg.window-control#close(@click="close")
                     use(href="../img/windows.svg#close-window")
             navbar
             router-view
